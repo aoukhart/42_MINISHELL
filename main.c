@@ -21,6 +21,7 @@ void    execute_cmd(char **cmd, char **env)
     }
     else
         wait(NULL);
+    ft_free(cmd);
 }
 
 char	**ft_free(char **str)
@@ -56,7 +57,7 @@ char	*check_path(char **cmd, char **path)
 		}
 		free(new_path);
 	}
-	free(path);
+	ft_free(path);
     return NULL;
 }
 
@@ -79,6 +80,7 @@ void    execute(char **cmd, char **env)
     if (access(cmd[0], X_OK) == 0)
     {
         execute_cmd(cmd,env);
+        ft_free(cmd);
         return;
     }
     int i = 1;
@@ -91,6 +93,7 @@ void    execute(char **cmd, char **env)
         i++;
     }
     execute_cmd(ft_split(path, ' '), env);
+    free(path);
 }
 
 void check_builtins(char *s, char **env)
@@ -98,24 +101,29 @@ void check_builtins(char *s, char **env)
     char **cmd;
     cmd = ft_split(s, ' ');
     if (ft_strncmp(cmd[0], "cd", 2) == 0)
-        cd(cmd, env);
-    else if (ft_strncmp(cmd[0], "env", 3) == 0)
     {
-        int i = -1;
-        while (env[++i])
-            printf("%s\n", env[i]);
+        if (!cmd[1])
+        {
+            cmd[1] = "~";
+        }
+        // else
+            // cd(cmd, env);
+            cd(cmd, env);
     }
+    else if (ft_strncmp(cmd[0], "env", 3) == 0)
+        my_env(env);
     else if (ft_strncmp(cmd[0], "exit", 4) == 0)
     {
         printf("exit\n");
         exit(0);
     }
-//    else if(ft_strncmp(cmd[0], "export", 6) == 0)
-//    {
-//        export(cmd, env);
-//    }
+    else if(ft_strncmp(cmd[0], "export", 6) == 0)
+        export(cmd, env);
+    else if (ft_strncmp(cmd[0], "unset", 5) == 0)
+        unset(cmd, env);
     else
         execute(cmd, env);
+    ft_free(cmd);
 }
 
 char **init_env(char **envp)
@@ -123,14 +131,15 @@ char **init_env(char **envp)
     char **env;
     int i = 0;
 
+    if (envp[0] == NULL)
+        return (NULL);
     while (envp[i++]);
-    env = malloc(sizeof(char *) * (i + 1));
+    env = malloc(sizeof(char *) * i);
     env[i] = NULL;
     i = 0;
     while (envp[i])
     {
-        env[i] = malloc(sizeof(char) * ft_strlen(envp[i]) + 1);
-        ft_strlcpy(env[i], envp[i], ft_strlen(envp[i]) + 1);
+        env[i] = ft_strdup(envp[i]);
         i++;
     }
     return (env);
@@ -146,8 +155,22 @@ int main(int ac, char **av, char **envp)
         while (1)
         {
             s = readline("minishell>>>");
+            if(!s)
+                exit(0);
+            if(s[0] == '\0')
+            {
+                free(s);
+                continue;
+            }
             add_history(s);
             check_builtins(s, env);
+            //int i = 0;
+            //while (env[i])
+            //{
+            //    printf("--->%s\n", env[i]);
+            //    i++;
+            //}
+            free(s);
         }
     }
     return 0;

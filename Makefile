@@ -1,5 +1,8 @@
 SRC = main.c\
-		builtins/cd.c
+		builtins/cd.c\
+		builtins/export.c\
+		builtins/env.c\
+		builtins/unset.c\
 
 OBJ = $(SRC:.c=.o)
 
