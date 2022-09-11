@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 18:02:40 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/09/05 21:19:53 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:25:11 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ size_t length(char *s)
     {
         i++;
     }
+    // printf("%zu\n", i);
     return i;
 }
 
@@ -28,6 +29,7 @@ void unset(char **cmd, char **env)
     int checker;
     char **env1;
     int i;
+    int j = 0;
 
     i = 0;
     len = 0;
@@ -43,28 +45,47 @@ void unset(char **cmd, char **env)
             if (!ft_strncmp(env[i], cmd[1], ft_strlen(cmd[1])) && (ft_strlen(cmd[1]) == length(env[i])))
             {
                 printf("{%s:%d}\n", env[i], i);
-                checker = 1;
+
+                checker = i;
                 break;
             }
             i++;
         }
-        if (checker == 1)
+        i = 0;
+        while (env[i])
+        {
+            printf("--%s--\n", env[i]);
+            i++;
+        }
+        if (checker)
         {
             env1 = malloc(sizeof(char*) * (len));
-            env1[len] = NULL;
+            i = 0;
+            j = 0;
             while (i < len)
             {
-                if (ft_strncmp(env[i], cmd[1], ft_strlen(cmd[1])))
-                    env1[i] = ft_strdup(env[i]);
+                if (i >= checker)
+                {
+                    j++;
+                    env1[i] = ft_strdup(env[j]);
+                }
+                else
+                {
+                    env1[i] = ft_strdup(env[j]);
+                    j++;
+                }
                 i++;
             }
+            env1[len - 1] = NULL;
+            i = -1;
+            while (env1[++i])
+                printf("[%s]\n", env1[i]);
         }
-        i = 0;
-        
         i = -1;
-        while (env1[++i])
-           printf("--->%s\n", env1[i]);
-        //ft_free(env1);
+        env = malloc(sizeof(char*) * (len));
+        //    printf("--->%s(%d)\n", env1[i], i);
+        env[len - 1] = NULL;
+        ft_free(env1);
     }
     else
     {

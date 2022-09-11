@@ -14,10 +14,13 @@ void    execute_cmd(char **cmd, char **env)
         if (cmd == NULL)
         {
             perror("minishell");
+            write(2, "m9wda elik", 11);
+            ft_free(env);
             exit(0);
         }
         else
-            execve(cmd[0],cmd, env);
+            if (execve(cmd[0],cmd, env) == -1)
+                exit(0);
     }
     else
         wait(NULL);
