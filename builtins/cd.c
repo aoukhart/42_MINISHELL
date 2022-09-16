@@ -4,7 +4,6 @@ void	change_old_pwd(char *old_pwd, char **env)
 {
 	int i = 0;
 			
-	//printf("<%s>\n", ft_strjoin("OLDPWD=", old_pwd));
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
@@ -31,7 +30,10 @@ void    cd(char **cmd, char **env)
 
 	old_p = getcwd(NULL, 1000);
 	change_old_pwd(old_p, env);
+	if (cmd[1][0] == '~' || cmd)
+		chdir(env[check_dup_env("HOME", env)] + length("HOME") + 1);
 	chdir(cmd[1]);
 	pwd = getcwd(NULL, 1000);
 	change_pwd(pwd, env);
+	g_ret = 12;
 }

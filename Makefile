@@ -3,10 +3,11 @@ SRC = main.c\
 		builtins/export.c\
 		builtins/env.c\
 		builtins/unset.c\
+		builtins/echo.c\
 
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror -lreadline
+FLAGS = -Wall -Wextra -Werror -lreadline #-fsanitize=address
 
 NAME = minishell
 
