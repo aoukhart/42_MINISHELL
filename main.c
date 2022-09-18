@@ -8,6 +8,7 @@ void    execute_cmd(char **cmd, char **env)
 {
     pid_t pid;
     pid = fork();
+    signal(2, SIG_IGN);
     if (pid == -1)
     {
         perror("fork failed\n");
@@ -15,11 +16,11 @@ void    execute_cmd(char **cmd, char **env)
     }
     if (pid == 0)
     {
+        // signal(2, SIG_DFL);
         if (execve(cmd[0],cmd, env) == -1)
         {
-            perror("command not found");
-            give_value(127);
-            // printf("qweqweqwe;%d\n", g_ret);
+            perror("minishell");
+            // printf("comman not found\n");
             exit(127);
         }
     }
@@ -84,7 +85,8 @@ void    execute(char **cmd, char **env)
     if (access(cmd[0], X_OK) == 0)
     {
         execute_cmd(cmd,env);
-        ft_free(cmd);
+       // if (cmd[0])
+        //ft_free(cmd);
         return;
     }
     int i = 1;
@@ -158,7 +160,8 @@ int main(int ac, char **av, char **envp)
         env = init_env(envp);
         while (1)
         {
-            s = readline("minishell>>>");
+            signals();
+            s = readline("minishell>>");
             if(!s)
                 exit(0);
             if(s[0] == '\0')
@@ -171,5 +174,6 @@ int main(int ac, char **av, char **envp)
             free(s);
         }
     }
+    system("leaks minishell");
     return 0;
 }

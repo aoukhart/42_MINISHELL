@@ -65,7 +65,7 @@ int export_check(char *cmd)
         printf("1apaah[%c]\n", cmd[0]);
         return (0);
     }
-    while (cmd[i])
+    while (i < (int)length(&cmd[i]))
     {
         if (cmd[i] != '_' && !ft_isalnum(cmd[i]))
         {

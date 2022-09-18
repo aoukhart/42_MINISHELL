@@ -30,10 +30,18 @@ void    cd(char **cmd, char **env)
 
 	old_p = getcwd(NULL, 1000);
 	change_old_pwd(old_p, env);
-	if (cmd[1][0] == '~' || cmd)
+	if (cmd[1] == NULL || (cmd[1][0] == '~' && !cmd[1][1]))
+	{
+		printf("<%s>\n", env[check_dup_env("HOME", env)] + length("HOME") + 1);
 		chdir(env[check_dup_env("HOME", env)] + length("HOME") + 1);
-	chdir(cmd[1]);
+	}
+	if (chdir(cmd[1]))
+	{
+		write(2, "minishell:", 11);
+		printf("%s\n", strerror(2));
+		g_ret = 1;
+	}
 	pwd = getcwd(NULL, 1000);
 	change_pwd(pwd, env);
-	g_ret = 12;
 }
+ 

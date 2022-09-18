@@ -3,6 +3,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -20,5 +21,5 @@ int     check_dup_env(char *cmd, char **env);
 size_t  length(char *s);
 void    echo(char **cmd, char **env);
 void    execute(char **cmd, char **env);
-
+void    signals();
 #endif
