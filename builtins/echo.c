@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/09/16 03:54:38 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/09/22 23:35:42 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void    echo(char **cmd, char **env)
     int i = 1;
     while (cmd[i])
     {
-
         if (cmd[i][0] == '$' && cmd[i][1] == '?')
         {
+            //printf("%d\n", g_value);
             // g_ret += 127;
-            cmd[i] = ft_strdup(ft_itoa(g_ret));
+            //cmd[i] = ft_strdup(ft_itoa(g_value));
         }
         else if (check_dup_env(cmd[i] + 1, env) && cmd[i][0] == '$' && 
             ft_strlen(cmd[i] + 1) == length(env[check_dup_env(cmd[i] + 1, env)]))
@@ -31,6 +31,5 @@ void    echo(char **cmd, char **env)
             
         i++;
     }
-    execute(cmd, env);
-    g_ret = 0;
+    exec(cmd, env);
 }

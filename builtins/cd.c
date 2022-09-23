@@ -39,7 +39,6 @@ void    cd(char **cmd, char **env)
 	{
 		write(2, "minishell:", 11);
 		printf("%s\n", strerror(2));
-		g_ret = 1;
 	}
 	pwd = getcwd(NULL, 1000);
 	change_pwd(pwd, env);

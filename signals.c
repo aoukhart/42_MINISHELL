@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 22:35:22 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/09/18 04:48:26 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/09/20 07:48:13 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void ctrl_c_handler(int sig)
 {
-    sig = 0;
-    // signal(sig, SIG_IGN);
+    (void)sig;
     printf("\n");
     rl_on_new_line();
     rl_replace_line("", 0);
@@ -24,6 +23,5 @@ void ctrl_c_handler(int sig)
 
 void signals()
 {
-    // printf("salam\n");
     signal(SIGINT, ctrl_c_handler);
 }

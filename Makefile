@@ -5,6 +5,7 @@ SRC = main.c\
 		builtins/unset.c\
 		builtins/echo.c\
 		signals.c\
+		execution/exec.c\
 
 OBJ = $(SRC:.c=.o)
 
