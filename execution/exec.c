@@ -6,7 +6,7 @@
 /*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/09/22 23:38:46 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/06 18:59:55 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ void execute_cmd(char **cmd, char **env)
         perror("fork failed\n");
         return;
     }
-    if (pid == 0)
+    else if (pid == 0)
     {
-        // signal(2, SIG_DFL);
+        signal(2, SIG_DFL);
         if (execve(cmd[0], cmd, env) == -1)
         {
-            perror("minishell");
-            // printf("comman not found\n");
+            perror("minishl");
             exit(127);
         }
     }
-    else
+    else if (pid >= 0)
         wait(NULL);
     ft_free(cmd);
 }
@@ -126,9 +125,7 @@ void check_builtins(char **cmd, char **env)
     else if (ft_strncmp(cmd[0], "unset", 6) == 0)
         unset(cmd, env);
     else if (ft_strncmp(cmd[0], "echo", 5) == 0)
-    {
         echo(cmd, env);
-    }
     else
         exec(cmd, env);
     // ft_free(cmd);

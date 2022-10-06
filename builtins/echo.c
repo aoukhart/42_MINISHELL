@@ -6,7 +6,7 @@
 /*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/09/22 23:35:42 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/06 17:50:24 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void    echo(char **cmd, char **env)
     {
         if (cmd[i][0] == '$' && cmd[i][1] == '?')
         {
-            //printf("%d\n", g_value);
             // g_ret += 127;
             //cmd[i] = ft_strdup(ft_itoa(g_value));
         }

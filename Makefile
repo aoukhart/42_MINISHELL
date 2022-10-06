@@ -4,8 +4,8 @@ SRC = main.c\
 		builtins/env.c\
 		builtins/unset.c\
 		builtins/echo.c\
-		signals.c\
 		execution/exec.c\
+		signals.c\
 
 OBJ = $(SRC:.c=.o)
 
