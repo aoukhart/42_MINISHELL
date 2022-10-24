@@ -6,7 +6,7 @@
 /*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/10/06 18:59:55 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/24 17:59:24 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void execute_cmd(char **cmd, char **env)
         perror("fork failed\n");
         return;
     }
+    else if (pid)
+        wait(&pid);
     else if (pid == 0)
     {
         signal(2, SIG_DFL);
@@ -31,8 +33,7 @@ void execute_cmd(char **cmd, char **env)
             exit(127);
         }
     }
-    else if (pid >= 0)
-        wait(NULL);
+
     ft_free(cmd);
 }
 
@@ -109,26 +110,74 @@ void exec(char **cmd, char **env)
     free(path);
 }
 
-void check_builtins(char **cmd, char **env)
+int get_fd_in(t_input *input)
 {
-    if (ft_strncmp(cmd[0], "cd", 3) == 0)
-        cd(cmd, env);
-    else if (ft_strncmp(cmd[0], "env", 4) == 0)
+    t_redirect *tmp;
+    int in = 0;
+    tmp = input->redirrections;
+    while (tmp)
+    {
+        if (tmp->type && tmp->type == '<')
+        {
+            in = tmp->fd;
+            printf("in--->%d\n", in);
+            if (in == -1)
+            {
+                perror("redic");
+                
+            }
+        }
+        tmp = tmp->next;
+    }
+    return in;
+}
+
+int get_fd_out(t_input *input)
+{
+    t_redirect *tmp;
+    int out = 1;
+    tmp = input->redirrections;
+    while (tmp)
+    {
+        if (tmp->type && tmp->type == '>')
+        {
+            out = tmp->fd;
+            printf("out--->%d\n", out);
+            if (out == -1)
+            {
+                perror("redic");
+            }
+        }
+        tmp = tmp->next;
+    }
+    return out;
+}  
+
+void check_builtins(t_input *input, char **env)
+{   
+    if (ft_strncmp(input->cmd[0], "cd", 3) == 0)
+        cd(input->cmd, env);
+    else if (ft_strncmp(input->cmd[0], "env", 4) == 0)
         my_env(env);
-    else if (ft_strncmp(cmd[0], "exit", 5) == 0)
+    else if (ft_strncmp(input->cmd[0], "exit", 5) == 0)
     {
         printf("exit\n");
         exit(0);
     }
-    else if (ft_strncmp(cmd[0], "export", 7) == 0)
-        export(cmd, env);
-    else if (ft_strncmp(cmd[0], "unset", 6) == 0)
-        unset(cmd, env);
-    else if (ft_strncmp(cmd[0], "echo", 5) == 0)
-        echo(cmd, env);
+    else if (ft_strncmp(input->cmd[0], "pwd", 4) == 0)
+    {
+        char tmp[256];
+        getcwd(tmp, sizeof(tmp));
+        printf("%s\n", tmp);
+    }
+    else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
+        export(input->cmd, env);
+    else if (ft_strncmp(input->cmd[0], "unset", 6) == 0)
+        unset(input->cmd, env);
+    //else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
+    //    echo(input->cmd, env);
     else
-        exec(cmd, env);
-    // ft_free(cmd);
+        exec(input->cmd, env);
 }
 
 char **init_env(char **envp)

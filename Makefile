@@ -6,6 +6,13 @@ SRC = main.c\
 		builtins/echo.c\
 		execution/exec.c\
 		signals.c\
+		parsing/args.c\
+		parsing/env.c\
+		parsing/parsing.c\
+		parsing/quotes.c\
+		parsing/redirections.c\
+		parsing/utiles.c\
+		parsing/utiles2.c\
 
 OBJ = $(SRC:.c=.o)
 
