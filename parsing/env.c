@@ -6,7 +6,7 @@
 /*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:12:11 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/10/24 16:32:35 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/25 18:20:17 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ char	*env_var(t_progres *progree)
 	if (!c)
 		return (0);
 	progree->i++;
+	if (progree->input[progree->i] == '?')
+	{
+		progree->i++;
+		return "$?";
+	}
 	while(progree->input[progree->i] && progree->input[progree->i] != ' '
 	&& progree->input[progree->i] != '"')
 	{
@@ -42,6 +47,11 @@ char	*env_var2(t_progres *progree)
 	if (!c)
 		return (0);
 	progree->i++;
+	if (progree->input[progree->i] == '?')
+	{
+		progree->i++;
+		return "$?";
+	}
 	while(progree->input[progree->i] && progree->input[progree->i] != '|'
 		&& progree->input[progree->i] != '<'
 		&& progree->input[progree->i] != '>'

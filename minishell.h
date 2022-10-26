@@ -29,6 +29,7 @@ typedef struct s_input
 	char				**cmd;
 	int					pipe;
 	t_redirect			*redirrections;
+	int					exit_val;
 	struct	s_input		*next;
 }	t_input;
 
@@ -65,17 +66,15 @@ void    unset(char **cmd, char **env);
 char	**ft_free(char **str);
 int     check_dup_env(char *cmd, char **env);
 size_t  length(char *s);
-void    echo(char **cmd, char **env);
-void    exec(char **cmd, char **env);
+void    echo(t_input *input, char **env);
+void    exec(t_input *input, char **env);
 void    signals();
-void    execute_cmd(char **cmd, char **env);
+void    execute_cmd(char **cmd, t_input *input, char **env);
 char	*check_path(char **cmd, char **path);
 char	*get_path(char **cmd, char *envp[]);
 char **init_env(char **envp);
 void check_builtins(t_input *input, char **env);
 int get_fd_in(t_input *input);
 int get_fd_out(t_input *input);
-
-
 
 #endif

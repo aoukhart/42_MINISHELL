@@ -6,7 +6,7 @@
 /*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/10/24 16:11:57 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/26 16:57:16 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	step_one(char *str, t_input *input, char **envp)
 			temp = temp->next;
 		}
 	}
-	print_list(input);
+	//print_list(input);
 }
 
 void	init_struct(t_input	*data)

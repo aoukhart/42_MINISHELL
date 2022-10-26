@@ -1,20 +1,20 @@
 #include "minishell.h"
 
-void exec_cmds(char **cmd, char **env)
+void exec_cmds(t_input *input, char **env)
 {
 
-	if (ft_strncmp(cmd[0], "env", 4) == 0)
+	if (ft_strncmp(input->cmd[0], "env", 4) == 0)
 		my_env(env);
-	else if (ft_strncmp(cmd[0], "export", 7) == 0)
-		export(cmd, env);
-	else if (ft_strncmp(cmd[0], "echo", 5) == 0)
-		echo(cmd, env);
+	else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
+		export(input->cmd, env);
+	else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
+		echo(input, env);
 	else
 	{
 		// exec(cmd, env);
-		if (execve(get_path(cmd, env), cmd, env) == -1)
+		if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
 		{
-			perror("SOMETHING WENT WRONG !!0");
+			perror("MINISHELL");
 			exit(127);
 		}
 	}
@@ -56,7 +56,7 @@ void multi_pipes(t_input *input, char **env)
 			}
 			else
 				dup2(out, STDOUT_FILENO);
-			exec_cmds(tmp->cmd, env);
+			exec_cmds(tmp, env);
 		}
 		else
 		{
@@ -64,6 +64,7 @@ void multi_pipes(t_input *input, char **env)
 			in = fd[0];
 			tmp = tmp->next;
 			wait(&pid);
+			input->exit_val = WEXITSTATUS(pid);
 		}
 	}
 }
@@ -174,27 +175,28 @@ void execute(t_input *input, char **env)
 		check_builtins(input, env);
 	else if (input->redirrections && !input->pipe)
 	{
-		int in = get_fd_in(input);
-		int out = get_fd_out(input);
 		int pid = fork();
     	signal(2, SIG_IGN);
 		if (pid == 0)
 		{
 	        signal(2, SIG_DFL);
-			if (in)
-			{
+			//if (in)
+			//{
+				int in = get_fd_in(input);
 				dup2(in,STDIN_FILENO);
 				close(in);
-			}
-			if (out != 1)
-			{
+			//}
+			//if (out != 1)
+			//{
+				int out = get_fd_out(input);
 				dup2(out,STDOUT_FILENO);
 				close(out);
-			}
-			exec_cmds(input->cmd, env);
+			//}
+			exec_cmds(input, env);
 		}
 		else
-			wait(NULL);	
+			wait(NULL);
+			
 	}
 	else if (input->pipe)
 	{
@@ -225,15 +227,14 @@ int main(int ac, char **av, char **envp)
 	{
 		env = init_env(envp);
 		input = malloc(sizeof(t_input));
+		input->exit_val = 0;
 		while (1)
 		{
+
 			signals();
 			s = readline("minishell>>");
 			if (!s)
-			{
-				printf("rah khawi\n");
 				exit(0);
-			}
 			if (!s[0])
 			{
 				free(s);

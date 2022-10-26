@@ -6,15 +6,16 @@
 /*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/10/24 17:59:24 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/26 17:13:38 by an_ass           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void execute_cmd(char **cmd, char **env)
+void execute_cmd(char **cmd, t_input *input, char **env)
 {
     pid_t pid;
+    int status;
     pid = fork();
     signal(2, SIG_IGN);
     if (pid == -1)
@@ -22,19 +23,22 @@ void execute_cmd(char **cmd, char **env)
         perror("fork failed\n");
         return;
     }
-    else if (pid)
-        wait(&pid);
     else if (pid == 0)
     {
         signal(2, SIG_DFL);
         if (execve(cmd[0], cmd, env) == -1)
         {
             perror("minishl");
+            printf("nari 9wdtiha\n");
             exit(127);
         }
     }
-
-    ft_free(cmd);
+    else
+    {
+        wait(&status);
+        input->exit_val = WEXITSTATUS(status);
+    }
+    //ft_free(cmd);
 }
 
 char **ft_free(char **str)
@@ -87,26 +91,26 @@ char *get_path(char **cmd, char *envp[])
     return (check_path(cmd, path));
 }
 
-void exec(char **cmd, char **env)
+void exec(t_input *input, char **env)
 {
 
-    if (access(cmd[0], X_OK) == 0)
+    if (access(input->cmd[0], X_OK) == 0)
     {
-        execute_cmd(cmd, env);
+        execute_cmd(input->cmd, input, env);
         // if (cmd[0])
         // ft_free(cmd);
         return;
     }
     int i = 1;
     char *path;
-    path = get_path(cmd, env);
-    while (cmd[i])
+    path = get_path(input->cmd, env);
+    while (input->cmd[i])
     {
         path = ft_strjoin(path, " ");
-        path = ft_strjoin(path, cmd[i]);
+        path = ft_strjoin(path, input->cmd[i]);
         i++;
     }
-    execute_cmd(ft_split(path, ' '), env);
+    execute_cmd(ft_split(path, ' '), input, env);
     free(path);
 }
 
@@ -120,11 +124,10 @@ int get_fd_in(t_input *input)
         if (tmp->type && tmp->type == '<')
         {
             in = tmp->fd;
-            printf("in--->%d\n", in);
             if (in == -1)
             {
                 perror("redic");
-                
+                exit(EXIT_FAILURE);
             }
         }
         tmp = tmp->next;
@@ -142,10 +145,10 @@ int get_fd_out(t_input *input)
         if (tmp->type && tmp->type == '>')
         {
             out = tmp->fd;
-            printf("out--->%d\n", out);
             if (out == -1)
             {
                 perror("redic");
+                exit(EXIT_FAILURE);
             }
         }
         tmp = tmp->next;
@@ -169,15 +172,16 @@ void check_builtins(t_input *input, char **env)
         char tmp[256];
         getcwd(tmp, sizeof(tmp));
         printf("%s\n", tmp);
+        input->exit_val = 10;
     }
     else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
         export(input->cmd, env);
     else if (ft_strncmp(input->cmd[0], "unset", 6) == 0)
         unset(input->cmd, env);
-    //else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
-    //    echo(input->cmd, env);
+    else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
+        echo(input, env);
     else
-        exec(input->cmd, env);
+        exec(input, env);
 }
 
 char **init_env(char **envp)
