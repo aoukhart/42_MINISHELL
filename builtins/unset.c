@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 18:02:40 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/09/12 19:55:24 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:45:33 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDE/minishell.h"
 
 size_t length(char *s)
 {
@@ -74,4 +74,5 @@ void    unset(char **cmd, char **env)
             i++;
         }
     }
+    g_var = 0;
 }

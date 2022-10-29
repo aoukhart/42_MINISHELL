@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 17:34:18 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/09/04 17:42:04 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:33:13 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDE/minishell.h"
 
 void    my_env(char **env)
 {
@@ -22,4 +22,5 @@ void    my_env(char **env)
         if (ft_strchr(env[i], '='))
             printf("%s\n",env[i]);
     }
+    g_var = 0;
 }

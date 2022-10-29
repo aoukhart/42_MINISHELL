@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../INCLUDE/minishell.h"
 
 void    printf_export(char *env)
 {
@@ -62,11 +62,13 @@ int export_check(char *cmd)
     int  i = 1;
     if (cmd[0] != '_' && !ft_isalpha(cmd[0]))
     {
-        printf("1apaah[%c]\n", cmd[0]);
+        //printf("1apaah[%c]\n", cmd[0]);
+        g_var = 1;
         return (0);
     }
     while (i < (int)length(&cmd[i]))
     {
+        printf("=>%c\n", cmd[i]);
         if (cmd[i] != '_' && !ft_isalnum(cmd[i]))
         {
             printf("2apaah[%c]\n", cmd[i]);
@@ -103,4 +105,5 @@ void export(char **cmd, char **env)
         while (env[++i])
             printf_export(env[i]);
     }
+    g_var = 0;
 }

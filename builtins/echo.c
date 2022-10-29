@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/10/25 19:19:08 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/27 12:55:26 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDE/minishell.h"
 
 void    echo(t_input *input, char **env)
 {
@@ -19,10 +19,10 @@ void    echo(t_input *input, char **env)
     {
         if (input->cmd[i][0] == '$' && input->cmd[i][1] == '?')
         {
-            input->cmd[i] = ft_itoa(input->exit_val);
+            input->cmd[i] = ft_itoa(g_var);
         }
         i++;
     }
     exec(input, env);
-    input->exit_val = 0;
+    g_var = 0;
 }

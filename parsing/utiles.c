@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:17 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/10/24 16:33:38 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/26 21:32:05 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include"../minishell.h"
+#include"../INCLUDE/minishell.h"
 
 char	*ft_strjoin2(char *s1, char *s2)
 {

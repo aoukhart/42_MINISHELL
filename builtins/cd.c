@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../INCLUDE/minishell.h"
 
 void	change_old_pwd(char *old_pwd, char **env)
 {
@@ -37,7 +37,8 @@ void    cd(char **cmd, char **env)
 	}
 	if (chdir(cmd[1]))
 	{
-		write(2, "minishell:", 11);
+		perror("minishell");
+		g_var = 1;
 		printf("%s\n", strerror(2));
 	}
 	pwd = getcwd(NULL, 1000);

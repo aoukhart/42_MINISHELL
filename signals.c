@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 22:35:22 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/09/20 07:48:13 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/27 12:49:55 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "INCLUDE/minishell.h"
 
 void ctrl_c_handler(int sig)
 {

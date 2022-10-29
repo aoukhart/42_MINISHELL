@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/10/26 17:13:38 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/28 22:39:22 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDE/minishell.h"
 
-void execute_cmd(char **cmd, t_input *input, char **env)
+void execute_cmd(char **cmd, char **env)
 {
     pid_t pid;
     int status;
@@ -36,7 +36,7 @@ void execute_cmd(char **cmd, t_input *input, char **env)
     else
     {
         wait(&status);
-        input->exit_val = WEXITSTATUS(status);
+        g_var = status >> 8;
     }
     //ft_free(cmd);
 }
@@ -96,7 +96,7 @@ void exec(t_input *input, char **env)
 
     if (access(input->cmd[0], X_OK) == 0)
     {
-        execute_cmd(input->cmd, input, env);
+        execute_cmd(input->cmd, env);
         // if (cmd[0])
         // ft_free(cmd);
         return;
@@ -110,61 +110,24 @@ void exec(t_input *input, char **env)
         path = ft_strjoin(path, input->cmd[i]);
         i++;
     }
-    execute_cmd(ft_split(path, ' '), input, env);
+    execute_cmd(ft_split(path, ' '), env);
     free(path);
 }
 
-int get_fd_in(t_input *input)
-{
-    t_redirect *tmp;
-    int in = 0;
-    tmp = input->redirrections;
-    while (tmp)
-    {
-        if (tmp->type && tmp->type == '<')
-        {
-            in = tmp->fd;
-            if (in == -1)
-            {
-                perror("redic");
-                exit(EXIT_FAILURE);
-            }
-        }
-        tmp = tmp->next;
-    }
-    return in;
-}
 
-int get_fd_out(t_input *input)
-{
-    t_redirect *tmp;
-    int out = 1;
-    tmp = input->redirrections;
-    while (tmp)
-    {
-        if (tmp->type && tmp->type == '>')
-        {
-            out = tmp->fd;
-            if (out == -1)
-            {
-                perror("redic");
-                exit(EXIT_FAILURE);
-            }
-        }
-        tmp = tmp->next;
-    }
-    return out;
-}  
 
-void check_builtins(t_input *input, char **env)
-{   
+int    check_builtins(t_input *input, char **env)
+{
     if (ft_strncmp(input->cmd[0], "cd", 3) == 0)
         cd(input->cmd, env);
     else if (ft_strncmp(input->cmd[0], "env", 4) == 0)
         my_env(env);
     else if (ft_strncmp(input->cmd[0], "exit", 5) == 0)
     {
-        printf("exit\n");
+        if (input->cmd[1])
+            g_var = ft_atoi(input->cmd[1]);
+        
+        printf("%dexit\n", g_var);
         exit(0);
     }
     else if (ft_strncmp(input->cmd[0], "pwd", 4) == 0)
@@ -172,7 +135,7 @@ void check_builtins(t_input *input, char **env)
         char tmp[256];
         getcwd(tmp, sizeof(tmp));
         printf("%s\n", tmp);
-        input->exit_val = 10;
+        g_var = 0;
     }
     else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
         export(input->cmd, env);
@@ -180,26 +143,15 @@ void check_builtins(t_input *input, char **env)
         unset(input->cmd, env);
     else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
         echo(input, env);
-    else
+    return (1); 
+}
+
+void execute(t_input *input, char **env)
+{   
+
+    if (check_builtins(input, env) 
+        && ft_strncmp(input->cmd[0], "pwd", 4) 
+        && ft_strncmp(input->cmd[0], "echo", 5))
         exec(input, env);
 }
 
-char **init_env(char **envp)
-{
-    char **env;
-    int i = 0;
-
-    if (envp[0] == NULL)
-        return (NULL);
-    while (envp[i++])
-        ;
-    env = malloc(sizeof(char *) * (i + 1));
-    i = 0;
-    while (envp[i])
-    {
-        env[i] = ft_strdup(envp[i]);
-        i++;
-    }
-    env[i] = 0;
-    return (env);
-}

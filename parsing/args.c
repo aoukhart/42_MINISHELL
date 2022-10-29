@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an_ass <an_ass@student.42.fr>              +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/10/24 16:32:20 by an_ass           ###   ########.fr       */
+/*   Updated: 2022/10/26 21:32:05 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include"../INCLUDE/minishell.h"
 
 void	arg(t_progres *progree, t_input *data)
 {

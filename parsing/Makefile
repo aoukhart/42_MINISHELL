@@ -8,7 +8,7 @@ SRC =	args.c\
 
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 NAME = pars
 
