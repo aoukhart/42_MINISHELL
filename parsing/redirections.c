@@ -106,7 +106,12 @@ void	ft_open(t_progres *progree, t_redirect *tmp, int	i)
 	skip_spaces(progree);
 	file_name = word_extract(progree);
 	if (i == 2)
-		tmp->fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND);
+	{
+		if(tmp->type == '>')
+			tmp->fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND);
+		else if(tmp->type == '<')
+			tmp->delimiter = file_name;
+	}
 	else
 		if(tmp->type == '>')
 			tmp->fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);

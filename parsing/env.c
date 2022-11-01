@@ -30,7 +30,7 @@ char	*env_var(t_progres *progree)
 		return "$?";
 	}
 	while(progree->input[progree->i] && progree->input[progree->i] != ' '
-	&& progree->input[progree->i] != '"')
+	&& progree->input[progree->i] != '"' && progree->input[progree->i] != '\'')
 	{
 		*c = progree->input[progree->i];
 		var =ft_strjoin2(var, c);

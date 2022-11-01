@@ -17,6 +17,7 @@ void	init_struct2(t_redirect *data)
 	data->fd = -1;
 	data->type = '\0';
 	data->next = NULL;
+	data->delimiter = NULL;
 }
 
 void	input_reader(t_progres *progree, t_input *data)
@@ -56,6 +57,7 @@ void	print_list(t_input *data)
 		{
 			printf("redirection type : %c\n", tmp->type);
 			printf("redirection FD : %d\n", tmp->fd);
+			printf("delimiter : %s\n", tmp->delimiter);
 			tmp = tmp->next;
 		}
 		data = data->next;
