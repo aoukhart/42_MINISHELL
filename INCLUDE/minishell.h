@@ -24,6 +24,7 @@ typedef	struct	s_redirect
 {
 	char	type; // change
 	int		fd;
+	char	*delimiter;
 	struct	s_redirect *next;
 }	t_redirect;
 
