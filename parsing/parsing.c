@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/10/29 17:20:59 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/08 00:35:50 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_list(t_input *data)
 		tmp = data->redirrections;
 		while(data->cmd && data->cmd[i])
 		{
-			printf("cmd line %d : %s\n", i, data->cmd[i]);
+			printf("cmd line %d : \"%s\"\n", i, data->cmd[i]);
 			i++;
 		}
 		printf("pipe : %d\n", data->pipe);
@@ -88,7 +88,7 @@ void	step_one(char *str, t_input *input, char **envp)
 			temp = temp->next;
 		}
 	}
-	//print_list(input);
+	print_list(input);
 }
 
 void	init_struct(t_input	*data)

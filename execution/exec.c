@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/10/28 22:39:22 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/04 15:29:51 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void execute_cmd(char **cmd, char **env)
     pid_t pid;
     int status;
     pid = fork();
-    signal(2, SIG_IGN);
+    //signal(2, SIG_IGN);
     if (pid == -1)
     {
         perror("fork failed\n");
@@ -29,7 +29,6 @@ void execute_cmd(char **cmd, char **env)
         if (execve(cmd[0], cmd, env) == -1)
         {
             perror("minishl");
-            printf("nari 9wdtiha\n");
             exit(127);
         }
     }
@@ -41,109 +40,57 @@ void execute_cmd(char **cmd, char **env)
     //ft_free(cmd);
 }
 
-char **ft_free(char **str)
+int    check_builtins_1(t_input*input, char **env)
 {
-    int i;
-
-    i = 0;
-    while (str[i])
+    if (ft_strncmp(input->cmd[0], "cd", 3) == 0)
     {
-        free(str[i]);
-        i++;
+        cd(input->cmd, env);
+        return 0;
     }
-    free(str);
-    return (NULL);
+    else if (ft_strncmp(input->cmd[0], "env", 4) == 0)
+    {
+        my_env(env);
+        return 0;
+    }
+    else if (ft_strncmp(input->cmd[0], "exit", 5) == 0)
+    {
+        printf("exit\n");
+        exit(0);
+    }
+    return 1;
 }
 
-char *check_path(char **cmd, char **path)
+int check_builtins_2(t_input *input, char **env)
 {
-    int i;
-    char *new_cmd;
-    char *new_path;
-
-    i = 0;
-    while (path[i++])
+    if (ft_strncmp(input->cmd[0], "pwd", 4) == 0)
     {
-        new_cmd = ft_strjoin("/", cmd[0]);
-        new_path = ft_strjoin(path[i], new_cmd);
-        free(new_cmd);
-        if (access(new_path, F_OK) == 0)
-        {
-            ft_free(path);
-            return (new_path);
-        }
-        free(new_path);
+        char tmp[256];
+        printf("%s\n", getcwd(tmp, sizeof(tmp)));
+        g_var = 0;
+        return 0;
     }
-    ft_free(path);
-    return (ft_strdup(cmd[0])); // leak;
-}
-
-char *get_path(char **cmd, char *envp[])
-{
-    int i;
-    char **path;
-
-    i = 0;
-    while (ft_strncmp(envp[i], "PATH", 4) != 0)
-        i++;
-    path = ft_split(envp[i] + 5, ':');
-    i = 0;
-    return (check_path(cmd, path));
-}
-
-void exec(t_input *input, char **env)
-{
-
-    if (access(input->cmd[0], X_OK) == 0)
+    else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
     {
-        execute_cmd(input->cmd, env);
-        // if (cmd[0])
-        // ft_free(cmd);
-        return;
+        export(input->cmd, env);
+        return 0;
     }
-    int i = 1;
-    char *path;
-    path = get_path(input->cmd, env);
-    while (input->cmd[i])
+    else if (ft_strncmp(input->cmd[0], "unset", 6) == 0)
     {
-        path = ft_strjoin(path, " ");
-        path = ft_strjoin(path, input->cmd[i]);
-        i++;
+        unset(input->cmd, env);
+        return 0;
     }
-    execute_cmd(ft_split(path, ' '), env);
-    free(path);
+    else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
+    {
+        echo(input, env);
+        return 0;
+    }
+    return 1;
 }
-
-
 
 int    check_builtins(t_input *input, char **env)
 {
-    if (ft_strncmp(input->cmd[0], "cd", 3) == 0)
-        cd(input->cmd, env);
-    else if (ft_strncmp(input->cmd[0], "env", 4) == 0)
-        my_env(env);
-    else if (ft_strncmp(input->cmd[0], "exit", 5) == 0)
-    {
-        if (input->cmd[1])
-            g_var = ft_atoi(input->cmd[1]);
-        
-        printf("%dexit\n", g_var);
-        exit(0);
-    }
-    else if (ft_strncmp(input->cmd[0], "pwd", 4) == 0)
-    {
-        char tmp[256];
-        getcwd(tmp, sizeof(tmp));
-        printf("%s\n", tmp);
-        g_var = 0;
-    }
-    else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
-        export(input->cmd, env);
-    else if (ft_strncmp(input->cmd[0], "unset", 6) == 0)
-        unset(input->cmd, env);
-    else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
-        echo(input, env);
-    return (1); 
+    return (check_builtins_1(input, env) 
+        & check_builtins_2(input, env));
 }
 
 void execute(t_input *input, char **env)
@@ -154,4 +101,3 @@ void execute(t_input *input, char **env)
         && ft_strncmp(input->cmd[0], "echo", 5))
         exec(input, env);
 }
-

@@ -1,11 +1,12 @@
 SRC = main.c\
+		signals.c\
 		builtins/cd.c\
 		builtins/export.c\
 		builtins/env.c\
 		builtins/unset.c\
 		builtins/echo.c\
 		execution/exec.c\
-		signals.c\
+		execution/exec_utils.c\
 		parsing/args.c\
 		parsing/env.c\
 		parsing/parsing.c\

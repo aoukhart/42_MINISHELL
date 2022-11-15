@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 22:35:22 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/10/27 12:49:55 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/08 00:10:40 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void ctrl_c_handler(int sig)
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();
+    g_var = 130;
 }
 
 void signals()

@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/10/28 16:05:39 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/07 21:50:31 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,9 @@ char **init_env(char **envp)
     return (env);
 }
 
-void exec_cmds(t_input *input, char **env)
-{
-
-	if (ft_strncmp(input->cmd[0], "env", 4) == 0)
-		my_env(env);
-	else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
-		export(input->cmd, env);
-	else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
-		echo(input, env);
-	else
-	{
-		// exec(cmd, env);
-		if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
-		{
-			printf("%s\n", get_path(input->cmd, env));
-			perror("MINISHE");
-			exit(127);
-		}
-	}
-	exit(0);
-}
-
 void execution(t_input *input, char **env)
 {
+	signal(2, SIG_IGN);
 	if (!input->redirrections && !input->pipe)
 		execute(input, env);
 	else if (input->redirrections && !input->pipe)

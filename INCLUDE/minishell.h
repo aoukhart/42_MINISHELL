@@ -64,7 +64,7 @@ char		*word_extract(t_progres *progree);
 void		redirect(t_progres *progree, t_redirect *tmp);
                 /*EXEC*/
 void    ft_redic(t_input *input, char **env);
-int	ft_heredoc(char *s);
+int	ft_heredoc(char *s, char **env);
 void exec_cmds(t_input *input, char **env);
 void	ft_pipes(t_input *input, char **env);
 void    cd(char **cmd, char **env);
@@ -83,7 +83,7 @@ char	*check_path(char **cmd, char **path);
 char	*get_path(char **cmd, char *envp[]);
 char **init_env(char **envp);
 void execute(t_input *input, char **env);
-int get_fd_in(t_input *input);
+int get_fd_in(t_input *input, char **env);
 int get_fd_out(t_input *input);
 
 #endif
