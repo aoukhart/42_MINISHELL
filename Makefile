@@ -15,6 +15,7 @@ SRC = main.c\
 		parsing/utiles.c\
 		parsing/utiles2.c\
 		pipes/pipes.c\
+		pipes/pipes_utils.c\
 		redirections/redirection.c\
 
 OBJ = $(SRC:.c=.o)

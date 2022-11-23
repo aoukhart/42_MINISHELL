@@ -83,7 +83,9 @@ char	*check_path(char **cmd, char **path);
 char	*get_path(char **cmd, char *envp[]);
 char **init_env(char **envp);
 void execute(t_input *input, char **env);
-int get_fd_in(t_input *input, char **env);
-int get_fd_out(t_input *input);
+void close_all(int fd[2]);
+void wait_all(int *pid, int x);
+int	get_in(t_input *tmp, int fd_in, char **env);
+int get_out(t_input *tmp, int fd_out);
 
 #endif

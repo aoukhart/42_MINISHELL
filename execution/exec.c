@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/11/04 15:29:51 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/22 17:22:03 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ void execute_cmd(char **cmd, char **env)
     }
     else
     {
-        wait(&status);
-        g_var = status >> 8;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status))
+            g_var = WEXITSTATUS(status);
+        else
+            g_var = 128 + WTERMSIG(status);
     }
     //ft_free(cmd);
 }

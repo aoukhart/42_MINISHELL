@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/15 08:52:18 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/22 19:22:41 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,14 @@ int	ft_heredoc(char *s, char **env)
 		write(p[1], str, ft_strlen(str));
 		write(p[1], "\n", 1);
 		str = readline(">");
+		if(str == NULL)
+		{
+			printf("<%s>\n",str);
+			str = s;
+		}
 	}
-	//signal(2, SIG_IGN);		
-	close(p[1]);
+		close(p[1]);
+	printf("sf ra salaw %d\n", p[0]);
 	return (p[0]);
 }
 
@@ -46,12 +51,14 @@ void    ft_redic(t_input *input, char **env)
 {
     int pid = fork();
 	//signal(2, SIG_IGN);
+	int in = 0;
+	int out = 1;
 	if (pid == 0)
 	{
         signal(2, SIG_DFL);
-		int in = get_fd_in(input, env);
+		in = get_in(input, in, env);
+		out = get_out(input, out);
 		int out = get_fd_out(input);
-		//printf("in:%d\nout:%d\n", in , out);
 		if (in)
 		{
 			dup2(in,STDIN_FILENO);
@@ -69,48 +76,4 @@ void    ft_redic(t_input *input, char **env)
 		wait(&pid);
 		g_var = pid >> 8;
 	}	
-}
-
-int get_fd_in(t_input *input, char **env)
-{
-    t_redirect *tmp;
-    int in = 0;
-    tmp = input->redirrections;
-    while (tmp)
-    {
-        if (tmp->type && tmp->type == '<' && !tmp->delimiter)
-            in = tmp->fd;
-        else if (tmp->type && tmp->type == '<' && tmp->delimiter)
-			in = ft_heredoc(tmp->delimiter, env);
-        tmp = tmp->next;
-    }
-	if (in == -1)
-    {
-        perror("redic");
-        g_var = 1;
-        exit(EXIT_FAILURE);
-    }
-    return in;
-}
-
-int get_fd_out(t_input *input)
-{
-    t_redirect *tmp;
-    int out = 1;
-    tmp = input->redirrections;
-    while (tmp)
-    {
-        if (tmp->type && tmp->type == '>')
-        {
-            out = tmp->fd;
-            if (out == -1)
-            {
-                perror("redic");
-                g_var = 1;
-                exit(EXIT_FAILURE);
-            }
-        }
-        tmp = tmp->next;
-    }
-    return out;
 }
