@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/22 19:22:41 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/25 23:29:43 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void    ft_redic(t_input *input, char **env)
         signal(2, SIG_DFL);
 		in = get_in(input, in, env);
 		out = get_out(input, out);
-		int out = get_fd_out(input);
 		if (in)
 		{
 			dup2(in,STDIN_FILENO);

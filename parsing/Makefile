@@ -5,6 +5,7 @@ SRC =	args.c\
 		redirections.c\
 		utiles.c\
 		utiles2.c\
+		utiles1.c\
 
 OBJ = $(SRC:.c=.o)
 

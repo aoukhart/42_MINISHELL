@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/13 04:49:25 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/25 23:50:41 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void exec(t_input *input, char **env)
 
 void exec_cmds(t_input *input, char **env)
 {
-
 	if (ft_strncmp(input->cmd[0], "env", 4) == 0)
 		my_env(env);
 	else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
