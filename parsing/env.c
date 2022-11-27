@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:18:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/25 22:52:47 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/27 08:01:03 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,45 @@ char	*ft_chr(char **env, char *variabel)
 	}
 	free(variabel);
 	return (NULL);
+}
+
+char	*env_3(t_progres *progree)
+{
+	// if (progree->input[progree->i + 1] == '{')
+	// {
+	// 	return (env_braces(progree));
+	// }
+	// else 
+	if (ft_isdigit(progree->input[progree->i + 1]))
+	{
+		progree->i += 2;
+		return (NULL);
+	}
+	else if (ft_isalpha(progree->input[progree->i + 1]))
+	{
+		return (env_alpha(progree));
+	}
+	else if (progree->input[progree->i + 1] == '?')
+	{
+		progree->i += 2;
+		return ("$?");
+	}
+	progree->i++;
+	return (NULL);
+}
+
+char	*env_alpha(t_progres *progree)
+{
+	char	*str;
+
+	str = NULL;
+	progree->i++;
+	while (progree->input[progree->i] != '$'
+		&& (ft_isalnum(progree->input[progree->i])
+			|| progree->input[progree->i] == '_'))
+	{
+		str = car_join(str, progree->input[progree->i]);
+		progree->i++;
+	}
+	return (ft_chr(progree->envp, str));
 }

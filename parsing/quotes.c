@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:12:01 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/25 22:53:50 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/27 07:36:50 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*d_quotes_handler(t_progres *progree)
 			&& progree->input[progree->i + 1] != '\0'
 			&& progree->input[progree->i + 1] != car)
 		{
-			arg = ft_strjoin1(arg, env_var(progree));
+			arg = ft_strjoin1(arg, env_3(progree));
 			continue ;
 		}
 		c = progree->input[progree->i];

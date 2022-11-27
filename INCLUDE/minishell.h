@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/25 23:44:55 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/27 06:26:09 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ typedef struct s_input
 	struct s_input		*next;
 }	t_input;
 
+// in test
+char		*env_3(t_progres *progree);
+char	*env_num(t_progres *progree);
+char	*env_alpha(t_progres *progree);
+//
 char		*ft_strchr(const char *s, int c);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlen(const char *s);
