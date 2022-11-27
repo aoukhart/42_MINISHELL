@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/25 22:52:12 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/27 02:16:36 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	arg(t_progres *progree, t_input *data)
 	{
 		arg = word_extract(progree);
 		skip_spaces(progree);
-		if (arg && arg[0])
+		if (arg)
 			add(data, arg);
 		arg = NULL;
 	}
