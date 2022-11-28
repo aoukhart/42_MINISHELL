@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/25 22:55:41 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/28 08:57:45 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,39 @@ void	init_struct2(t_redirect *data)
 
 void	input_reader(t_progres *progree, t_input *data)
 {
-		if(progree->input[progree->i] && progree->input[progree->i] != '|'
+	if (progree->input[progree->i] && progree->input[progree->i] != '|'
 		&& progree->input[progree->i] != '<'
 		&& progree->input[progree->i] != '>')
-			arg(progree, data);
-		if(progree->input[progree->i])
+		arg(progree, data);
+	if (progree->input[progree->i])
+	{
+		if (progree->input[progree->i] == '>'
+			|| progree->input[progree->i] == '<')
+			redirection_handler(progree, data);
+		if (progree->input[progree->i] == '|')
 		{
-			if ( progree->input[progree->i] == '>' || progree->input[progree->i] == '<')
-					redirection_handler(progree, data);
-			if (progree->input[progree->i] == '|')
-			{
-				data->pipe = 1;
-				progree->i++;
-			}
+			data->pipe = 1;
+			progree->i++;
 		}
+	}
 }
 
 void	print_list(t_input *data)
 {
 	t_redirect	*tmp;
-	int i;
+	int			i;
 
-	while(data)
+	while (data)
 	{
 		i = 0;
 		tmp = data->redirrections;
-		while(data->cmd && data->cmd[i])
+		while (data->cmd && data->cmd[i])
 		{
 			printf("\tcmd line %d : \"%s\"\n", i, data->cmd[i]);
 			i++;
 		}
 		printf("\tpipe : %d\n", data->pipe);
-		while(tmp)
+		while (tmp)
 		{
 			printf("\tredirection type : %c\n", tmp->type);
 			printf("\tredirection FD : %d\n", tmp->fd);
@@ -72,7 +73,7 @@ void	step_one(char *str, t_input *input, char **envp)
 
 	progree = malloc(sizeof(t_progres));
 	if (!input || !progree)
-		return;
+		return ;
 	temp = input;
 	init_struct(input);
 	progree->i = 0;
@@ -80,8 +81,8 @@ void	step_one(char *str, t_input *input, char **envp)
 	progree->envp = envp;
 	while (progree->input[progree->i])
 	{
-		input_reader(progree,temp);
-		if(progree->input[progree->i])
+		input_reader(progree, temp);
+		if (progree->input[progree->i])
 		{
 			temp->next = malloc(sizeof(t_input));
 			init_struct(temp->next);
@@ -89,6 +90,7 @@ void	step_one(char *str, t_input *input, char **envp)
 		}
 	}
 	print_list(input);
+	ft_free1(progree, input);
 }
 
 void	init_struct(t_input	*data)
@@ -98,19 +100,3 @@ void	init_struct(t_input	*data)
 	data->redirrections = NULL;
 	data->next = NULL;
 }
-
-//int	main(int argc, char **argv, char **envp)
-//{
-//	char *ptr;
-//
-//	ptr = NULL;
-//	while(1)
-//	{
-//		ptr = readline("BC_&_anaslm9awed_shell>");
-//		if(*ptr)
-//		{
-//			step_one(ptr, envp);
-//		}
-//	}
-//	return (0);
-//}

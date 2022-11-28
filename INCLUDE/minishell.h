@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/27 06:26:09 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/28 09:20:26 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,9 @@ typedef struct s_input
 	struct s_input		*next;
 }	t_input;
 
-// in test
 char		*env_3(t_progres *progree);
-char	*env_num(t_progres *progree);
-char	*env_alpha(t_progres *progree);
-//
+char		*env_num(t_progres *progree);
+char		*env_alpha(t_progres *progree);
 char		*ft_strchr(const char *s, int c);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlen(const char *s);
@@ -81,6 +79,8 @@ char		*word_extract(t_progres *progree);
 void		redirect(t_progres *progree, t_redirect *tmp);
 int			car_check(char c, int i);
 char		*car_join(char *s1, char c);
+void		ft_free1(t_progres *progree, t_input *data);
+void		ft_free2(t_input *data);
 /*EXEC*/
 void		ft_redic(t_input *input, char **env);
 int			ft_heredoc(char *s, char **env);

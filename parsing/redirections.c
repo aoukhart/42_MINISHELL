@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:18 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/25 21:03:25 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/28 09:05:01 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	redirect(t_progres *progree, t_redirect *tmp)
 	ft_open(progree, tmp, i);
 }
 
-void	ft_open(t_progres *progree, t_redirect *tmp, int	i)
+void	ft_open(t_progres *progree, t_redirect *tmp, int i)
 {
 	char	*file_name;
 
@@ -72,14 +72,14 @@ void	ft_open(t_progres *progree, t_redirect *tmp, int	i)
 	file_name = word_extract(progree);
 	if (i == 2)
 	{
-		if(tmp->type == '>')
+		if (tmp->type == '>')
 			tmp->fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND);
-		else if(tmp->type == '<')
-			tmp->delimiter = file_name;
+		else if (tmp->type == '<')
+			tmp->delimiter = ft_strdup(file_name);
 	}
-	else
-		if(tmp->type == '>')
+	else if (tmp->type == '>')
 			tmp->fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		tmp->fd = open(file_name, O_RDONLY, 0644);
+	free(file_name);
 }

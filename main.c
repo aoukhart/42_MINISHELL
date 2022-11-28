@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/27 06:32:04 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/28 09:00:19 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ int main(int ac, char **av, char **envp)
 	char **env;
 	(void)av;
 	t_input *input;
-	if (ac == 1)
+	
+	if (ac == 1) // main khasso it3awed
 	{
 		env = init_env(envp);
-		input = malloc(sizeof(t_input));
+		
 		g_var = 0;
 		while (1)
 		{
-
+			input = malloc(sizeof(t_input));
 			signals();
 			s = readline("minishell>>");
 			if (!s)
@@ -70,7 +71,7 @@ int main(int ac, char **av, char **envp)
 			}
 			add_history(s);
 			step_one(s, input, env);
-			execution(input, env);
+			// execution(input, env);
 		}
 	}
 	return 0;

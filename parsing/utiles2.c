@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:12:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/25 21:04:07 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/28 09:21:02 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*car_join(char *s1, char c)
 	if (!s1)
 		s1 = ft_calloc(1, 1);
 	res = ft_calloc(ft_strlen(s1) + 2, 1);
-	if (!res || c == '\0' || !s1)
+	if (!res || c == '\0' || !s1) // leaks !! free res
 		return (s1);
 	while (s1[i])
 	{
@@ -75,4 +75,41 @@ char	*car_join(char *s1, char c)
 	res[i] = c;
 	free(s1);
 	return (res);
+}
+
+void	ft_free1(t_progres *progree, t_input *data)
+{
+	int			i;
+	t_input		*temp;
+
+	free(progree->input);
+	free(progree);
+	while (data)
+	{
+		i = 0;
+		while(data->cmd[i])
+		{
+			free(data->cmd[i]);
+			i++;
+		}
+		free(data->cmd);
+		ft_free2(data);
+		temp = data->next;
+		free(data);
+		data = temp;
+	}
+}
+
+void	ft_free2(t_input *data)
+{
+	t_redirect	*temp1;
+
+	while(data->redirrections)
+	{
+		if (data->redirrections->delimiter)
+			free(data->redirrections->delimiter);
+		temp1 = data->redirrections->next;
+		free (data->redirrections);
+		data->redirrections = temp1;
+	}
 }

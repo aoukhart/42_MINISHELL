@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/27 06:25:19 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/28 07:23:25 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	arg(t_progres *progree, t_input *data)
 		&& progree->input[progree->i] != '<'
 		&& progree->input[progree->i] != '>')
 	{
-		arg = word_extract(progree);
 		skip_spaces(progree);
+		arg = word_extract(progree);
 		if (arg)
 			add(data, arg);
 		arg = NULL;
@@ -60,8 +60,7 @@ char	*word_extract(t_progres *progree)
 		if (progree->input[progree->i] == '$'
 			&& car_check(progree->input[progree->i + 1], 0))
 		{
-			// word = ft_strjoin1(word, env_var2(progree));
-			word = ft_strjoin1(word, env_3(progree));
+			word = ft_strjoin1(word, env_3(progree));// srtjoin1 leaks
 			continue ;
 		}
 		c = progree->input[progree->i];
@@ -70,3 +69,4 @@ char	*word_extract(t_progres *progree)
 	}
 	return (word);
 }
+// skip spaces ???

@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:17 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/25 22:54:17 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/28 07:23:51 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin1(char *s1, char *s2)
 	i = -1;
 	if (!s1)
 		s1 = ft_calloc(1, 1);
-	if (!s1 || !s2)
+	if (!s1 || !s2) // if s2 == NULL free s1
 		return (s1);
 	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, 1);
 	if (!res)

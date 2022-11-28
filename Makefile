@@ -19,15 +19,13 @@ SRC = main.c\
 		pipes/pipes_utils.c\
 		redirections/redirection.c\
 
-OBJ = $(SRC:.c=.o)
-
 FLAGS = -Wall -Wextra -Werror
 
 NAME = minishell
 
 all : $(NAME)
 
-$(NAME) :
+$(NAME) : $(SRC)
 	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /Users/ybachaki/goinfre/ybachaki/.brew/opt/readline/lib -I /Users/ybachaki/goinfre/ybachaki/.brew/opt/readline/include
 
 clean :
