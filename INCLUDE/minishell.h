@@ -81,6 +81,7 @@ int			car_check(char c, int i);
 char		*car_join(char *s1, char c);
 void		ft_free1(t_progres *progree, t_input *data);
 void		ft_free2(t_input *data);
+char	*heredoc(t_progres *progree);
 /*EXEC*/
 void		ft_redic(t_input *input, char **env);
 int			ft_heredoc(char *s, char **env);

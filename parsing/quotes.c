@@ -68,3 +68,26 @@ char	*d_quotes_handler(t_progres *progree)
 		progree->i++;
 	return (arg);
 }
+
+char	*heredoc(t_progres *progree)
+{
+	char	*arg;
+	char	c;
+
+	arg = NULL;
+	if (progree->input && progree->input[0] == '\0')
+		return ("\0");
+	while (progree->input && progree->input[progree->i])
+	{
+		if (progree->input[progree->i] == '$'
+			&& progree->input[progree->i + 1] != '\0')
+		{
+			arg = ft_strjoin1(arg, env_3(progree));
+			continue ;
+		}
+		c = progree->input[progree->i];
+		arg = car_join(arg, c);
+		progree->i++;
+	}
+	return (arg);
+}

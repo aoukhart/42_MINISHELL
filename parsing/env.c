@@ -44,14 +44,15 @@ char	*env_3(t_progres *progree)
 		progree->i += 2;
 		return (NULL);
 	}
-	else if (ft_isalpha(progree->input[progree->i + 1]))
+	else if (ft_isalpha(progree->input[progree->i + 1])
+		|| progree->input[progree->i + 1] == '_')
 	{
 		return (env_alpha(progree));
 	}
 	else if (progree->input[progree->i + 1] == '?')
 	{
 		progree->i += 2;
-		return ("$?");
+		return (ft_itoa(g_var));
 	}
 	else if (progree->input[progree->i + 1] == '$')
 	{

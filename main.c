@@ -71,7 +71,7 @@ int main(int ac, char **av, char **envp)
 			}
 			add_history(s);
 			step_one(s, input, env);
-			// execution(input, env);
+			execution(input, env);
 		}
 	}
 	return 0;

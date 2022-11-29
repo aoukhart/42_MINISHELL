@@ -90,7 +90,7 @@ void	step_one(char *str, t_input *input, char **envp)
 		}
 	}
 	print_list(input);
-	ft_free1(progree, input);
+	// ft_free1(progree, input);
 }
 
 void	init_struct(t_input	*data)

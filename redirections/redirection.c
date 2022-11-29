@@ -16,34 +16,35 @@ int	ft_heredoc(char *s, char **env)
 {
 	int p[2];
 	char *str;
+	t_progres	ptr;
+
+	ptr.i = 0;
+	ptr.envp = env;
 	if (pipe(p) == -1)
 	{
 		perror("anass : "); // must set 1 to the exit value
 		return -1;
 	}
     //signal(2, SIG_DFL);
-	str = readline(">");
-	while (ft_strncmp(s, str, ft_strlen(s) + 1))
+	ptr.input = readline(">");
+	str = heredoc(&ptr);
+	while (str && ft_strncmp(s, str, ft_strlen(s) + 1))
 	{
-		
-		if(str[0] == '$')
-		{
-			if (ft_chr(env, (str+1)))
-				str = ft_chr(env, (str+1));
-			else
-				str = "\n";
-		}
-		write(p[1], str, ft_strlen(str));
-		write(p[1], "\n", 1);
-		str = readline(">");
-		if(str == NULL)
+		if (!str)
 		{
 			printf("<%s>\n",str);
 			str = s;
 		}
+		write(p[1], str, ft_strlen(str));
+		write(p[1], "\n", 1);
+
+		ptr.i = 0;
+		ptr.input = readline(">");
+		str = heredoc(&ptr);
 	}
-		close(p[1]);
-	printf("sf ra salaw %d\n", p[0]);
+
+	close(p[1]);
+
 	return (p[0]);
 }
 
