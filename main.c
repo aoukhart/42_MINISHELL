@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/29 17:58:08 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/30 11:14:11 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void execution(t_input *input, char **env)
 		ft_redic(input, env);
 	else if (input->pipe)
 		ft_pipes(input, env);
+	printf("safi ra salaw\n");
 }
 
 int main(int ac, char **av, char **envp)

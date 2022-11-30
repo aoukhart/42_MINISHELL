@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/29 21:51:56 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/30 11:27:02 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,48 @@ int redic_builtins(t_input *input, char **env)
 	return (check_builtins_1(input, env) 
    			& check_builtins_2(input, env));
 }
+
+int    is_builtin(t_input*input)
+{
+    if (ft_strncmp(input->cmd[0], "cd", 3) == 0)
+    {
+		return 1;
+    }
+    else if (ft_strncmp(input->cmd[0], "env", 4) == 0)
+    {
+		return 1;
+    }
+    else if (ft_strncmp(input->cmd[0], "exit", 5) == 0)
+    {
+		return 1;
+    }
+    if (ft_strncmp(input->cmd[0], "pwd", 4) == 0)
+    {
+		return 1;
+    }
+    else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
+    {
+		return 1;
+    }
+    else if (ft_strncmp(input->cmd[0], "unset", 6) == 0)
+    {
+		return 1;
+    }
+    else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
+    {
+		return 1;
+    }
+	return 0;
+}
+
 void    ft_redic(t_input *input, char **env)
 {
 	int in = 0;
 	int out = 1;
-	if (redic_builtins(input, env))
+	if (!is_builtin(input))
 	{
-	printf(".\n");
-    	int pid = fork();
-		if (pid == 0)
+		int pid = fork();
+		if (pid == 0 )
 		{
     	    signal(2, SIG_DFL);
     	    signal(SIGQUIT, SIG_DFL);
@@ -103,12 +136,15 @@ void    ft_redic(t_input *input, char **env)
 				dup2(out,STDOUT_FILENO);
 				close(out);
 			}
-			//if (in)
-			//	close(in);
+			if (in)
+				close(in);
 			if (out != 1)
 				close(out);
-			exec(input, env);
-			exit(0);
+			if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
+			{
+				perror("MINISHE");
+				exit(127);
+			}
 		}
 		else
 		{
@@ -118,6 +154,24 @@ void    ft_redic(t_input *input, char **env)
 	}
 	else
 	{
-		
-	}	
+		in = get_in(input, in, env);
+		out = get_out(input, out);
+		if (in)
+		{
+			printf("in\n");
+			dup2(in, STDIN_FILENO);
+			close(in);
+		}
+		if (out != 1)
+		{
+			printf("out\n");
+			dup2(out, STDOUT_FILENO);
+			close(out);
+		}
+		check_builtins(input, env);
+		if (in)
+			close(in);
+		if (out != 1)
+			close(out);
+	}
 }
