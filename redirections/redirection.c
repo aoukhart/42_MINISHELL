@@ -3,19 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/25 23:29:43 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:51:56 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
+int	heredoc_manager(t_progres ptr, int fd[2], char *delim)
+{
+	char *str;
+
+	ptr.input = readline(">");
+	str = heredoc(&ptr);
+	while (str && ft_strncmp(delim, str, ft_strlen(delim) + 1))
+	{
+		if (!str)
+			str = delim;
+		write(fd[1], str, ft_strlen(str));
+		write(fd[1], "\n", 1);
+		ptr.i = 0;
+		ptr.input = readline(">");
+		str = heredoc(&ptr);
+	}
+	close(fd[1]);
+	return (fd[0]);
+}
+
 int	ft_heredoc(char *s, char **env)
 {
 	int p[2];
-	char *str;
 	t_progres	ptr;
 
 	ptr.i = 0;
@@ -25,55 +44,80 @@ int	ft_heredoc(char *s, char **env)
 		perror("anass : "); // must set 1 to the exit value
 		return -1;
 	}
-    //signal(2, SIG_DFL);
-	ptr.input = readline(">");
-	str = heredoc(&ptr);
-	while (str && ft_strncmp(s, str, ft_strlen(s) + 1))
-	{
-		if (!str)
-		{
-			printf("<%s>\n",str);
-			str = s;
-		}
-		write(p[1], str, ft_strlen(str));
-		write(p[1], "\n", 1);
-
-		ptr.i = 0;
-		ptr.input = readline(">");
-		str = heredoc(&ptr);
-	}
-
-	close(p[1]);
-
-	return (p[0]);
+	signal(SIGQUIT, SIG_IGN);
+	return (heredoc_manager(ptr, p, s));
 }
 
-void    ft_redic(t_input *input, char **env)
+int redic_builtins(t_input *input, char **env)
 {
-    int pid = fork();
-	//signal(2, SIG_IGN);
 	int in = 0;
 	int out = 1;
-	if (pid == 0)
+	in = get_in(input, in, env);
+	out = get_out(input, out);
+	if (in == -1 || out == -1)
 	{
-        signal(2, SIG_DFL);
-		in = get_in(input, in, env);
-		out = get_out(input, out);
-		if (in)
+		perror("minishell");
+		exit(1);
+	}
+	if (in)
+	{
+		dup2(in,STDIN_FILENO);
+		close(in);
+	}
+	if (out != 1)
+	{
+		dup2(out,STDOUT_FILENO);
+		close(out);
+	}
+	close(in);
+	close(out);
+	return (check_builtins_1(input, env) 
+   			& check_builtins_2(input, env));
+}
+void    ft_redic(t_input *input, char **env)
+{
+	int in = 0;
+	int out = 1;
+	if (redic_builtins(input, env))
+	{
+	printf(".\n");
+    	int pid = fork();
+		if (pid == 0)
 		{
-			dup2(in,STDIN_FILENO);
-			close(in);
+    	    signal(2, SIG_DFL);
+    	    signal(SIGQUIT, SIG_DFL);
+			in = get_in(input, in, env);
+			out = get_out(input, out);
+			if (in == -1 || out == -1)
+			{
+				perror("minishell");
+				exit(1);
+			}
+			if (in)
+			{
+				dup2(in,STDIN_FILENO);
+				close(in);
+			}
+			if (out != 1)
+			{
+				dup2(out,STDOUT_FILENO);
+				close(out);
+			}
+			//if (in)
+			//	close(in);
+			if (out != 1)
+				close(out);
+			exec(input, env);
+			exit(0);
 		}
-		if (out != 1)
+		else
 		{
-			dup2(out,STDOUT_FILENO);
-			close(out);
+			wait(&pid);
+			g_var = pid >> 8;
 		}
-		exec_cmds(input, env);
 	}
 	else
 	{
-		wait(&pid);
-		g_var = pid >> 8;
+		
 	}	
 }

@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/11/22 17:22:03 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/29 21:41:09 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void execute_cmd(char **cmd, char **env)
     pid_t pid;
     int status;
     pid = fork();
-    //signal(2, SIG_IGN);
     if (pid == -1)
     {
         perror("fork failed\n");
@@ -26,6 +25,7 @@ void execute_cmd(char **cmd, char **env)
     else if (pid == 0)
     {
         signal(2, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
         if (execve(cmd[0], cmd, env) == -1)
         {
             perror("minishl");

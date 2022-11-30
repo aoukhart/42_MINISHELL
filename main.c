@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/28 09:00:19 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:58:08 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char **init_env(char **envp)
 void execution(t_input *input, char **env)
 {
 	signal(2, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (!input->redirrections && !input->pipe)
 		execute(input, env);
 	else if (input->redirrections && !input->pipe)

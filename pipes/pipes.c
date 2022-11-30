@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/22 18:31:54 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/29 17:51:01 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	exec_pipes(t_input *tmp, int in, int out, int fd[2], char **env)
 	if (pid == 0)
 	{
 		signal(2, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		in = get_in(tmp, in, env);
 		out = get_out(tmp, out);
 		if (in == -1 || out == -1)

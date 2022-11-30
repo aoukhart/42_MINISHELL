@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 18:02:40 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/11/03 18:13:37 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/11/29 18:27:02 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void unset_1(char *cmd, char **env, int len)
     checker = check_dup_env(cmd, env);
     if (checker && (length(env[checker]) == length(cmd)))
     {
-        printf("%d\n",checker);
         env1 = malloc(sizeof(char*) * (len));
         i = 0;
         j = 0;

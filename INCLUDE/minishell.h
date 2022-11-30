@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/28 09:20:26 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:36:45 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,9 @@ void		close_all(int fd[2]);
 void		wait_all(int *pid, int x);
 int			get_in(t_input *tmp, int fd_in, char **env);
 int			get_out(t_input *tmp, int fd_out);
+int    check_builtins(t_input *input, char **env);
+int check_builtins_2(t_input *input, char **env);
+int check_builtins_1(t_input *input, char **env);
+
 
 #endif

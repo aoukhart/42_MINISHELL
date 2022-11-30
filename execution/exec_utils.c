@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/25 23:50:41 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:09:09 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,8 @@ void exec(t_input *input, char **env)
         // ft_free(cmd);
         return;
     }
-    int i = 1;
-    char *path;
-    path = get_path(input->cmd, env);
-    while (input->cmd[i])
-    {
-        path = ft_strjoin(path, " ");
-        path = ft_strjoin(path, input->cmd[i]);
-        i++;
-    }
-    execute_cmd(ft_split(path, ' '), env);
-    free(path);
+    input->cmd[0] = get_path(input->cmd, env);
+    execute_cmd(input->cmd, env);
 }
 
 void exec_cmds(t_input *input, char **env)
