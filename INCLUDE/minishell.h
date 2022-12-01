@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/29 21:36:45 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 14:50:44 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char		*ft_strjoin1(char *s1, char *s2);
 void		skip_spaces(t_progres *progree);
 void		input_reader(t_progres *progree, t_input *data);
 void		init_struct(t_input	*data);
-void		step_one(char *str, t_input *input, char **envp);
+void		step_one(t_progres *progree);
 void		redirection_handler(t_progres *progree, t_input *data);
 void		arg(t_progres *progree, t_input *data);
 char		*quotes_handler(t_progres *progree);
@@ -83,6 +83,7 @@ void		ft_free1(t_progres *progree, t_input *data);
 void		ft_free2(t_input *data);
 char	*heredoc(t_progres *progree);
 /*EXEC*/
+void 		execution(t_input *input, char **env);
 void		ft_redic(t_input *input, char **env);
 int			ft_heredoc(char *s, char **env);
 void		exec_cmds(t_input *input, char **env);

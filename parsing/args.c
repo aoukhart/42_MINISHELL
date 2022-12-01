@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/28 07:23:25 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/01 13:49:57 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*word_extract(t_progres *progree)
 		if (progree->input[progree->i] == '$'
 			&& car_check(progree->input[progree->i + 1], 0))
 		{
-			word = ft_strjoin1(word, env_3(progree));// srtjoin1 leaks
+			word = ft_strjoin1(word, env_3(progree));
 			continue ;
 		}
 		c = progree->input[progree->i];
@@ -69,4 +69,3 @@ char	*word_extract(t_progres *progree)
 	}
 	return (word);
 }
-// skip spaces ???

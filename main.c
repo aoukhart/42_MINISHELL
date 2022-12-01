@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/30 11:14:11 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 14:50:52 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ void execution(t_input *input, char **env)
 
 int main(int ac, char **av, char **envp)
 {
-	char *s;
 	char **env;
 	(void)av;
-	t_input *input;
+	t_progres	*progree;
 	
 	if (ac == 1) // main khasso it3awed
 	{
@@ -61,19 +60,23 @@ int main(int ac, char **av, char **envp)
 		g_var = 0;
 		while (1)
 		{
-			input = malloc(sizeof(t_input));
+			progree = malloc(sizeof(t_progres));
+			progree->envp = env;
+			progree->i = 0;
 			signals();
-			s = readline("minishell>>");
-			if (!s)
+			progree->input = readline("minishell>>");
+			if (!progree->input)
 				exit(0);
-			if (!s[0])
+			if (!progree->input[0])
 			{
-				free(s);
+				
+				free(progree->input);
+				free(progree);
 				continue;
 			}
-			add_history(s);
-			step_one(s, input, env);
-			execution(input, env);
+			add_history(progree->input);
+			step_one(progree);
+			// execution(input, env);
 		}
 	}
 	return 0;

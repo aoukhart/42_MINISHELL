@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/11/28 08:57:45 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:51:31 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,14 @@ void	print_list(t_input *data)
 	}
 }
 
-void	step_one(char *str, t_input *input, char **envp)
+void	step_one(t_progres *progree)
 {
-	t_progres	*progree;
 	t_input		*temp;
+	t_input		*input;
 
-	progree = malloc(sizeof(t_progres));
-	if (!input || !progree)
-		return ;
+	input = malloc(sizeof(t_input));
 	temp = input;
 	init_struct(input);
-	progree->i = 0;
-	progree->input = str;
-	progree->envp = envp;
 	while (progree->input[progree->i])
 	{
 		input_reader(progree, temp);
@@ -90,7 +85,8 @@ void	step_one(char *str, t_input *input, char **envp)
 		}
 	}
 	print_list(input);
-	// ft_free1(progree, input);
+	// execution(input, progree->envp);
+	ft_free1(progree, input);
 }
 
 void	init_struct(t_input	*data)
