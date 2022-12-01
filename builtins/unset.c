@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 18:02:40 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/11/29 18:27:02 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 16:16:56 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ void unset_1(char *cmd, char **env, int len)
     }
 }
 
-void    unset(char **cmd, char **env)
+void    unset(t_input *input, char **env)
 {
     int  i = 1;
     int len;
-    if (cmd[1])
+    if (input->cmd[1])
     {
-        while (cmd[i])
+        while (input->cmd[i])
         {
             len = 0;
             while (env[len])
                 len++;
-            unset_1(cmd[i], env, len);
+            unset_1(input->cmd[i], env, len);
             i++;
         }
     }

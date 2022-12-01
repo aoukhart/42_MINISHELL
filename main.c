@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/01 14:50:52 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:16:57 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int main(int ac, char **av, char **envp)
 	char **env;
 	(void)av;
 	t_progres	*progree;
-	
 	if (ac == 1) // main khasso it3awed
 	{
 		env = init_env(envp);
@@ -76,7 +75,7 @@ int main(int ac, char **av, char **envp)
 			}
 			add_history(progree->input);
 			step_one(progree);
-			// execution(input, env);
+			//execution(input, env);
 		}
 	}
 	return 0;

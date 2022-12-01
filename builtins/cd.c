@@ -23,19 +23,19 @@ void	change_pwd(char *pwd, char **env)
 	}
 }
 
-void    cd(char **cmd, char **env)
+void    cd(t_input *input, char **env)
 {
 	char *old_p;
 	char *pwd;
 
 	old_p = getcwd(NULL, 1000);
 	change_old_pwd(old_p, env);
-	if (cmd[1] == NULL || (cmd[1][0] == '~' && !cmd[1][1]))
+	if (input->cmd[1] == NULL || (input->cmd[1][0] == '~' && !input->cmd[1][1]))
 	{
 		printf("<%s>\n", env[check_dup_env("HOME", env)] + length("HOME") + 1);
 		chdir(env[check_dup_env("HOME", env)] + length("HOME") + 1);
 	}
-	if (chdir(cmd[1]))
+	if (chdir(input->cmd[1]))
 	{
 		perror("minishell");
 		g_var = 1;

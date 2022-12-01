@@ -6,16 +6,16 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 17:34:18 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/10/27 14:33:13 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 16:20:15 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
-void    my_env(char **env)
+void    my_env(t_input *input, char **env)
 {
     int i;
-
+    (void)input;
     i = -1;
     while (env[++i])
     {

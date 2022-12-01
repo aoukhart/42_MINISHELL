@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/29 18:09:09 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 16:36:32 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,4 @@ void exec(t_input *input, char **env)
     }
     input->cmd[0] = get_path(input->cmd, env);
     execute_cmd(input->cmd, env);
-}
-
-void exec_cmds(t_input *input, char **env)
-{
-	if (ft_strncmp(input->cmd[0], "env", 4) == 0)
-		my_env(env);
-	else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
-		export(input->cmd, env);
-	else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
-		echo(input, env);
-	else
-	{
-		if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
-		{
-			//printf("%s\n", get_path(input->cmd, env));
-			perror("MINISHE");
-			exit(127);
-		}
-	}
-	exit(0);
 }

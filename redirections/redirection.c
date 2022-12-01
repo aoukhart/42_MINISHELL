@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/30 11:27:02 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 15:49:06 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,6 @@ int	ft_heredoc(char *s, char **env)
 	}
 	signal(SIGQUIT, SIG_IGN);
 	return (heredoc_manager(ptr, p, s));
-}
-
-int redic_builtins(t_input *input, char **env)
-{
-	int in = 0;
-	int out = 1;
-	in = get_in(input, in, env);
-	out = get_out(input, out);
-	if (in == -1 || out == -1)
-	{
-		perror("minishell");
-		exit(1);
-	}
-	if (in)
-	{
-		dup2(in,STDIN_FILENO);
-		close(in);
-	}
-	if (out != 1)
-	{
-		dup2(out,STDOUT_FILENO);
-		close(out);
-	}
-	close(in);
-	close(out);
-	return (check_builtins_1(input, env) 
-   			& check_builtins_2(input, env));
 }
 
 int    is_builtin(t_input*input)
@@ -154,24 +127,30 @@ void    ft_redic(t_input *input, char **env)
 	}
 	else
 	{
+		int in_fd = dup(STDIN_FILENO);
+		int out_fd = dup(STDOUT_FILENO);
 		in = get_in(input, in, env);
 		out = get_out(input, out);
 		if (in)
 		{
-			printf("in\n");
 			dup2(in, STDIN_FILENO);
 			close(in);
 		}
 		if (out != 1)
 		{
-			printf("out\n");
 			dup2(out, STDOUT_FILENO);
 			close(out);
 		}
 		check_builtins(input, env);
 		if (in)
-			close(in);
+		{
+			dup2(in_fd, STDIN_FILENO);
+			close(in_fd);
+		}
 		if (out != 1)
-			close(out);
+		{
+			dup2(out_fd, STDOUT_FILENO);
+			close(out_fd);
+		}
 	}
 }

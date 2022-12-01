@@ -85,22 +85,22 @@ int export_check(char *cmd)
     return (1);
 }
 
-void export(char **cmd, char **env)
+void export(t_input *input, char **env)
 {
     int i;
     int len;
 
-    if (cmd[1])
+    if (input->cmd[1])
     {
         i = 1;
-        while (cmd[i])
+        while (input->cmd[i])
         {
-            if (export_check(cmd[i]) == 1)
+            if (export_check(input->cmd[i]) == 1)
             {
                 len = 0;
                 while (env[len])
                     len++;
-                export_1(cmd[i], env, len);
+                export_1(input->cmd[i], env, len);
             }
             i++;
         }        

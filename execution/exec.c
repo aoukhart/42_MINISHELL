@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/11/29 21:41:09 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 17:22:23 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,31 @@ void execute_cmd(char **cmd, char **env)
     //ft_free(cmd);
 }
 
-int    check_builtins_1(t_input*input, char **env)
+int    check_builtins_1(t_input *input, char **env)
 {
+    char *built_in[5] = {
+        "cd", "env", "export", "unset", "echo"
+    };
+    void (*fcts[5])(t_input*, char**) = {
+        cd, my_env, export, unset, echo
+    };
+    int i = -1;
+    while (++i < 5)
+    {
+        if (ft_strncmp(input->cmd[0], built_in[i],
+             ft_strlen(built_in[i]) + 1) == 0)
+        {
+            fcts[i](input, env);
+        }
+    }    
     if (ft_strncmp(input->cmd[0], "cd", 3) == 0)
     {
-        cd(input->cmd, env);
+        cd(input, env);
         return 0;
     }
     else if (ft_strncmp(input->cmd[0], "env", 4) == 0)
     {
-        my_env(env);
+        my_env(input, env);
         return 0;
     }
     else if (ft_strncmp(input->cmd[0], "exit", 5) == 0)
@@ -74,12 +89,12 @@ int check_builtins_2(t_input *input, char **env)
     }
     else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
     {
-        export(input->cmd, env);
+        export(input, env);
         return 0;
     }
     else if (ft_strncmp(input->cmd[0], "unset", 6) == 0)
     {
-        unset(input->cmd, env);
+        unset(input, env);
         return 0;
     }
     else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)

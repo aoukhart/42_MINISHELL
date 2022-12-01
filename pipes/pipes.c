@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/29 17:51:01 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/01 17:15:41 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,16 @@ void	pipes_manager(t_input *tmp, int fd[2], int in, int out, char **env)
 	if (in != 0)
 		close(in);
 	close_all(fd);
-	exec_cmds(tmp, env);
+	if (!is_builtin(tmp))
+	{
+		if (execve(get_path(tmp->cmd, env), tmp->cmd, env) == -1)
+		{
+			perror("minishell");
+			exit(127);
+		}
+	}
+	else
+		check_builtins(tmp, env);
 }
 
 int	exec_pipes(t_input *tmp, int in, int out, int fd[2], char **env)

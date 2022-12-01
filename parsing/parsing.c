@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/01 14:51:31 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:17:02 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	step_one(t_progres *progree)
 		}
 	}
 	print_list(input);
-	// execution(input, progree->envp);
+	execution(input, progree->envp);
 	ft_free1(progree, input);
 }
 

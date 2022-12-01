@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/01 14:50:44 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:15:59 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void		ft_redic(t_input *input, char **env);
 int			ft_heredoc(char *s, char **env);
 void		exec_cmds(t_input *input, char **env);
 void		ft_pipes(t_input *input, char **env);
-void		cd(char **cmd, char **env);
+void		cd(t_input *input, char **env);
 void		change_old_pwd(char *old_pwd, char **env);
-void		export(char **cmd, char **env);
-void		my_env(char **env);
-void		unset(char **cmd, char **env);
+void		export(t_input *input, char **env);
+void		my_env(t_input *input, char **env);
+void		unset(t_input *input, char **env);
 char		**ft_free(char **str);
 int			check_dup_env(char *cmd, char **env);
 size_t		length(char *s);
@@ -111,6 +111,6 @@ int			get_out(t_input *tmp, int fd_out);
 int    check_builtins(t_input *input, char **env);
 int check_builtins_2(t_input *input, char **env);
 int check_builtins_1(t_input *input, char **env);
-
+int    is_builtin(t_input*input);
 
 #endif
