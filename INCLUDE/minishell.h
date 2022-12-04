@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/02 15:50:23 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:47:11 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+	
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include "../Libft/libft.h"
 
+#define NOT_BUILT_IN -1
 extern int	g_var;
 
 typedef struct s_progres
@@ -49,9 +50,6 @@ typedef struct s_input
 	struct s_input		*next;
 }	t_input;
 
-int			check_input(t_input *input);
-void		init(t_progres	**progree, t_input **input, char **envp);
-int			check_progree(t_progres *progree);
 char		*env_3(t_progres *progree);
 char		*env_num(t_progres *progree);
 char		*env_alpha(t_progres *progree);
@@ -66,7 +64,7 @@ char		*ft_strjoin1(char *s1, char *s2);
 void		skip_spaces(t_progres *progree);
 void		input_reader(t_progres *progree, t_input *data);
 void		init_struct(t_input	*data);
-void		step_one(t_progres *progree, t_input *input);
+void		step_one(t_progres *progree);
 void		redirection_handler(t_progres *progree, t_input *data);
 void		arg(t_progres *progree, t_input *data);
 char		*quotes_handler(t_progres *progree);
@@ -84,9 +82,9 @@ int			car_check(char c, int i);
 char		*car_join(char *s1, char c);
 void		ft_free1(t_progres *progree, t_input *data);
 void		ft_free2(t_input *data);
-char		*heredoc(t_progres *progree);
+char	*heredoc(t_progres *progree);
 /*EXEC*/
-void		execution(t_input *input, char **env);
+void 		execution(t_input *input, char **env);
 void		ft_redic(t_input *input, char **env);
 int			ft_heredoc(char *s, char **env);
 void		exec_cmds(t_input *input, char **env);
@@ -106,14 +104,16 @@ void		execute_cmd(char **cmd, char **env);
 char		*check_path(char **cmd, char **path);
 char		*get_path(char **cmd, char *envp[]);
 char		**init_env(char **envp);
-void		execute(t_input *input, char **env);
+void		execute_single_cmd(t_input *input, char **env);
 void		close_all(int fd[2]);
 void		wait_all(int *pid, int x);
 int			get_in(t_input *tmp, int fd_in, char **env);
 int			get_out(t_input *tmp, int fd_out);
-int			check_builtins(t_input *input, char **env);
-int			check_builtins_2(t_input *input, char **env);
-int			check_builtins_1(t_input *input, char **env);
-int			is_builtin(t_input*input);
+void    check_builtins(t_input *input, char **env);
+int check_builtins_2(t_input *input, char **env);
+int check_builtins_1(t_input *input, char **env);
+int    is_builtin(t_input*input);
+void    execute_builtin(t_input *input, char **env, int index);
+void exec_in_child(t_input *input, char **env);
 
 #endif

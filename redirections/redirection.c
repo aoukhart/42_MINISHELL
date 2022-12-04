@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/01 15:49:06 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/02 13:49:49 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,42 +50,56 @@ int	ft_heredoc(char *s, char **env)
 
 int    is_builtin(t_input*input)
 {
-    if (ft_strncmp(input->cmd[0], "cd", 3) == 0)
-    {
-		return 1;
-    }
-    else if (ft_strncmp(input->cmd[0], "env", 4) == 0)
-    {
-		return 1;
-    }
-    else if (ft_strncmp(input->cmd[0], "exit", 5) == 0)
-    {
-		return 1;
-    }
-    if (ft_strncmp(input->cmd[0], "pwd", 4) == 0)
-    {
-		return 1;
-    }
-    else if (ft_strncmp(input->cmd[0], "export", 7) == 0)
-    {
-		return 1;
-    }
-    else if (ft_strncmp(input->cmd[0], "unset", 6) == 0)
-    {
-		return 1;
-    }
-    else if (ft_strncmp(input->cmd[0], "echo", 5) == 0)
-    {
-		return 1;
-    }
-	return 0;
+	char *built_in[5] = {
+        "cd", "env", "export", "unset", "echo"
+    };
+	int i = 5;
+	while (--i >= 0)
+	{
+		if (ft_strncmp(input->cmd[0], built_in[i],
+        	ft_strlen(built_in[i]) + 1) == 0)
+		{
+			return i;
+		}
+	}
+	return i;
 }
 
+void redic_builtin(t_input *input, char **env)
+{
+	int in = 0;
+	int out = 1;
+	int in_fd = dup(STDIN_FILENO);
+	int out_fd = dup(STDOUT_FILENO);
+	in = get_in(input, in, env);
+	out = get_out(input, out);
+	if (in)
+	{
+		dup2(in, STDIN_FILENO);
+		close(in);
+	}
+	if (out != 1)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+	}
+	execute_builtin(input, env, is_builtin(input));
+	if (in)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
+	if (out != 1)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+	}
+}
 void    ft_redic(t_input *input, char **env)
 {
 	int in = 0;
 	int out = 1;
-	if (!is_builtin(input))
+	if (is_builtin(input) == NOT_BUILT_IN)
 	{
 		int pid = fork();
 		if (pid == 0 )
@@ -109,15 +123,7 @@ void    ft_redic(t_input *input, char **env)
 				dup2(out,STDOUT_FILENO);
 				close(out);
 			}
-			if (in)
-				close(in);
-			if (out != 1)
-				close(out);
-			if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
-			{
-				perror("MINISHE");
-				exit(127);
-			}
+			exec_in_child(input, env);
 		}
 		else
 		{
@@ -126,31 +132,5 @@ void    ft_redic(t_input *input, char **env)
 		}
 	}
 	else
-	{
-		int in_fd = dup(STDIN_FILENO);
-		int out_fd = dup(STDOUT_FILENO);
-		in = get_in(input, in, env);
-		out = get_out(input, out);
-		if (in)
-		{
-			dup2(in, STDIN_FILENO);
-			close(in);
-		}
-		if (out != 1)
-		{
-			dup2(out, STDOUT_FILENO);
-			close(out);
-		}
-		check_builtins(input, env);
-		if (in)
-		{
-			dup2(in_fd, STDIN_FILENO);
-			close(in_fd);
-		}
-		if (out != 1)
-		{
-			dup2(out_fd, STDOUT_FILENO);
-			close(out_fd);
-		}
-	}
+		redic_builtin(input, env);
 }

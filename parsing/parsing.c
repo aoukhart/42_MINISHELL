@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/02 15:45:27 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:17:02 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,38 +66,14 @@ void	print_list(t_input *data)
 	}
 }
 
-int	check_input(t_input *input)
+void	step_one(t_progres *progree)
 {
 	t_input		*temp;
-	t_redirect	*temp1;
-	
-	temp = input;
-	while(temp)
-	{
-		if (!temp->cmd)
-			return (1);
-		if (temp->pipe)
-		{
-			if ((!temp->next) || (!temp->next->cmd))
-				return (1);
-		}
-		temp1 = temp->redirrections;
-		while (temp1)
-		{
-			if (temp1->fd == -1 && temp1->delimiter == NULL)
-				return (1);
-			temp1 = temp1->next;
-		}
-		temp = temp->next;
-	}
-	return (0);
-}
+	t_input		*input;
 
-void	step_one(t_progres *progree, t_input *input)
-{
-	t_input		*temp;
-
+	input = malloc(sizeof(t_input));
 	temp = input;
+	init_struct(input);
 	while (progree->input[progree->i])
 	{
 		input_reader(progree, temp);
@@ -109,12 +85,8 @@ void	step_one(t_progres *progree, t_input *input)
 		}
 	}
 	print_list(input);
-	if (check_input(input))
-	{
-		printf("synthax err\n");
-		return ;
-	}
-	// execution(input, progree->envp);
+	execution(input, progree->envp);
+	ft_free1(progree, input);
 }
 
 void	init_struct(t_input	*data)

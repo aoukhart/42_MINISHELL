@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/01 16:36:32 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/03 13:21:31 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,25 @@ char *get_path(char **cmd, char *envp[])
 
 void exec(t_input *input, char **env)
 {
+    input->cmd[0] = get_path(input->cmd, env);
+    //printf(".%s\n", input->cmd[0]);
+    execute_cmd(input->cmd, env);
+}
 
+void exec_in_child(t_input *input, char **env)
+{
     if (access(input->cmd[0], X_OK) == 0)
     {
-        execute_cmd(input->cmd, env);
-        // if (cmd[0])
-        // ft_free(cmd);
-        return;
+	    if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
+	    {
+	    	perror("minishell wst l exec d pipe o absolute");
+	    	exit(127);
+	    }
     }
-    input->cmd[0] = get_path(input->cmd, env);
-    execute_cmd(input->cmd, env);
+    input->cmd[0] = get_path(input->cmd, env); 
+	if (execve(input->cmd[0], input->cmd, env) == -1)
+	{
+		perror("minishell wst l exec d pipe");
+		exit(127);
+	}
 }

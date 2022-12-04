@@ -6,14 +6,14 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/01 17:15:41 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/03 20:25:59 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
 
-int	get_in(t_input *tmp, int fd_in, char **env)
+int	get_in(t_input *tmp, int fd_in, char **env, int flag, int *fd_redic)
 {
   	t_redirect *tmp1;
 	tmp1 = tmp->redirrections;
@@ -21,11 +21,13 @@ int	get_in(t_input *tmp, int fd_in, char **env)
 	{
 		if (tmp1->type == '<' && !tmp1->delimiter)
 			fd_in = tmp1->fd;
-		else if (tmp1->type == '<' && tmp1->delimiter)
+		else if (tmp1->type == '<' && tmp1->delimiter && flag == -1)
 			fd_in = ft_heredoc(tmp1->delimiter, env);
+		else if (tmp1->type == '<' && tmp1->delimiter && flag != -1)
+			fd_in = fd_redic[flag];
 		tmp1 = tmp1->next;
 	}
-		printf("in>%d\n", fd_in);
+		// printf("in>%d\n", fd_in);
 	return fd_in;
 }
 
@@ -40,7 +42,7 @@ int get_out(t_input *tmp, int fd_out)
 			fd_out = tmp1->fd;
 		tmp1 = tmp1->next;
 	}
-	printf("out>%d\n", fd_out);
+	// printf("out>%d\n", fd_out);
 	return fd_out;
 }
 
@@ -56,16 +58,10 @@ void	pipes_manager(t_input *tmp, int fd[2], int in, int out, char **env)
 	if (in != 0)
 		close(in);
 	close_all(fd);
-	if (!is_builtin(tmp))
-	{
-		if (execve(get_path(tmp->cmd, env), tmp->cmd, env) == -1)
-		{
-			perror("minishell");
-			exit(127);
-		}
-	}
+	if (is_builtin(tmp) == NOT_BUILT_IN)
+		exec_in_child(tmp, env);
 	else
-		check_builtins(tmp, env);
+		execute_builtin(tmp, env, is_builtin(tmp));
 }
 
 int	exec_pipes(t_input *tmp, int in, int out, int fd[2], char **env)
@@ -81,12 +77,53 @@ int	exec_pipes(t_input *tmp, int in, int out, int fd[2], char **env)
 		out = get_out(tmp, out);
 		if (in == -1 || out == -1)
 		{
-			perror("minishell");
+			perror("minishell error fd");
 			exit(1) ;
 		}
 		pipes_manager(tmp, fd, in, out, env);
 	}
 	return pid;
+}
+
+int get_line_len(t_input * input)
+{
+	t_input *tmp;
+	int pipe = 0;
+	tmp = input;
+	while (tmp)
+	{
+		if (tmp->pipe)
+			pipe++;
+		tmp = tmp->next;
+	}
+	return pipe;
+}
+int	*execute_heredocs(t_input *input, char **env)
+{
+	int *in_tab;
+	int i = 0;
+	t_input *tmp;
+	t_redirect *redir;
+	int len =  get_line_len(input);
+	tmp = input;
+	in_tab = malloc(sizeof(int)*len);
+	ft_memset(in_tab, 0,len*sizeof(int));
+	while (i < len && tmp)
+	{
+		redir = tmp->redirrections;
+		while (redir)
+		{
+			if (redir->type == '<' && redir->delimiter)
+			{
+				in_tab[i] = ft_heredoc(redir->delimiter, env);
+				printf("fd heredoc %d\n", in_tab[i]);
+			}
+			redir = redir->next;
+		}
+		i++;
+		tmp = tmp->next;
+	}
+	return in_tab;
 }
 
 void ft_pipes(t_input *input, char **env)
@@ -100,6 +137,13 @@ void ft_pipes(t_input *input, char **env)
 	tmp = input;
 	int *pid = malloc(sizeof(int) * 3);
 	ft_memset(fd, -1, sizeof(int)*2);
+	int *in_redir = execute_heredocs(input, env);
+	int x = 0;
+	while (x <= get_line_len(input))
+	{
+		printf("->%d\n", in_redir[x]);
+		x++;
+	}
 	while (tmp)
 	{
 		pipe(fd);
