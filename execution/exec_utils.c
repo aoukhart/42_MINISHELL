@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/03 13:21:31 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/05 02:25:39 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,6 @@ void exec(t_input *input, char **env)
 
 void exec_in_child(t_input *input, char **env)
 {
-    if (access(input->cmd[0], X_OK) == 0)
-    {
-	    if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
-	    {
-	    	perror("minishell wst l exec d pipe o absolute");
-	    	exit(127);
-	    }
-    }
     input->cmd[0] = get_path(input->cmd, env); 
 	if (execve(input->cmd[0], input->cmd, env) == -1)
 	{

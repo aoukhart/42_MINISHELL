@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/02 13:49:49 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/05 02:41:39 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	heredoc_manager(t_progres ptr, int fd[2], char *delim)
 {
 	char *str;
 
+	printf("hahowa bda ->%s<-\n", delim);
 	ptr.input = readline(">");
 	str = heredoc(&ptr);
 	while (str && ft_strncmp(delim, str, ft_strlen(delim) + 1))
@@ -95,6 +96,7 @@ void redic_builtin(t_input *input, char **env)
 		close(out_fd);
 	}
 }
+
 void    ft_redic(t_input *input, char **env)
 {
 	int in = 0;
@@ -128,6 +130,7 @@ void    ft_redic(t_input *input, char **env)
 		else
 		{
 			wait(&pid);
+			printf("");
 			g_var = pid >> 8;
 		}
 	}

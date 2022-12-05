@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/03 20:25:59 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/05 02:19:26 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
 
-int	get_in(t_input *tmp, int fd_in, char **env, int flag, int *fd_redic)
+int	get_in(t_input *tmp, int fd_in, char **env)
 {
   	t_redirect *tmp1;
 	tmp1 = tmp->redirrections;
@@ -21,10 +21,8 @@ int	get_in(t_input *tmp, int fd_in, char **env, int flag, int *fd_redic)
 	{
 		if (tmp1->type == '<' && !tmp1->delimiter)
 			fd_in = tmp1->fd;
-		else if (tmp1->type == '<' && tmp1->delimiter && flag == -1)
+		else if (tmp1->type == '<' && tmp1->delimiter)
 			fd_in = ft_heredoc(tmp1->delimiter, env);
-		else if (tmp1->type == '<' && tmp1->delimiter && flag != -1)
-			fd_in = fd_redic[flag];
 		tmp1 = tmp1->next;
 	}
 		// printf("in>%d\n", fd_in);
@@ -64,7 +62,23 @@ void	pipes_manager(t_input *tmp, int fd[2], int in, int out, char **env)
 		execute_builtin(tmp, env, is_builtin(tmp));
 }
 
-int	exec_pipes(t_input *tmp, int in, int out, int fd[2], char **env)
+int	get_in_v2(t_input *tmp, int fd_in, int *fd, int index)
+{
+  	t_redirect *tmp1;
+	tmp1 = tmp->redirrections;
+	while (tmp1)
+	{
+		if (tmp1->type == '<' && !tmp1->delimiter)
+			fd_in = tmp1->fd;
+		else if (tmp1->type == '<' && tmp1->delimiter)
+			fd_in = fd[index];
+		tmp1 = tmp1->next;
+	}
+	return fd_in;
+}
+
+int	exec_pipes(t_input *tmp, int in, int out, 
+	int fd[2], char **env, int *ff, int index)
 {
 	int pid;
 
@@ -73,7 +87,7 @@ int	exec_pipes(t_input *tmp, int in, int out, int fd[2], char **env)
 	{
 		signal(2, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		in = get_in(tmp, in, env);
+		in = get_in_v2(tmp, in, ff, index);
 		out = get_out(tmp, out);
 		if (in == -1 || out == -1)
 		{
@@ -98,6 +112,7 @@ int get_line_len(t_input * input)
 	}
 	return pipe;
 }
+
 int	*execute_heredocs(t_input *input, char **env)
 {
 	int *in_tab;
@@ -108,15 +123,16 @@ int	*execute_heredocs(t_input *input, char **env)
 	tmp = input;
 	in_tab = malloc(sizeof(int)*len);
 	ft_memset(in_tab, 0,len*sizeof(int));
-	while (i < len && tmp)
+	while (i <= len && tmp)
 	{
+		printf("->%s<-\n", tmp->cmd[0]);
 		redir = tmp->redirrections;
 		while (redir)
 		{
 			if (redir->type == '<' && redir->delimiter)
 			{
 				in_tab[i] = ft_heredoc(redir->delimiter, env);
-				printf("fd heredoc %d\n", in_tab[i]);
+				printf("fd %d heredoc %d\n", i, in_tab[i]);
 			}
 			redir = redir->next;
 		}
@@ -144,16 +160,18 @@ void ft_pipes(t_input *input, char **env)
 		printf("->%d\n", in_redir[x]);
 		x++;
 	}
+	// return ;
 	while (tmp)
 	{
 		pipe(fd);
-		pid[i] = exec_pipes(tmp, in , out, fd, env);
+		pid[i] = exec_pipes(tmp, in , out, fd, env, in_redir, i);
 		if (in != 0)
 			close(in);
 		in = fd[0];
 		fd[0] = -1;
 		close_all(fd);
 		i++;
+		printf("g_var = %d\n", g_var);
         tmp = tmp->next;
 	}
 	wait_all(pid, i);
