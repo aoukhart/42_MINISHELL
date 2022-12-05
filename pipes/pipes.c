@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/05 02:19:26 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/05 22:03:37 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,16 @@ int get_line_len(t_input * input)
 	return pipe;
 }
 
+void ctrl_c_handler_parent(int sig)
+{
+    (void)sig;
+    printf("\n");
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+    g_var = 1;
+}
+
 int	*execute_heredocs(t_input *input, char **env)
 {
 	int *in_tab;
@@ -123,6 +133,8 @@ int	*execute_heredocs(t_input *input, char **env)
 	tmp = input;
 	in_tab = malloc(sizeof(int)*len);
 	ft_memset(in_tab, 0,len*sizeof(int));
+    signal(SIGINT, ctrl_c_handler_parent);
+	signal(SIGQUIT, SIG_IGN);
 	while (i <= len && tmp)
 	{
 		printf("->%s<-\n", tmp->cmd[0]);
@@ -153,6 +165,7 @@ void ft_pipes(t_input *input, char **env)
 	tmp = input;
 	int *pid = malloc(sizeof(int) * 3);
 	ft_memset(fd, -1, sizeof(int)*2);
+
 	int *in_redir = execute_heredocs(input, env);
 	int x = 0;
 	while (x <= get_line_len(input))

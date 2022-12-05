@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/05 02:41:39 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/05 21:25:43 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void    ft_redic(t_input *input, char **env)
 {
 	int in = 0;
 	int out = 1;
+	int status;
 	if (is_builtin(input) == NOT_BUILT_IN)
 	{
 		int pid = fork();
@@ -129,9 +130,11 @@ void    ft_redic(t_input *input, char **env)
 		}
 		else
 		{
-			wait(&pid);
-			printf("");
-			g_var = pid >> 8;
+        	waitpid(pid, &status, 0);
+        	if (WIFEXITED(status))
+        	    g_var = WEXITSTATUS(status);
+        	else
+        	    g_var = 1;
 		}
 	}
 	else
