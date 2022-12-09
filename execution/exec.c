@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/05 01:23:04 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:51:03 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,24 @@ void execute_cmd(char **cmd, char **env)
 
 void    execute_builtin(t_input *input, char **env, int index)
 {
-    void (*fcts[5])(t_input*, char**) = {
-        cd, my_env, export, unset, echo
+    void (*fcts[6])(t_input*, char**) = {
+        cd, my_env, export, unset, echo, pwd
     };
+	//ft_putstr_fd(input->cmd[0], 1);
     fcts[index](input, env);
-    
 }
 
 
 void execute_single_cmd(t_input *input, char **env)
 {   
     int cmd_type = is_builtin(input);
-    if (cmd_type == NOT_BUILT_IN)
-    {
-        if (input->redirrections)
-            ft_redic(input, env);
-        else
-            exec(input, env);
-    }
+    if (input->redirrections)
+        ft_redic(input, env);
     else
-        execute_builtin(input, env, cmd_type);
-    printf("safi ra salaw\n");
+    {
+        if (cmd_type == NOT_BUILT_IN)
+            exec(input, env);
+        else
+            execute_builtin(input, env, cmd_type);
+    }
 }

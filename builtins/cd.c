@@ -26,22 +26,41 @@ void	change_pwd(char *pwd, char **env)
 void    cd(t_input *input, char **env)
 {
 	char *old_p;
-	char *pwd;
-
+	char *cwd;
+	char *home;
 	old_p = getcwd(NULL, 1000);
 	change_old_pwd(old_p, env);
-	if (input->cmd[1] == NULL || (input->cmd[1][0] == '~' && !input->cmd[1][1]))
+	if (input->cmd[2])
 	{
-		printf("<%s>\n", env[check_dup_env("HOME", env)] + length("HOME") + 1);
-		chdir(env[check_dup_env("HOME", env)] + length("HOME") + 1);
+		ft_putstr_fd("minishell: too many arguments\n", 2);
+		g_var = 1;
+		return;
 	}
-	if (chdir(input->cmd[1]))
+		
+	else if(printf("azezaea\n") && !ft_strncmp(input->cmd[1], "-", 2))
+	{
+		chdir(ft_chr(env, "OLDPWD"));
+		pwd(input, env);
+	}
+	else if (input->cmd[1] == NULL || !ft_strncmp(input->cmd[1] ,"~", 2))
+	{
+		if (ft_chr(env, "HOME"))
+		{
+			home = ft_chr(env, "HOME");
+			chdir(home);
+		}
+		else
+		{
+			ft_putstr_fd("minishell: HOME not set\n", 2);
+			g_var = 1;
+		}
+	}
+	else if (chdir(input->cmd[1]))
 	{
 		perror("minishell");
 		g_var = 1;
-		printf("%s\n", strerror(2));
 	}
-	pwd = getcwd(NULL, 1000);
-	change_pwd(pwd, env);
+	cwd = getcwd(NULL, 1000);
+	change_pwd(cwd, env);
 }
  

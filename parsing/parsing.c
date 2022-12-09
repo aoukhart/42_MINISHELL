@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/05 01:19:55 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:16:29 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	step_one(t_progres *progree)
 			temp = temp->next;
 		}
 	}
-	//print_list(input);
+	print_list(input);
 	execution(input, progree->envp);
 	ft_free1(progree, input);
 }

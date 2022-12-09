@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 15:35:10 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/22 18:13:47 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/08 19:17:57 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ void wait_all(int *pid, int x)
             g_var = 128 + WTERMSIG(status);
         i++;
 	}
+}
+
+void handle_exit_val(int pid)
+{
+	int status;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	    g_var = WEXITSTATUS(status);
+	else
+	    g_var = 1;
 }

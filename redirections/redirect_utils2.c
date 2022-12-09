@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   redirect_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/08 15:04:03 by an4ss            ###   ########.fr       */
+/*   Created: 2022/12/08 19:19:34 by an4ss             #+#    #+#             */
+/*   Updated: 2022/12/08 19:20:02 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
-void    echo(t_input *input, char **env)
+void dup_in_out(int in, int out)
 {
-    int i = 1;
-    while (input->cmd[i])
-    {
-        if (input->cmd[i][0] == '$' && input->cmd[i][1] == '?')
-        {
-            input->cmd[i] = ft_itoa(g_var);
-        }
-        i++;
-    }
-    // if (execve(get_path(input->cmd, env), input->cmd, env) == -1)
-    // {
-    //      perror("mochkila hadi");
-    //      exit(127);
-    // }
-    exec(input, env);
-    g_var = 0;
+	if (in)
+	{
+		dup2(in, STDIN_FILENO);
+		close(in);
+	}
+	if (out != 1)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+	}
+}
+
+void restore_fd(int in, int out, int new_in, int new_out)
+{
+	if (in)
+	{
+		dup2(new_in, STDIN_FILENO);
+		close(new_in);
+	}
+	if (out != 1)
+	{
+		dup2(new_out, STDOUT_FILENO);
+		close(new_out);
+	}
 }

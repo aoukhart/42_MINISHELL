@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/05 02:25:39 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:18:38 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ char *get_path(char **cmd, char *envp[])
 
 void exec(t_input *input, char **env)
 {
-    input->cmd[0] = get_path(input->cmd, env);
-    //printf(".%s\n", input->cmd[0]);
+    //input->cmd[0] = get_path(input->cmd, env);
     execute_cmd(input->cmd, env);
 }
 

@@ -4,6 +4,7 @@ SRC = main.c\
 		builtins/export.c\
 		builtins/env.c\
 		builtins/unset.c\
+		builtins/pwd.c\
 		builtins/echo.c\
 		execution/exec.c\
 		execution/exec_utils.c\
@@ -18,6 +19,9 @@ SRC = main.c\
 		pipes/pipes.c\
 		pipes/pipes_utils.c\
 		redirections/redirection.c\
+		redirections/redirect_utils.c\
+		redirections/redirect_utils2.c\
+		redirections/heredoc.c\
 
 FLAGS = -Wall -Wextra -Werror
 

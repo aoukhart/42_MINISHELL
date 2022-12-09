@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:18:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/11/28 05:57:11 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/09 00:26:12 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_chr(char **env, char *variabel)
 {
 	int	i;
 	int	j;
+
 
 	i = 0;
 	while (env[i])
@@ -27,13 +28,13 @@ char	*ft_chr(char **env, char *variabel)
 				j++;
 			if (env[i][j] == '=' && !variabel[j])
 			{
-				free(variabel);
+				//free(variabel);
 				return (*(env + i) + j + 1);
 			}
 		}
 		i++;
 	}
-	free(variabel);
+	//free(variabel);
 	return (NULL);
 }
 

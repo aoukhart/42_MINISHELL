@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/05 01:27:19 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:50:34 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char		**init_env(char **envp);
 void		execute_single_cmd(t_input *input, char **env);
 void		close_all(int fd[2]);
 void		wait_all(int *pid, int x);
-int			get_in(t_input *tmp, int fd_in, char **env);
+int			get_in(t_input *tmp, int fd_in);
 int			get_out(t_input *tmp, int fd_out);
 void    check_builtins(t_input *input, char **env);
 int check_builtins_2(t_input *input, char **env);
@@ -115,5 +115,17 @@ int check_builtins_1(t_input *input, char **env);
 int    is_builtin(t_input*input);
 void    execute_builtin(t_input *input, char **env, int index);
 void exec_in_child(t_input *input, char **env);
+int execute_heredocs(t_input *input, char **env);
+int get_in_v2(t_input *tmp, int fd_in, int index);
+void heredoc_manager_v2(t_progres ptr, int fd, char *delim);
+void ft_heredoc_v2(char *s, char **env, int fd);
+int execute_heredocs(t_input *input, char **env);
+int get_line_len(t_input *input);
+void open_file(int i, char *s, char **env);
+void open_herdoc_file(t_input *input, char **env);
+void handle_exit_val(int pid);
+void dup_in_out(int in, int out);
+void restore_fd(int in, int out, int new_in, int new_out);
+void pwd(t_input *input, char **env);
 
 #endif
