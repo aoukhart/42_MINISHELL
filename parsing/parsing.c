@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/09 11:16:29 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/10 05:26:04 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,11 @@ void	print_list(t_input *data)
 	}
 }
 
-void	step_one(t_progres *progree)
+void	step_one(t_progres *progree, t_input *input)
 {
 	t_input		*temp;
-	t_input		*input;
 
-	input = malloc(sizeof(t_input));
 	temp = input;
-	init_struct(input);
 	while (progree->input[progree->i])
 	{
 		input_reader(progree, temp);
@@ -85,8 +82,12 @@ void	step_one(t_progres *progree)
 		}
 	}
 	print_list(input);
-	execution(input, progree->envp);
-	ft_free1(progree, input);
+	if (input_checker(input))
+	{
+		printf("synthacx err\n");
+		return ;
+	}
+	// execution(input, progree->envp);
 }
 
 void	init_struct(t_input	*data)

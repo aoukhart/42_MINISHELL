@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:17 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/01 13:58:18 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/10 06:00:17 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_strjoin1(char *s1, char *s2)
 	while (*(s2 + i))
 		*(res + j++) = *(s2 + i++);
 	free((void *)s1);
+	free(s2);
 	return (res);
 }
 

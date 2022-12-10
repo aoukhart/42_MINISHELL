@@ -30,7 +30,7 @@ NAME = minishell
 all : $(NAME)
 
 $(NAME) : $(SRC)
-	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /goinfre/aoukhart/homebrew/opt/readline/lib -I /goinfre/aoukhart/homebrew/opt/readline/include
+	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /Users/ybachaki/goinfre/ybachaki/.brew/opt/readline/lib -I /Users/ybachaki/goinfre/ybachaki/.brew/opt/readline/include
 clean :
 	@rm -rf $(NAME)
 	

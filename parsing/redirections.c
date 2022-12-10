@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:18 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/05 01:24:48 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/10 05:35:24 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,20 @@ void	ft_open(t_progres *progree, t_redirect *tmp, int i)
 	char	*file_name;
 
 	skip_spaces(progree);
-	file_name = word_extract(progree);
-	if (i == 2)
+	if (i == 2 && tmp->type == '<')
 	{
-		if (tmp->type == '>')
-			tmp->fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND);
-		else if (tmp->type == '<')
-			tmp->delimiter = ft_strdup(file_name);
+		tmp->delimiter = word_extract(progree, 1);
+		return ;
 	}
-	else if (tmp->type == '>')
-			tmp->fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		tmp->fd = open(file_name, O_RDONLY, 0644);
-	free(file_name);
+	{
+		file_name = word_extract(progree, 0);
+		if (i == 2 && tmp->type == '>')
+				tmp->fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
+		else if (tmp->type == '>')
+				tmp->fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		else
+			tmp->fd = open(file_name, O_RDWR, 0777);
+		free(file_name);
+	}
 }

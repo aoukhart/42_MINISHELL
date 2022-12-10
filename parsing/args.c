@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/01 13:49:57 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/10 05:43:04 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	arg(t_progres *progree, t_input *data)
 		&& progree->input[progree->i] != '>')
 	{
 		skip_spaces(progree);
-		arg = word_extract(progree);
+		arg = word_extract(progree, 0);
 		if (arg)
 			add(data, arg);
 		arg = NULL;
@@ -44,7 +44,7 @@ int	car_check(char c, int i)
 	return (0);
 }
 
-char	*word_extract(t_progres *progree)
+char	*word_extract(t_progres *progree, int i)
 {
 	char	c;
 	char	*word;
@@ -54,11 +54,12 @@ char	*word_extract(t_progres *progree)
 	{
 		if (car_check(progree->input[progree->i], 1))
 		{
-			word = ft_strjoin1(word, quotes_handler(progree));
+			word = ft_strjoin1(word, quotes_handler(progree, i));
 			continue ;
 		}
 		if (progree->input[progree->i] == '$'
-			&& car_check(progree->input[progree->i + 1], 0))
+			&& car_check(progree->input[progree->i + 1], 0)
+			&& i == 0)
 		{
 			word = ft_strjoin1(word, env_3(progree));
 			continue ;
