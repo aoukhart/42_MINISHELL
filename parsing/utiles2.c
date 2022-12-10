@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:12:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/10 00:47:51 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/10 06:13:43 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*car_join(char *s1, char c)
 	if (!s1)
 		s1 = ft_calloc(1, 1);
 	if (c == '\0')
-		return (s1);  // mv up
+		return (s1);
 	res = ft_calloc(ft_strlen(s1) + 2, 1);
 	while (s1[i])
 	{

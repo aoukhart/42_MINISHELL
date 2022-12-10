@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:18:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/10 05:59:13 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/10 06:12:54 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_chr(char **env, char *variabel)
 {
 	int	i;
 	int	j;
-
 
 	i = 0;
 	while (env[i])
@@ -28,13 +27,13 @@ char	*ft_chr(char **env, char *variabel)
 				j++;
 			if (env[i][j] == '=' && !variabel[j])
 			{
-				//free(variabel);
-				return (strdup(*(env + i) + j + 1));
+				free(variabel);
+				return (ft_strdup(*(env + i) + j + 1));
 			}
 		}
 		i++;
 	}
-	//free(variabel);
+	free(variabel);
 	return (NULL);
 }
 

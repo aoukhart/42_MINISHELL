@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/10 05:26:04 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/10 06:13:09 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	step_one(t_progres *progree, t_input *input)
 		printf("synthacx err\n");
 		return ;
 	}
-	// execution(input, progree->envp);
+	execution(input, progree->envp);
 }
 
 void	init_struct(t_input	*data)
