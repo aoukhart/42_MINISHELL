@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/10 04:13:06 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/12 03:09:20 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**init_env(char **envp)
 
 void	execution(t_input *input, char **env)
 {
-	signal(2, SIG_IGN);
+	// signal(2, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (!input->pipe)
 		execute_single_cmd(input, env);
@@ -123,6 +123,7 @@ int	main(int ac, char **av, char **envp)
 		g_var = 0;
 		while (1)
 		{
+			signal(SIGQUIT, SIG_IGN);
 			signals();
 			init_all_structs(&input, &progree, env);
 			progree->input = read_input();
