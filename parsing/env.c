@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:18:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/10 06:12:54 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/12 08:26:55 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*env_3(t_progres *progree)
 	else if (progree->input[progree->i + 1] == '$')
 	{
 		progree->i += 2;
-		return ("$$");
+		return (ft_strdup("$$"));
 	}
 	progree->i++;
 	return (NULL);
