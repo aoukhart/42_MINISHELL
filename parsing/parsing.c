@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/12 08:39:53 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/12 10:51:57 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	step_one(t_progres *progree, t_input *input)
 	if (input_checker(input))
 	{
 		printf("synthacx err\n");
+		g_var = 258;
 		return ;
 	}
 	execution(input, progree->envp);

@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/12 06:09:58 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/12 10:13:06 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ char *check_path(char **cmd, char **path)
     return (ft_strdup(cmd[0])); // leak;
 }
 
-char *get_path(char **cmd, char *envp[])
+char *get_path(char **cmd, char **envp)
 {
     int i;
     char **path;
 
     i = 0;
+    if (!ft_chr(envp, ft_strdup("PATH")))
+        return (cmd[0]);
     while (ft_strncmp(envp[i], "PATH", 4) != 0)
         i++;
     path = ft_split(envp[i] + 5, ':');
@@ -64,6 +66,7 @@ char *get_path(char **cmd, char *envp[])
 void exec(t_input *input, char **env)
 {
     //input->cmd[0] = get_path(input->cmd, env);
+
     execute_cmd(input->cmd, env);
 }
 

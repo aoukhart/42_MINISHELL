@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:18 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/12 09:52:35 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/12 10:55:20 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,24 @@ void	redirect(t_progres *progree, t_redirect *tmp)
 	ft_open(progree, tmp, i);
 }
 
-int	check(char *str, char **env)
+int	check(char *str, char **env, t_progres *progree)
 {
 	char	*name;
 	int		i;
 
 	name = NULL;
-	i = 0;
-	str++;
+	i = 1;
 	while (car_check(str[i], 0))
 	{
 		name = car_join(name, str[i]);
 		i++;
 	}
 	name = ft_chr(env, name);
-	if (!name)
-		return (0);
-	if (ft_strchr(name, ' '))
+	if (!name || ft_strchr(name, ' '))
+	{
+		progree->i += i;
 		return (1);
+	}
 	return (0);
 }
 
@@ -98,7 +98,7 @@ void	ft_open(t_progres *progree, t_redirect *tmp, int i)
 	else
 	{
 		if (progree->input[progree->i] == '$'
-			&& check(progree->input + progree->i, progree->envp))
+			&& check(progree->input + progree->i, progree->envp, progree))
 		{
 			tmp->fd = -2;
 			return ;

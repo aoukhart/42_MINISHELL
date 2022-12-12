@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/10 04:19:23 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/12 10:15:20 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ void redic_builtin(t_input *input, char **env)
 		perror("minishell");
 		exit(1);
 	}
+	if (out == -2 || in == -2) 
+	{
+		ft_putstr_fd("minishell: ambiguous redirect", 2);
+		g_var = 1;
+		return;
+	}
 	dup_in_out(in, out);
 	execute_builtin(input, env, is_builtin(input));
 	restore_fd(in, out, in_fd, out_fd);
@@ -63,6 +69,11 @@ void redic_not_builtin(t_input *input, char **env)
 		if (in == -1 || out == -1)
 		{
 			perror("minishell");
+			exit(1);
+		}
+		if (out == -2 || in == -2) 
+		{
+			ft_putstr_fd("minishell: ambiguous redirect\n", 2);
 			exit(1);
 		}
 		dup_in_out(in, out);

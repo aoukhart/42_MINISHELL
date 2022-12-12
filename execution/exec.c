@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/12 06:52:17 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/12 10:14:19 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void execute_cmd(char **cmd, char **env)
         signal(SIGQUIT, SIG_DFL);
         if (execve(get_path(cmd, env), cmd, env) == -1)
         {
-            
             perror("minishell wst execute_cmd");
             exit(127);
         }

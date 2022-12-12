@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/11 22:37:43 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:01:52 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ int exec_pipes(t_input *tmp, int fd[3], char **env, int index)
 		if (fd[2] == -1 || out == -1)
 		{
 			perror("minishell error fd wayliiii");
+			exit(1);
+		}
+		if (fd[2] == -2 || out == -2)
+		{
+			ft_putstr_fd("minishell: ambigious redirect\n", 2);
 			exit(1);
 		}
 		pipes_manager(tmp, fd, fd[2], out, env);
