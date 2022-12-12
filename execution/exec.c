@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/12 06:13:45 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/12 06:52:17 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,31 @@ void    execute_builtin(t_input *input, char **env, int index)
     fcts[index](input, env);
 }
 
+char    **add_after_split(char **src, char **dest)
+{
+	int	i;
+	int	j;
+	char	**res;
+
+	i = 0;
+	j = 1;
+	res = ft_calloc(ft_len(src) + ft_len(dest), sizeof(char *));
+	while (dest[i])
+	{
+		res[i] = dest[i];
+		i++;
+	}
+	while (src[j])
+	{
+		res[i] = src[j];
+		j++;
+		i++;
+	}
+	free(dest);
+    free(src[0]);
+	free(src);
+	return (res);
+}
 
 void execute_single_cmd(t_input *input, char **env)
 {   
@@ -60,18 +85,9 @@ void execute_single_cmd(t_input *input, char **env)
     if (ft_strchr(input->cmd[0], ' '))
     {
         char **splited = ft_split(input->cmd[0], ' ');
-        int i = 0;
-        while (splited[i])
-        {
-            input->cmd[i] = splited[i];
-            printf("%s\n", input->cmd[i]);
-            i++;
-        }
-        input->cmd[i] = 0;
+        input->cmd = add_after_split(input->cmd, splited);
+        print_list(input);
     }
-    printf("{%s}\n", input->cmd[0]);
-    printf("{%s}\n", input->cmd[1]);
-    printf("{%s}\n", input->cmd[2]);
     if (execute_heredocs(input, env))
 	{
 		g_var = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/11 22:40:58 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/12 06:48:45 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_input
 	struct s_input		*next;
 }	t_input;
 
+int			ft_len(char **tab);
+void		print_list(t_input *data);
 int			check_spaces(char *str);
 char		*file_name_extract(t_progres *progree);
 int			input_checker(t_input *input);
