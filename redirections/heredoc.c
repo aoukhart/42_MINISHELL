@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:54:44 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/08 19:03:15 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/12 04:09:27 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,15 @@ void ft_heredoc_v2(char *s, char **env, int fd)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_DFL);
 	ptr.input = readline(">");
-	str = heredoc(&ptr);
-	while (str && ft_strncmp(s, str, ft_strlen(s) + 1))
+	while (ptr.input && ft_strncmp(ptr.input, s, ft_strlen(s) + 1))
 	{
+		str = heredoc(&ptr);
 		if (!str)
 			str = s;
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		ptr.i = 0;
 		ptr.input = readline(">");
-		str = heredoc(&ptr);
 	}
 }
 

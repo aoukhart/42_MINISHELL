@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/12 03:09:20 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/12 05:35:26 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	main(int ac, char **av, char **envp)
 				add_history(progree->input);
 				step_one(progree, input);
 			}
-			ft_free1(progree, input);
+			// ft_free1(progree, input);
 		}
 	}
 	return (0);

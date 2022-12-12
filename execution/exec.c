@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/12 02:37:25 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/12 06:13:45 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void execute_cmd(char **cmd, char **env)
         signal(SIGQUIT, SIG_DFL);
         if (execve(get_path(cmd, env), cmd, env) == -1)
         {
+            
             perror("minishell wst execute_cmd");
             exit(127);
         }
@@ -59,12 +60,18 @@ void execute_single_cmd(t_input *input, char **env)
     if (ft_strchr(input->cmd[0], ' '))
     {
         char **splited = ft_split(input->cmd[0], ' ');
-        int i = -1;
-        while (splited[++i])
+        int i = 0;
+        while (splited[i])
         {
             input->cmd[i] = splited[i];
+            printf("%s\n", input->cmd[i]);
+            i++;
         }
+        input->cmd[i] = 0;
     }
+    printf("{%s}\n", input->cmd[0]);
+    printf("{%s}\n", input->cmd[1]);
+    printf("{%s}\n", input->cmd[2]);
     if (execute_heredocs(input, env))
 	{
 		g_var = 1;
