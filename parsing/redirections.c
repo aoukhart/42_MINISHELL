@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:18 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/12 07:40:40 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/12 09:52:35 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,27 @@ void	redirect(t_progres *progree, t_redirect *tmp)
 	ft_open(progree, tmp, i);
 }
 
+int	check(char *str, char **env)
+{
+	char	*name;
+	int		i;
+
+	name = NULL;
+	i = 0;
+	str++;
+	while (car_check(str[i], 0))
+	{
+		name = car_join(name, str[i]);
+		i++;
+	}
+	name = ft_chr(env, name);
+	if (!name)
+		return (0);
+	if (ft_strchr(name, ' '))
+		return (1);
+	return (0);
+}
+
 void	ft_open(t_progres *progree, t_redirect *tmp, int i)
 {
 	char	*file_name;
@@ -76,6 +97,12 @@ void	ft_open(t_progres *progree, t_redirect *tmp, int i)
 	}
 	else
 	{
+		if (progree->input[progree->i] == '$'
+			&& check(progree->input + progree->i, progree->envp))
+		{
+			tmp->fd = -2;
+			return ;
+		}
 		file_name = word_extract(progree, 0);
 		if (i == 2 && tmp->type == '>')
 				tmp->fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
