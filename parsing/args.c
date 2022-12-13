@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/12 08:15:38 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:49:13 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	arg(t_progres *progree, t_input *data)
 		&& progree->input[progree->i] != '>')
 	{
 		skip_spaces(progree);
-		arg = word_extract(progree, 0);
+		arg = word_extract(progree, 0, data);
 		if (arg)
 			add(data, arg);
 		arg = NULL;
@@ -44,7 +44,32 @@ int	car_check(char c, int i)
 	return (0);
 }
 
-char	*word_extract(t_progres *progree, int i)
+char	*split_after_expand(char *value, char *word, t_input *input)
+{
+	char	**res;
+	int		lent;
+	int		i;
+
+	i = 1;
+	if (!value)
+		return (word);
+	res = ft_split(value, ' ');
+	lent = ft_len(res);
+	word = ft_strjoin1(word, res[0]);
+	if (lent > 1)
+	{
+		add(input, word);
+		while (i < lent - 1)
+		{
+			add(input, res[i]);
+			i++;
+		}
+		return (res[i]);
+	}
+	return (word);
+}
+
+char	*word_extract(t_progres *progree, int i, t_input *input)
 {
 	char	c;
 	char	*word;
@@ -61,7 +86,8 @@ char	*word_extract(t_progres *progree, int i)
 			&& car_check(progree->input[progree->i + 1], 0)
 			&& i == 0)
 		{
-			word = ft_strjoin1(word, env_3(progree));
+			/*word = ft_strjoin1(word, env_3(progree));*/
+			word = split_after_expand(env_3(progree), word, input);
 			continue ;
 		}
 		c = progree->input[progree->i];

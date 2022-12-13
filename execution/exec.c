@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/13 02:49:38 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:22:58 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void    execute_builtin(t_input *input, char **env, int index)
     void (*fcts[6])(t_input*, char**) = {
         cd, my_env, export, unset, echo, pwd
     };
+    
 	//ft_putstr_fd(input->cmd[0], 1);
     fcts[index](input, env);
 }
@@ -87,14 +88,14 @@ void execute_single_cmd(t_input *input, char **env)
     }
     if(input->cmd)
     {
-        if (ft_strchr(input->cmd[0], ' '))
-        {
+        // if (ft_strchr(input->cmd[0], ' '))
+        // {
 
-            char **splited = ft_split(input->cmd[0], ' ');
-            input->cmd = add_after_split(input->cmd, splited);
-            print_list(input);
+        //     char **splited = ft_split(input->cmd[0], ' ');
+        //     input->cmd = add_after_split(input->cmd, splited);
+        //     print_list(input);
 
-        }
+        // }
         int cmd_type = is_builtin(input);
         if (input->redirrections)
         {

@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 05:34:49 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:10:55 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ typedef struct s_input
 	struct s_input		*next;
 }	t_input;
 
-void		free_Dptr(t_input *input, int j);
+char		*env_3(t_progres *progree);
+void		free_dptr(t_input *input, int j);
 int			ft_len(char **tab);
 void		print_list(t_input *data);
 int			check_spaces(char *str);
@@ -81,9 +82,9 @@ char		*s_quotes_handler(t_progres *progree);
 void		add(t_input *data, char *str);
 void		init_struct2(t_redirect *data);
 char		*env_var2(t_progres *progree);
-void		ft_open(t_progres *progree, t_redirect *tmp, int i);
-char		*word_extract(t_progres *progree, int i);
-void		redirect(t_progres *progree, t_redirect *tmp);
+void		ft_open(t_progres *progree, t_redirect *tmp, int i, t_input *input);
+char		*word_extract(t_progres *progree, int i, t_input *input);
+void		redirect(t_progres *progree, t_redirect *tmp, t_input *input);
 int			car_check(char c, int i);
 char		*car_join(char *s1, char c);
 void		ft_free1(t_progres *progree, t_input *data);

@@ -31,7 +31,7 @@ int check_dup_env(char *cmd, char **env)
     return 0;
 }
 
-void    export_1(char *cmd, char **env, int len)
+char    **export_1(char *cmd, char **env, int len)
 {
     char **env1;
     int i;
@@ -48,13 +48,15 @@ void    export_1(char *cmd, char **env, int len)
         env1[len] = ft_strdup(cmd);
         i = -1;
         while (++i < len)
+        {
             env1[i] = ft_strdup(env[i]);
+            printf("________ %s\n", env1[i]);
+        }
+        printf("________ %s\n", env1[i]);
         i = -1;
-        while (env1[++i])
-            env[i] = ft_strdup(env1[i]);
-        env[i] = NULL;
-        ft_free(env1);
+        return env1;
     }
+    return env;
 }
 
 int export_check(char *cmd)

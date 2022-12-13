@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/13 05:34:24 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 09:13:58 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ int	check_n(char *str)
 	else
 		return (0);
 }
-
-/*
-echo
--n
--n
-kjbejnew
-elhlwedew
-*/
 
 void	echo_appah(t_input	*input)
 {
@@ -53,7 +45,7 @@ void	echo_appah(t_input	*input)
 		new_cmd[1] = ft_strdup("-n");
 		while(input->cmd[a])
 			new_cmd[a++] = input->cmd[y++];
-        free_Dptr(input, free);
+        free_dptr(input, free);
 		input->cmd = new_cmd;
 	}
 }
