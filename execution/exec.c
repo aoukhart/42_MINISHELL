@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/12 10:14:19 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 02:49:38 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,38 @@ char    **add_after_split(char **src, char **dest)
 }
 
 void execute_single_cmd(t_input *input, char **env)
-{   
-
-    if (ft_strchr(input->cmd[0], ' '))
-    {
-        char **splited = ft_split(input->cmd[0], ' ');
-        input->cmd = add_after_split(input->cmd, splited);
-        print_list(input);
-    }
+{
     if (execute_heredocs(input, env))
-	{
-		g_var = 1;
-		return;
-	}
-    int cmd_type = is_builtin(input);
-    if (input->redirrections)
     {
-        if (is_builtin(input) == NOT_BUILT_IN)
-            redic_not_builtin(input, env);
+        g_var = 1;
+        return;
+    }
+    if(input->cmd)
+    {
+        if (ft_strchr(input->cmd[0], ' '))
+        {
+
+            char **splited = ft_split(input->cmd[0], ' ');
+            input->cmd = add_after_split(input->cmd, splited);
+            print_list(input);
+
+        }
+        int cmd_type = is_builtin(input);
+        if (input->redirrections)
+        {
+            if (is_builtin(input) == NOT_BUILT_IN)
+                redic_not_builtin(input, env);
+            else
+                redic_builtin(input, env);
+        }
         else
-            redic_builtin(input, env);
+        {
+            if (cmd_type == NOT_BUILT_IN)
+                exec(input, env);
+            else
+                execute_builtin(input, env, cmd_type);
+        }
     }
     else
-    {
-        if (cmd_type == NOT_BUILT_IN)
-            exec(input, env);
-        else
-            execute_builtin(input, env, cmd_type);
-    }
+        unlink("minishell_0");
 }
