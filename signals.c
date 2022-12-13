@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 22:35:22 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/12 23:22:42 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 05:42:47 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void ctrl_c_handler(int sig)
 {
     (void)sig;
-    printf("\n");
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-    g_var = 130;
+    // printf("\n");
+    // rl_on_new_line();
+    // rl_replace_line("", 0);
+    // rl_redisplay();
+    // g_var = 130;
 }
 
 void signals()

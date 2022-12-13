@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:05:48 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/01 14:06:32 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 05:33:42 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,17 @@ void	ft_free2(t_input *data)
 		free (data->redirrections);
 		data->redirrections = temp1;
 	}
+}
+
+void	free_Dptr(t_input *input, int j)
+{
+	int i;
+	
+	i = 1;
+	while (i < j)
+	{
+		free(input->cmd[i]);
+		i++;
+	}
+	free(input->cmd);
 }

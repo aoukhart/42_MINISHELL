@@ -5,3 +5,5 @@ close fd after <
 free cmd in execution
 <<"EOF" <<E"OF" <<""EOF 
 problem in echo execute 2 times
+echo ""f'''''f""
+"ls -la" split

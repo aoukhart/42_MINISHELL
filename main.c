@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/13 04:39:46 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 06:17:44 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	input_checker(t_input *input)
 	temp = input;
 	while (temp)
 	{
-		// if (!temp->cmd)
-		// 	return (1);
+		if (!temp->cmd && !temp->redirrections)
+			return (1);
 		if (temp->pipe == 1 && temp->next == NULL)
 			return (1);
 		temp_r = temp->redirrections;
@@ -84,7 +84,7 @@ char	*read_input(void)
 
 	str = readline("minishell>>");
 	if (!str)
-		exit(0);
+		exit(g_var);
 	if (!str[0])
 	{
 		free(str);
@@ -132,7 +132,7 @@ int	main(int ac, char **av, char **envp)
 				add_history(progree->input);
 				step_one(progree, input);
 			}
-			// ft_free1(progree, input);
+			ft_free1(progree, input);
 		}
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/12 10:51:57 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 06:18:51 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	step_one(t_progres *progree, t_input *input)
 	print_list(input);
 	if (input_checker(input))
 	{
-		printf("synthacx err\n");
+		printf("minishell: parse error\n");
 		g_var = 258;
 		return ;
 	}

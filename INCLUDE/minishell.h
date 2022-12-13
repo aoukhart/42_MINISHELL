@@ -6,7 +6,7 @@
 /*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/12 06:48:45 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 05:34:49 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_input
 	struct s_input		*next;
 }	t_input;
 
+void		free_Dptr(t_input *input, int j);
 int			ft_len(char **tab);
 void		print_list(t_input *data);
 int			check_spaces(char *str);
