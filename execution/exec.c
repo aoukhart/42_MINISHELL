@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/13 11:22:58 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:11:29 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ void execute_cmd(char **cmd, char **env)
     //ft_free(cmd);
 }
 
-void    execute_builtin(t_input *input, char **env, int index)
+void    execute_builtin(t_input *input, t_progres *progress, int index)
 {
-    void (*fcts[6])(t_input*, char**) = {
-        cd, my_env, export, unset, echo, pwd
+    void (*fcts[7])(t_input*, t_progres*) = {
+        cd, my_env, export, unset, echo, pwd, ft_exit
     };
-    
 	//ft_putstr_fd(input->cmd[0], 1);
-    fcts[index](input, env);
+    fcts[index](input, progress);
 }
 
 char    **add_after_split(char **src, char **dest)
@@ -79,37 +78,37 @@ char    **add_after_split(char **src, char **dest)
 	return (res);
 }
 
-void execute_single_cmd(t_input *input, char **env)
+void execute_single_cmd(t_input *input, t_progres *progress)
 {
-    if (execute_heredocs(input, env))
+    if (execute_heredocs(input, progress->envp))
     {
         g_var = 1;
         return;
     }
     if(input->cmd)
     {
-        // if (ft_strchr(input->cmd[0], ' '))
-        // {
+        if (ft_strchr(input->cmd[0], ' '))
+        {
 
-        //     char **splited = ft_split(input->cmd[0], ' ');
-        //     input->cmd = add_after_split(input->cmd, splited);
-        //     print_list(input);
+            char **splited = ft_split(input->cmd[0], ' ');
+            input->cmd = add_after_split(input->cmd, splited);
+            print_list(input);
 
-        // }
+        }
         int cmd_type = is_builtin(input);
         if (input->redirrections)
         {
             if (is_builtin(input) == NOT_BUILT_IN)
-                redic_not_builtin(input, env);
+                redic_not_builtin(input, progress->envp);
             else
-                redic_builtin(input, env);
+                redic_builtin(input, progress);
         }
         else
         {
             if (cmd_type == NOT_BUILT_IN)
-                exec(input, env);
+                exec(input, progress->envp);
             else
-                execute_builtin(input, env, cmd_type);
+                execute_builtin(input, progress, cmd_type);
         }
     }
     else

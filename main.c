@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/13 06:17:44 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:26:55 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ char	**init_env(char **envp)
 	return (env);
 }
 
-void	execution(t_input *input, char **env)
+void	execution(t_input *input, t_progres *progres)
 {
 	// signal(2, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (!input->pipe)
-		execute_single_cmd(input, env);
+		execute_single_cmd(input, progres);
 	else
-		ft_pipes(input, env);
+		ft_pipes(input, progres);
 }
 
 int	input_checker(t_input *input)
@@ -110,6 +110,9 @@ int	check_spaces(char *str)
 	else
 		return (1);	
 }
+
+void    printf_export(char *env);
+
 int	main(int ac, char **av, char **envp)
 {
 	char		**env;
@@ -132,7 +135,14 @@ int	main(int ac, char **av, char **envp)
 				add_history(progree->input);
 				step_one(progree, input);
 			}
+			env = progree->envp;
 			ft_free1(progree, input);
+			// int i = 0;
+        	// while (env[i])
+        	// {
+        	//     printf_export(env[i]);
+        	//     i++;
+        	// }
 		}
 	}
 	return (0);

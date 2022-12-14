@@ -4,3 +4,4 @@ cd .. && cd folder problem
 close fd after <
 free cmd in execution
 <<"EOF" <<E"OF" <<""EOF 
+unset without value

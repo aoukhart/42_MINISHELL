@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/13 02:34:46 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:13:27 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int    is_builtin(t_input*input)
 {
-	char *built_in[6] = {
-        "cd", "env", "export", "unset", "echo", "pwd"
+	char *built_in[7] = {
+        "cd", "env", "export", "unset", "echo", "pwd", "exit"
     };
-	int i = 6;
+	int i = 7;
 	while (--i >= 0)
 	{
 		if (ft_strncmp(input->cmd[0], built_in[i],
@@ -29,7 +29,7 @@ int    is_builtin(t_input*input)
 	return i;
 }
 
-void redic_builtin(t_input *input, char **env)
+void redic_builtin(t_input *input, t_progres *progress)
 {
 	int in = 0;
 	int out = 1;
@@ -49,7 +49,7 @@ void redic_builtin(t_input *input, char **env)
 		return;
 	}
 	dup_in_out(in, out);
-	execute_builtin(input, env, is_builtin(input));
+	execute_builtin(input, progress, is_builtin(input));
 	restore_fd(in, out, in_fd, out_fd);
 }
 

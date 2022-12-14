@@ -6,23 +6,23 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 17:34:18 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/12 10:12:38 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:09:14 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
-void    my_env(t_input *input, char **env)
+void    my_env(t_input *input, t_progres *progress)
 {
     int i;
     (void)input;
     i = -1;
-    if (!env)
-        printf("salam\n");
-    while (env[++i])
+    if (!progress->envp)
+        return;
+    while (progress->envp[++i])
     {
-        if (ft_strchr(env[i], '='))
-            printf("%s\n",env[i]);
+        if (ft_strchr(progress->envp[i], '='))
+            printf("%s\n",progress->envp[i]);
     }
     g_var = 0;
 }

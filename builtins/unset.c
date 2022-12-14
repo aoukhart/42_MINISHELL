@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 18:02:40 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/01 16:16:56 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/13 15:29:49 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void unset_1(char *cmd, char **env, int len)
     checker = 0;
     env1 = NULL;
     checker = check_dup_env(cmd, env);
+    printf("%d\n", checker);
     if (checker && (length(env[checker]) == length(cmd)))
     {
         env1 = malloc(sizeof(char*) * (len));
@@ -49,6 +50,7 @@ void unset_1(char *cmd, char **env, int len)
                 env1[i] = NULL;
             else
                 env1[i] = ft_strdup(env[j++]);
+            printf("<<%s\n", env[i]);
             i++;
         }
         i = -1;
@@ -59,7 +61,23 @@ void unset_1(char *cmd, char **env, int len)
     }
 }
 
-void    unset(t_input *input, char **env)
+int unset_check(char *cmd)
+{
+    int i = 0;
+    while (cmd[i])
+    {
+        if (ft_strchr(&cmd[i], '='))
+        {
+            ft_putstr_fd("Minishell: not a valid identifier\n", 2);
+            g_var = 1;
+            return (0);
+        }
+        i++;
+    }
+    return 1;
+}
+
+void    unset(t_input *input, t_progres *progress)
 {
     int  i = 1;
     int len;
@@ -67,10 +85,13 @@ void    unset(t_input *input, char **env)
     {
         while (input->cmd[i])
         {
-            len = 0;
-            while (env[len])
-                len++;
-            unset_1(input->cmd[i], env, len);
+            if (unset_check(input->cmd[i]))
+            {
+                len = 0;
+                while (progress->envp[len])
+                    len++;
+                unset_1(input->cmd[i], progress->envp, len);
+            }
             i++;
         }
     }

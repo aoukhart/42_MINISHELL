@@ -6,13 +6,13 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/12 11:01:52 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:12:47 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
-void pipes_manager(t_input *tmp, int fd[2], int in, int out, char **env)
+void pipes_manager(t_input *tmp, int fd[2], int in, int out, t_progres *progress)
 {
 	
 	dup2(in, STDIN_FILENO);
@@ -26,10 +26,10 @@ void pipes_manager(t_input *tmp, int fd[2], int in, int out, char **env)
 		close(in);
 	close_all(fd);
 	if (is_builtin(tmp) == NOT_BUILT_IN)
-		exec_in_child(tmp, env);
+		exec_in_child(tmp, progress->envp);
 	else
 	{
-		execute_builtin(tmp, env, is_builtin(tmp));
+		execute_builtin(tmp, progress, is_builtin(tmp));
 		exit(0);
 	}
 }
@@ -49,7 +49,7 @@ int execute_heredocs(t_input *input, char **env)
 	return 0;
 }
 
-int exec_pipes(t_input *tmp, int fd[3], char **env, int index)
+int exec_pipes(t_input *tmp, int fd[3], t_progres *progress, int index)
 {
 	int pid;
 	int out = 1;
@@ -71,12 +71,12 @@ int exec_pipes(t_input *tmp, int fd[3], char **env, int index)
 			ft_putstr_fd("minishell: ambigious redirect\n", 2);
 			exit(1);
 		}
-		pipes_manager(tmp, fd, fd[2], out, env);
+		pipes_manager(tmp, fd, fd[2], out, progress);
 	}
 	return pid;
 }
 
-void ft_pipes(t_input *input, char **env)
+void ft_pipes(t_input *input, t_progres *progress)
 {
 	t_input *tmp;
 	int fd[3];
@@ -87,7 +87,7 @@ void ft_pipes(t_input *input, char **env)
 	int *pid = malloc(sizeof(int) * 3);
 	ft_memset(fd, -1, sizeof(int) * 3);
 	fd[2] = 0;
-	if (execute_heredocs(input, env))
+	if (execute_heredocs(input, progress->envp))
 	{
 		g_var = 1;
 		return;
@@ -95,7 +95,7 @@ void ft_pipes(t_input *input, char **env)
 	while (tmp)
 	{
 		pipe(fd);
-		pid[i] = exec_pipes(tmp, fd, env, i);
+		pid[i] = exec_pipes(tmp, fd, progress, i);
 		if (fd[2] != 0)
 			close(fd[2]);
 		fd[2] = fd[0];

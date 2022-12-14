@@ -29,7 +29,7 @@ void	ft_chdir(char *path, char **env)
 	change_pwds(getcwd(NULL, 1000), oldpwd, env);
 }
 
-void    cd(t_input *input, char **env)
+void    cd(t_input *input, t_progres *progress)
 {
 	char *home;
 	if (input->cmd[1])
@@ -42,31 +42,31 @@ void    cd(t_input *input, char **env)
 		}
 		else if (!ft_strncmp(input->cmd[1], "-", 2))
 		{
-			char *oldpwd = ft_chr(env, ft_strdup("OLDPWD"));
+			char *oldpwd = ft_chr(progress->envp, ft_strdup("OLDPWD"));
 			if (!oldpwd)
 			{
 				ft_putstr_fd("minishell: OLDPWD not set\n", 2);
 				g_var = 1;
 				return;
 			}
-			ft_chdir(oldpwd, env);
-			pwd(input, env);
+			ft_chdir(oldpwd, progress->envp);
+			pwd(input, progress);
 			return;
 		}
 		else
 		{
-			ft_chdir(input->cmd[1], env);
+			ft_chdir(input->cmd[1], progress->envp);
 			return;
 		}
 	}
 	else if (input->cmd[1] == NULL || !ft_strncmp(input->cmd[1] ,"~", 2))
 	{
-		if (ft_chr(env, ft_strdup("HOME")))
+		if (ft_chr(progress->envp, ft_strdup("HOME")))
 		{
-			home = ft_chr(env, ft_strdup("HOME"));
+			home = ft_chr(progress->envp, ft_strdup("HOME"));
 			char *oldpwd = getcwd(NULL, 1000);
 			chdir(home);
-			change_pwds(getcwd(NULL, 1000), oldpwd, env);
+			change_pwds(getcwd(NULL, 1000), oldpwd, progress->envp);
 			return;
 		}
 		else

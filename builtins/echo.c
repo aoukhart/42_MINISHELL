@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/13 09:13:58 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:08:50 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	echo_appah(t_input	*input)
 	}
 }
 
-void    echo(t_input *input, char **env)
+void    echo(t_input *input, t_progres *progress)
 {
     int i = 1;
 
@@ -67,9 +67,10 @@ void    echo(t_input *input, char **env)
     int pid = fork();
     if (!pid)
     {
-        if (execve("/bin/echo", input->cmd, env) == -1)
+        if (execve("/bin/echo", input->cmd, progress->envp) == -1)
         {
-            printf("minishell");
+            perror("minishell");
+			exit(1);
         }
     }
     else

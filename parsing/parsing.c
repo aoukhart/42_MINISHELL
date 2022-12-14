@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 06:18:51 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:14:48 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	step_one(t_progres *progree, t_input *input)
 		g_var = 258;
 		return ;
 	}
-	execution(input, progree->envp);
+	execution(input, progree);
 }
 
 void	init_struct(t_input	*data)

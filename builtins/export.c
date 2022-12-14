@@ -18,12 +18,13 @@ void    printf_export(char *env)
 
 int check_dup_env(char *cmd, char **env)
 {
+
     int i = 0;
     if (cmd == NULL)
         return 0;
     while (env[i])
     {
-        if (!ft_strncmp(env[i], cmd, length(env[i])))
+        if (!ft_strncmp(env[i], cmd, length(env[i])) && (length(cmd) == length(env[i])))
             return (i);
         else
             i++;
@@ -31,32 +32,35 @@ int check_dup_env(char *cmd, char **env)
     return 0;
 }
 
-char    **export_1(char *cmd, char **env, int len)
+void    export_1(char *cmd, t_progres *progress, int len)
 {
     char **env1;
     int i;
     int x;
 
     i = 0;
-    if ((x = check_dup_env(cmd, env)) && ft_strchr(cmd, '=') 
-        && (length(cmd) == length(env[x])))
-            env[x] = ft_strdup(cmd);
-    else if (!check_dup_env(cmd, env))
+    if ((x = check_dup_env(cmd, progress->envp)) && !ft_strchr(cmd, '=')
+        && length(progress->envp[x]) == length(cmd))
+    {
+        printf("%d\n", x);
+        return;
+    }
+    if ((x = check_dup_env(cmd, progress->envp)) && ft_strchr(cmd, '=') 
+        && (length(cmd) == length(progress->envp[x])))
+        {
+            progress->envp[x] = ft_strdup(cmd);
+            printf("%d\n", x);
+        }
+    else
     {
         env1 = malloc(sizeof(char*) * (len + 2));
         env1[len + 1] = NULL;
         env1[len] = ft_strdup(cmd);
         i = -1;
         while (++i < len)
-        {
-            env1[i] = ft_strdup(env[i]);
-            printf("________ %s\n", env1[i]);
-        }
-        printf("________ %s\n", env1[i]);
-        i = -1;
-        return env1;
+            env1[i] = progress->envp[i];
+        progress->envp = env1;
     }
-    return env;
 }
 
 int export_check(char *cmd)
@@ -83,11 +87,11 @@ int export_check(char *cmd)
         ft_putstr_fd("Minishell: not a valid identifier\n", 2);
         g_var = 1;
         return (0);
-    }   
+    }
     return (1);
 }
 
-void export(t_input *input, char **env)
+void export(t_input *input, t_progres *progress)
 {
     int i;
     int len;
@@ -99,18 +103,20 @@ void export(t_input *input, char **env)
         {
             if (export_check(input->cmd[i]) == 1)
             {
-                len = 0;
-                while (env[len])
-                    len++;
-                export_1(input->cmd[i], env, len);
+                len = -1;
+                while (progress->envp[++len]);
+                export_1(input->cmd[i], progress, len);
             }
             i++;
-        }        
+        }
     }
     else
     {
-        i = -1;
-        while (env[++i])
-            printf_export(env[i]);
+        i = 0;
+        while (progress->envp[i])
+        {
+            printf_export(progress->envp[i]);
+            i++;
+        }
     }
 }

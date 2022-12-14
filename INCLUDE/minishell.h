@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 11:10:55 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:06:42 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,27 @@ void		ft_free1(t_progres *progree, t_input *data);
 void		ft_free2(t_input *data);
 char		*heredoc(t_progres *progree);
 /*EXEC*/
-void 		execution(t_input *input, char **env);
+void 		execution(t_input *input, t_progres *progress);
 void		ft_redic(t_input *input, char **env);
 int			ft_heredoc(char *s, char **env);
 void		exec_cmds(t_input *input, char **env);
-void		ft_pipes(t_input *input, char **env);
-void		cd(t_input *input, char **env);
+void		ft_pipes(t_input *input, t_progres *progress);
+void		cd(t_input *input, t_progres *progress);
 void		change_old_pwd(char *old_pwd, char **env);
-void		export(t_input *input, char **env);
-void		my_env(t_input *input, char **env);
-void		unset(t_input *input, char **env);
+void		export(t_input *input, t_progres *progress);
+void		my_env(t_input *input, t_progres *progress);
+void		unset(t_input *input, t_progres *progress);
 char		**ft_free(char **str);
 int			check_dup_env(char *cmd, char **env);
 size_t		length(char *s);
-void		echo(t_input *input, char **env);
+void		echo(t_input *input, t_progres *progress);
 void		exec(t_input *input, char **env);
 void		signals(void);
 void		execute_cmd(char **cmd, char **env);
 char		*check_path(char **cmd, char **path);
 char		*get_path(char **cmd, char *envp[]);
 char		**init_env(char **envp);
-void		execute_single_cmd(t_input *input, char **env);
+void		execute_single_cmd(t_input *input, t_progres *progress);
 void		close_all(int fd[2]);
 void		wait_all(int *pid, int x);
 int			get_in(t_input *tmp, int fd_in);
@@ -120,7 +120,7 @@ void    check_builtins(t_input *input, char **env);
 int check_builtins_2(t_input *input, char **env);
 int check_builtins_1(t_input *input, char **env);
 int    is_builtin(t_input*input);
-void    execute_builtin(t_input *input, char **env, int index);
+void    execute_builtin(t_input *input, t_progres *progress, int index);
 void exec_in_child(t_input *input, char **env);
 int execute_heredocs(t_input *input, char **env);
 int get_in_v2(t_input *tmp, int fd_in, int index);
@@ -133,8 +133,9 @@ void open_herdoc_file(t_input *input, char **env);
 void handle_exit_val(int pid);
 void dup_in_out(int in, int out);
 void restore_fd(int in, int out, int new_in, int new_out);
-void pwd(t_input *input, char **env);
+void pwd(t_input *input, t_progres *progress);
 void redic_not_builtin(t_input *input, char **env);
-void redic_builtin(t_input *input, char **env);
+void redic_builtin(t_input *input, t_progres *progress);
+void    ft_exit(t_input *input, t_progres *progress);
 
 #endif
