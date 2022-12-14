@@ -4,4 +4,23 @@ cd .. && cd folder problem
 close fd after <
 free cmd in execution
 <<"EOF" <<E"OF" <<""EOF 
-unset without value
+unset without value\
+
+
+
+echo - .
+$?     .
+
+Try ctrl-\ in a prompt after you wrote some stuff should quit minishell --> RELAUNCH!
+
+minishell>>cat
+^C
+minishell>>minishell>>
+
+>$t => not creat the file   .
+
+echo $HOME lx
+
+lx $t="ab cd"
+
+< nonexistingfile (no such file instead of parse error)

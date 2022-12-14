@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 12:06:42 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:14:53 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,6 @@ void pwd(t_input *input, t_progres *progress);
 void redic_not_builtin(t_input *input, char **env);
 void redic_builtin(t_input *input, t_progres *progress);
 void    ft_exit(t_input *input, t_progres *progress);
+void	check_error(int in, int out);
 
 #endif

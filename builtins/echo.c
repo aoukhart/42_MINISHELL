@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/13 12:08:50 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:02:27 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	echo_appah(t_input	*input)
 	y = 1;
 	a = 2;
 	while(input->cmd && input->cmd[y] && input->cmd[y][0] == '-'
+		&& input->cmd[y][1] == 'n'
 		&& check_n(input->cmd[y]))
 		y++;
 	if (y > 1)
@@ -43,7 +44,7 @@ void	echo_appah(t_input	*input)
 		new_cmd = ft_calloc(ft_len(input->cmd) - y + 3, sizeof(char *));
 		new_cmd[0] = input->cmd[0];
 		new_cmd[1] = ft_strdup("-n");
-		while(input->cmd[a])
+		while(input->cmd[y])
 			new_cmd[a++] = input->cmd[y++];
         free_dptr(input, free);
 		input->cmd = new_cmd;

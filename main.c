@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/13 14:26:55 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:21:30 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	input_checker(t_input *input)
 		temp_r = temp->redirrections;
 		while (temp_r)
 		{
-			if (temp_r->fd == -1 && temp_r->delimiter == NULL)
+			if (temp_r->fd == -3 && temp_r->delimiter == NULL)
 				return (1);
 			temp_r = temp_r->next;
 		}

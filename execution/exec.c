@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/13 12:11:29 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:24:12 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,22 @@ char    **add_after_split(char **src, char **dest)
 	free(src);
 	return (res);
 }
+void check_error_single_cmd(t_input *input)
+{
+    if (input->redirrections && (input->redirrections->fd) == -2)
+    {
+        ft_putstr_fd("minishell: ambigious redirect\n", 2);
+		g_var = 1;
+        return;
+    }
+    else if (input->redirrections && (input->redirrections->fd) == -1)
+    {
+        perror("minishell");
+        // ft_putstr_fd("minishell: ambigious redirect\n", 2);
+		g_var = 1;
+        return;
+    }
+}
 
 void execute_single_cmd(t_input *input, t_progres *progress)
 {
@@ -85,16 +101,9 @@ void execute_single_cmd(t_input *input, t_progres *progress)
         g_var = 1;
         return;
     }
+    check_error_single_cmd(input);
     if(input->cmd)
     {
-        if (ft_strchr(input->cmd[0], ' '))
-        {
-
-            char **splited = ft_split(input->cmd[0], ' ');
-            input->cmd = add_after_split(input->cmd, splited);
-            print_list(input);
-
-        }
         int cmd_type = is_builtin(input);
         if (input->redirrections)
         {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:18 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 10:40:26 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:20:33 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,11 @@ void	ft_open(t_progres *progree, t_redirect *tmp, int i, t_input *input)
 			return ;
 		}
 		file_name = word_extract(progree, 0, input);
-		if (i == 2 && tmp->type == '>')
+		if (i == 2 && tmp->type == '>' && file_name)
 				tmp->fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
-		else if (tmp->type == '>')
+		else if (tmp->type == '>' && file_name)
 				tmp->fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		else
+		else if(file_name)
 			tmp->fd = open(file_name, O_RDWR, 0777);
 		free(file_name);
 	}

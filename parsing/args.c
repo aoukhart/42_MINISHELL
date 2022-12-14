@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 10:49:13 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:37:50 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*split_after_expand(char *value, char *word, t_input *input)
 	if (!value)
 		return (word);
 	res = ft_split(value, ' ');
+	free(value);
 	lent = ft_len(res);
 	word = ft_strjoin1(word, res[0]);
 	if (lent > 1)
@@ -64,8 +65,10 @@ char	*split_after_expand(char *value, char *word, t_input *input)
 			add(input, res[i]);
 			i++;
 		}
+		free(res);
 		return (res[i]);
 	}
+	free(res);
 	return (word);
 }
 

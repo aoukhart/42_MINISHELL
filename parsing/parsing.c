@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 12:14:48 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:20:44 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_struct2(t_redirect *data)
 {
-	data->fd = -1;
+	data->fd = -3;
 	data->type = '\0';
 	data->next = NULL;
 	data->delimiter = NULL;
