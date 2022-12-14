@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 18:02:40 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/13 15:29:49 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 07:15:47 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ size_t length(char *s)
     {
         i++;
     }
-    // printf("%zu\n", i);
     return i;
 }
 
-void unset_1(char *cmd, char **env, int len)
+void unset_1(char *cmd, t_progres *progress, int len)
 {
     int checker;
     char **env1;
@@ -31,33 +30,27 @@ void unset_1(char *cmd, char **env, int len)
     int j;
 
     checker = 0;
-    env1 = NULL;
-    checker = check_dup_env(cmd, env);
+    checker = check_dup_env(cmd, progress->envp);
     printf("%d\n", checker);
-    if (checker && (length(env[checker]) == length(cmd)))
+    if (checker && (length(progress->envp[checker]) == length(cmd)))
     {
-        env1 = malloc(sizeof(char*) * (len));
+        env1 = ft_calloc(len , sizeof(char *));
         i = 0;
         j = 0;
         while (i < len)
         {
-            if (i >= checker && i != (len - 1))
+            if (i == checker)
             {
+                free(progress->envp[j]);
                 j++;
-                env1[i] = ft_strdup(env[j]);
             }
-            else if (i == (len - 1))
-                env1[i] = NULL;
-            else
-                env1[i] = ft_strdup(env[j++]);
-            printf("<<%s\n", env[i]);
+            env1[i] = progress->envp[j];
             i++;
+            j++;
         }
-        i = -1;
-        while (env1[++i])
-            env[i] = ft_strdup(env1[i]);
-        env[i] = NULL;
-        ft_free(env1);
+        printf("<<%s\n", progress->envp[i]);
+        free(progress->envp);
+        progress->envp = env1;
     }
 }
 
@@ -90,7 +83,7 @@ void    unset(t_input *input, t_progres *progress)
                 len = 0;
                 while (progress->envp[len])
                     len++;
-                unset_1(input->cmd[i], progress->envp, len);
+                unset_1(input->cmd[i], progress, len);
             }
             i++;
         }

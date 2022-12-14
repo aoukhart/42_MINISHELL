@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:45:51 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/13 12:10:42 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 07:20:49 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,7 @@ void pwd(t_input *input, t_progres *progress)
 {
     (void)input;
     (void)progress;
-   printf("%s\n",getcwd(0,0));
+    char *s= getcwd(0,0);
+    printf("%s\n",s);
+    free(s);
 }

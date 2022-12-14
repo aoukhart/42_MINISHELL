@@ -59,6 +59,7 @@ void    export_1(char *cmd, t_progres *progress, int len)
         i = -1;
         while (++i < len)
             env1[i] = progress->envp[i];
+        free(progress->envp);
         progress->envp = env1;
     }
 }
