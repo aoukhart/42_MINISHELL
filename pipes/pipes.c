@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/14 17:11:13 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 23:35:16 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void pipes_manager(t_input *tmp, int fd[3], int out, t_progres *progress)
 	else
 	{
 		execute_builtin(tmp, progress, is_builtin(tmp));
-		exit(0);
+		exit(g_var);
 	}
 }
 

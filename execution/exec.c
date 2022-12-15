@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/15 06:43:25 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/15 23:31:53 by ybachaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ void	exec(t_input *input, t_progres *progress)
 		if (execve(get_path(input->cmd, progress->envp),
 				input->cmd, progress->envp) == -1)
 		{
-			if (errno = 8)
+			if (errno == 8)
 			{
 				ft_putstr_fd("minishell: permission denied\n", 2);
 				exit(126);
 			}
+			perror("minnishell");
 			exit(127);
 		}
 	}
