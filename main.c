@@ -6,7 +6,7 @@
 /*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/15 07:09:46 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/15 10:26:32 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ char	**init_env(char **envp)
 
 	i = 0;
 	if (envp[0] == NULL)
-		return (NULL);
+	{
+		env = ft_calloc(sizeof(char*), 1);
+		return (env);
+	}
 	while (envp[i++])
 		;
 	env = malloc(sizeof(char *) * (i + 1));
