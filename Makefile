@@ -1,5 +1,6 @@
 SRC = main.c\
 		signals.c\
+		builtins/utils/export_utils.c\
 		builtins/cd.c\
 		builtins/export.c\
 		builtins/env.c\

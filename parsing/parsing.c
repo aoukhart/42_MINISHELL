@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:06 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/14 16:20:44 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 01:48:43 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	step_one(t_progres *progree, t_input *input)
 	t_input		*temp;
 
 	temp = input;
+	printf("asdasdasd\n");
 	while (progree->input[progree->i])
 	{
 		input_reader(progree, temp);

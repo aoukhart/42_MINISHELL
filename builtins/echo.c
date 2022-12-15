@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/14 13:02:27 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 01:42:12 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_n(char *str)
 	int	y;
 
 	y = 1;
-	while(str && str[y] && str[y] == 'n')
+	while (str && str[y] && str[y] == 'n')
 		y++;
 	if (y == (int)ft_strlen(str))
 		return (1);
@@ -27,54 +27,47 @@ int	check_n(char *str)
 
 void	echo_appah(t_input	*input)
 {
-	int	y;
-	int	a;
-    int free;
+	int		y;
+	int		a;
+	int		free;
 	char	**new_cmd;
 
 	y = 1;
 	a = 2;
-	while(input->cmd && input->cmd[y] && input->cmd[y][0] == '-'
+	while (input->cmd && input->cmd[y] && input->cmd[y][0] == '-'
 		&& input->cmd[y][1] == 'n'
 		&& check_n(input->cmd[y]))
 		y++;
 	if (y > 1)
 	{
-        free = y;
+		free = y;
 		new_cmd = ft_calloc(ft_len(input->cmd) - y + 3, sizeof(char *));
 		new_cmd[0] = input->cmd[0];
 		new_cmd[1] = ft_strdup("-n");
-		while(input->cmd[y])
+		while (input->cmd[y])
 			new_cmd[a++] = input->cmd[y++];
-        free_dptr(input, free);
+		free_dptr(input, free);
 		input->cmd = new_cmd;
 	}
 }
 
-void    echo(t_input *input, t_progres *progress)
+void	echo(t_input *input, t_progres *progress)
 {
-    int i = 1;
+	int	i;
+	int	pid;
 
-    echo_appah(input);
-    
-    while (input->cmd[i])
-    {
-        if (input->cmd[i][0] == '$' && input->cmd[i][1] == '?')
-        {
-            input->cmd[i] = ft_itoa(g_var);
-        }
-        i++;
-    }
-    int pid = fork();
-    if (!pid)
-    {
-        if (execve("/bin/echo", input->cmd, progress->envp) == -1)
-        {
-            perror("minishell");
+	i = 1;
+	echo_appah(input);
+	pid = fork();
+	if (!pid)
+	{
+		if (execve("/bin/echo", input->cmd, progress->envp) == -1)
+		{
+			perror("minishell");
 			exit(1);
-        }
-    }
-    else
-        wait(NULL);
-    g_var = 0;
+		}
+	}
+	else
+		wait(NULL);
+	g_var = 0;
 }

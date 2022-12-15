@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/14 14:14:53 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 02:34:33 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char		**ft_free(char **str);
 int			check_dup_env(char *cmd, char **env);
 size_t		length(char *s);
 void		echo(t_input *input, t_progres *progress);
-void		exec(t_input *input, char **env);
+void		exec(t_input *input, t_progres *progress);
 void		signals(void);
 void		execute_cmd(char **cmd, char **env);
 char		*check_path(char **cmd, char **path);
@@ -130,7 +130,7 @@ int execute_heredocs(t_input *input, char **env);
 int get_line_len(t_input *input);
 void open_file(int i, char *s, char **env);
 void open_herdoc_file(t_input *input, char **env);
-void handle_exit_val(int pid);
+void 	handle_exit_val(int pid);
 void dup_in_out(int in, int out);
 void restore_fd(int in, int out, int new_in, int new_out);
 void pwd(t_input *input, t_progres *progress);
@@ -138,5 +138,7 @@ void redic_not_builtin(t_input *input, char **env);
 void redic_builtin(t_input *input, t_progres *progress);
 void    ft_exit(t_input *input, t_progres *progress);
 void	check_error(int in, int out);
+int	export_error(void);
+int	export_n_unset_check(char *cmd);
 
 #endif

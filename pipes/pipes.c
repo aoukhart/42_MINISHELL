@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/14 14:53:22 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:11:13 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void pipes_manager(t_input *tmp, int fd[3], int out, t_progres *progress)
 {
-	
 	dup2(fd[2], STDIN_FILENO);
 	if (tmp->pipe && tmp->redirrections && out != 1)
 		dup2(out, STDOUT_FILENO);

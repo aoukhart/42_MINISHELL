@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/13 12:13:27 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 02:32:42 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void redic_builtin(t_input *input, t_progres *progress)
 	int out_fd = dup(STDOUT_FILENO);
 	in = get_in(input, in);
 	out = get_out(input, out);
+	printf("in>%d\nout>%d\n", in, out);
 	if (in == -1 || out == -1)
 	{
 		perror("minishell");

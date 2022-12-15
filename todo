@@ -24,3 +24,8 @@ echo $HOME lx
 lx $t="ab cd"
 
 < nonexistingfile (no such file instead of parse error)
+
+$qweqweqw (non-export)
+
+check if env null before expand
+

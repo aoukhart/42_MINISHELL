@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:58:00 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/10 05:35:19 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 00:54:02 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int get_in(t_input *tmp, int fd_in)
 {
 	t_redirect *tmp1;
 	int fd;
+	int flag;
 	tmp1 = tmp->redirrections;
 	while (tmp1)
 	{
@@ -23,14 +24,15 @@ int get_in(t_input *tmp, int fd_in)
 			fd_in = tmp1->fd;
 		else if (tmp1->type == '<' && tmp1->delimiter)
 		{
-			fd = open(ft_strjoin("minishell_",ft_itoa(0)), O_RDWR);
+			flag = 1;
+			fd = open("minishell_0", O_RDWR);
 			if (fd != -1)
 				fd_in = fd;
 		}
 		tmp1 = tmp1->next;
 	}
-	if (fd)
-	    unlink(ft_strjoin("minishell_", ft_itoa(0)));
+	if (flag)
+	    unlink("minishell_0");
 	return fd_in;
 }
 

@@ -6,73 +6,69 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/12 10:13:06 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 02:11:16 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
-char **ft_free(char **str)
+char	**ft_free(char **str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        free(str[i]);
-        i++;
-    }
-    free(str);
-    return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return (NULL);
 }
 
-char *check_path(char **cmd, char **path)
+char	*check_path(char **cmd, char **path)
 {
-    int i;
-    char *new_cmd;
-    char *new_path;
+	int		i;
+	char	*new_cmd;
+	char	*new_path;
 
-    i = -1;
-    while (path[++i])
-    {
-        new_cmd = ft_strjoin("/", cmd[0]);
-        new_path = ft_strjoin(path[i], new_cmd);
-        free(new_cmd);
-        if (access(new_path, F_OK) == 0)
-        {
-            ft_free(path);
-            return (new_path);
-        }
-        free(new_path);
-    }
-    ft_free(path);
-    return (ft_strdup(cmd[0])); // leak;
+	i = -1;
+	while (path[++i])
+	{
+		new_cmd = ft_strjoin("/", cmd[0]);
+		new_path = ft_strjoin(path[i], new_cmd);
+		free(new_cmd);
+		if (access(new_path, F_OK) == 0)
+		{
+			ft_free(path);
+			return (new_path);
+		}
+		free(new_path);
+	}
+	ft_free(path);
+	return (ft_strdup(cmd[0]));
 }
 
-char *get_path(char **cmd, char **envp)
+char	*get_path(char **cmd, char **envp)
 {
-    int i;
-    char **path;
+	int		i;
+	char	**path;
 
-    i = 0;
-    if (!ft_chr(envp, ft_strdup("PATH")))
-        return (cmd[0]);
-    while (ft_strncmp(envp[i], "PATH", 4) != 0)
-        i++;
-    path = ft_split(envp[i] + 5, ':');
-    return (check_path(cmd, path));
+	i = 0;
+	if (!ft_chr(envp, ft_strdup("PATH")))
+	{
+		ft_putstr_fd("minishell: No such file or directory\n", 2);
+		exit(127);
+	}
+	while (ft_strncmp(envp[i], "PATH", 4) != 0)
+		i++;
+	path = ft_split(envp[i] + 5, ':');
+	return (check_path(cmd, path));
 }
 
-void exec(t_input *input, char **env)
+void	exec_in_child(t_input *input, char **env)
 {
-    //input->cmd[0] = get_path(input->cmd, env);
-
-    execute_cmd(input->cmd, env);
-}
-
-void exec_in_child(t_input *input, char **env)
-{
-    input->cmd[0] = get_path(input->cmd, env); 
+	input->cmd[0] = get_path(input->cmd, env);
 	if (execve(input->cmd[0], input->cmd, env) == -1)
 	{
 		perror("minishell wst l exec d pipe");

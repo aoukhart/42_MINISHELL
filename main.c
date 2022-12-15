@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/14 16:21:30 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 01:07:34 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,6 @@ int	main(int ac, char **av, char **envp)
 			}
 			env = progree->envp;
 			ft_free1(progree, input);
-			// int i = 0;
-        	// while (env[i])
-        	// {
-        	//     printf_export(env[i]);
-        	//     i++;
-        	// }
 		}
 	}
 	return (0);

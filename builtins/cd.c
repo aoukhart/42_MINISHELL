@@ -1,18 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/14 17:29:12 by aoukhart          #+#    #+#             */
+/*   Updated: 2022/12/14 17:32:26 by aoukhart         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../INCLUDE/minishell.h"
 
 void	change_pwds(char *pwd, char *oldpwd, char **env)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (env[i])
 	{
-		if(ft_strncmp(env[i], "PWD=", 4) == 0)
+		if (ft_strncmp(env[i], "PWD=", 4) == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("PWD=", pwd);
 		}
 		i++;
 	}
-	i = 0;		
+	i = 0;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
@@ -28,7 +42,9 @@ void	change_pwds(char *pwd, char *oldpwd, char **env)
 
 void	ft_chdir(char *path, char **env)
 {
-	char *oldpwd = getcwd(NULL, 1000);
+	char	*oldpwd;
+
+	oldpwd = getcwd(NULL, 1000);
 	if (chdir(path))
 	{
 		perror("minishalal");
@@ -37,52 +53,57 @@ void	ft_chdir(char *path, char **env)
 	change_pwds(getcwd(NULL, 0), oldpwd, env);
 }
 
-void    cd(t_input *input, t_progres *progress)
+void	handle_cd_underscore(t_input *input, t_progres *progress)
 {
-	char *home;
+	char	*oldpwd;
+
+	oldpwd = ft_chr(progress->envp, ft_strdup("OLDPWD"));
+	if (!oldpwd)
+	{
+		ft_putstr_fd("minishell: OLDPWD not set\n", 2);
+		g_var = 1;
+		return ;
+	}
+	ft_chdir(oldpwd, progress->envp);
+	pwd(input, progress);
+	free(oldpwd);
+}
+
+void	cd_home(t_progres *progress)
+{
+	char	*home;
+
+	home = ft_chr(progress->envp, ft_strdup("HOME"));
+	if (home)
+	{
+		ft_chdir(home, progress->envp);
+		free(home);
+		return ;
+	}
+	else
+	{
+		free(home);
+		ft_putstr_fd("minishell: HOME not set\n", 2);
+		g_var = 1;
+	}
+}
+
+void	cd(t_input *input, t_progres *progress)
+{
 	if (input->cmd[1])
 	{
 		if (input->cmd[2])
 		{
 			ft_putstr_fd("minishell: too many arguments\n", 2);
 			g_var = 1;
-			return;
+			return ;
 		}
 		else if (!ft_strncmp(input->cmd[1], "-", 2))
-		{
-			char *oldpwd = ft_chr(progress->envp, ft_strdup("OLDPWD"));
-			if (!oldpwd)
-			{
-				ft_putstr_fd("minishell: OLDPWD not set\n", 2);
-				g_var = 1;
-				return;
-			}
-			ft_chdir(oldpwd, progress->envp);
-			pwd(input, progress);
-			free(oldpwd);
-			return;
-		}
+			handle_cd_underscore(input, progress);
 		else
-		{
 			ft_chdir(input->cmd[1], progress->envp);
-			return;
-		}
+		return ;
 	}
-	else if (input->cmd[1] == NULL || !ft_strncmp(input->cmd[1] ,"~", 2))
-	{
-
-		home = ft_chr(progress->envp, ft_strdup("HOME"));
-		if (home)
-		{
-			ft_chdir(home, progress->envp);
-			free(home);
-			return;
-		}
-		else
-		{
-			free(home);
-			ft_putstr_fd("minishell: HOME not set\n", 2);
-			g_var = 1;
-		}
-	}
+	else if (input->cmd[1] == NULL || !ft_strncmp(input->cmd[1], "~", 2))
+		cd_home(progress);
 }
