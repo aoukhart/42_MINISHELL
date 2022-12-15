@@ -32,11 +32,14 @@ NAME = minishell
 all : $(NAME)
 
 $(NAME) : $(SRC)
+	@make all -C Libft/
 	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /goinfre/aoukhart/homebrew/opt/readline/lib -I /goinfre/aoukhart/homebrew/opt/readline/include #-fsanitize=address -g
 clean :
+	@make clean -C Libft
 	@rm -rf $(NAME)
 	
 fclean : clean
+	@make fclean -C Libft
 
 re : fclean all
 
