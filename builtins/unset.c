@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 18:02:40 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 01:56:30 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 05:53:15 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	unset_1(char *cmd, t_progres *progress, int len)
 	int		j;
 
 	checker = check_dup_env(cmd, progress->envp);
-	if (checker && (length(progress->envp[checker]) == length(cmd)))
+	if (checker != -1 && (length(progress->envp[checker]) == length(cmd)))
 	{
 		env1 = ft_calloc(len, sizeof(char *));
 		i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 22:39:15 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 01:42:12 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 06:28:57 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ void	echo_appah(t_input	*input)
 
 void	echo(t_input *input, t_progres *progress)
 {
-	int	i;
 	int	pid;
 
-	i = 1;
 	echo_appah(input);
 	pid = fork();
 	if (!pid)

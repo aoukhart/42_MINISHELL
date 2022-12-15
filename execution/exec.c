@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/15 02:57:48 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 06:43:25 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	exec(t_input *input, t_progres *progress)
 	{
 		signal(2, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (access(input->cmd[0], X_OK))
-		{
-			perror("minishell wst execute_cmd");
-			exit(126);
-		}
 		if (execve(get_path(input->cmd, progress->envp),
 				input->cmd, progress->envp) == -1)
 		{
+			if (errno = 8)
+			{
+				ft_putstr_fd("minishell: permission denied\n", 2);
+				exit(126);
+			}
 			exit(127);
 		}
 	}
@@ -51,8 +51,8 @@ void	execute_builtin(t_input *input, t_progres *progress, int index)
 
 char	**add_after_split(char **src, char **dest)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	**res;
 
 	i = 0;
@@ -74,7 +74,7 @@ char	**add_after_split(char **src, char **dest)
 	free(src);
 	return (res);
 }
-int check_error_single_cmd(t_input *input)
+int	check_error_single_cmd(t_input *input)
 {
     if (input->redirrections && (input->redirrections->fd) == -2)
     {
@@ -84,7 +84,7 @@ int check_error_single_cmd(t_input *input)
     }
     else if (input->redirrections && (input->redirrections->fd) == -1)
     {
-        perror("minihell");
+        perror("minishell");
 		g_var = 1;
         return (0);
     }

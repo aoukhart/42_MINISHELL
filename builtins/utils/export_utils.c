@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:36:24 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 02:10:00 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 06:04:15 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	export_error(void)
 {
-	ft_putstr_fd("Minishell: not a valid idqweentifier\n", 2);
+	ft_putstr_fd("Minishell: not a valid identifier\n", 2);
 	g_var = 1;
 	return (0);
 }
@@ -34,5 +34,5 @@ int	check_dup_env(char *cmd, char **env)
 		else
 			i++;
 	}
-	return (0);
+	return (-1);
 }

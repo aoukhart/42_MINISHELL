@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:55:04 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 01:44:24 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/15 05:42:52 by an4ss            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,13 @@ void	export_algo(char *cmd, t_progres *progress, int len)
 
 void	export_1(char *cmd, t_progres *progress, int len)
 {
-	int	i;
 	int	dupl;
 
-	i = 0;
 	dupl = check_dup_env(cmd, progress->envp);
-	if (dupl && !ft_strchr(cmd, '=')
+	if (dupl != -1 && !ft_strchr(cmd, '=')
 		&& length(progress->envp[dupl]) == length(cmd))
 		return ;
-	if (dupl && ft_strchr(cmd, '=')
+	if (dupl != -1 && ft_strchr(cmd, '=')
 		&& (length(cmd) == length(progress->envp[dupl])))
 		progress->envp[dupl] = ft_strdup(cmd);
 	else
