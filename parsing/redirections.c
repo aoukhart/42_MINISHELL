@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:18 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/15 01:25:02 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:59:34 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	ft_open(t_progres *progree, t_redirect *tmp, int i, t_input *input)
 		if (i == 2 && tmp->type == '>' && file_name)
 			tmp->fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
 		else if (tmp->type == '>' && file_name)
-			tmp->fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0640);
-		else if(file_name)
+			tmp->fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		else if (file_name)
 			tmp->fd = open(file_name, O_RDWR, 0777);
 		free(file_name);
 	}

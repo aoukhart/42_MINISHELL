@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:12:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/12 09:48:48 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/16 00:37:45 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ void	skip_spaces(t_progres *progree)
 {
 	while (progree->input[progree->i] && progree->input[progree->i] == ' ')
 		progree->i++;
+}
+
+int	check_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i])
+		return (0);
+	else
+		return (1);
 }
 
 char	*car_join(char *s1, char c)

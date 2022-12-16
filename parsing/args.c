@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:09:25 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/14 16:37:50 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:21:58 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ char	*word_extract(t_progres *progree, int i, t_input *input)
 			&& car_check(progree->input[progree->i + 1], 0)
 			&& i == 0)
 		{
-			/*word = ft_strjoin1(word, env_3(progree));*/
 			word = split_after_expand(env_3(progree), word, input);
 			continue ;
 		}

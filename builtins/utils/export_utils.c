@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:36:24 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 06:04:15 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/16 17:50:02 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,30 @@ int	check_dup_env(char *cmd, char **env)
 			i++;
 	}
 	return (-1);
+}
+
+char	**add_after_split(char **src, char **dest)
+{
+	int		i;
+	int		j;
+	char	**res;
+
+	i = 0;
+	j = 1;
+	res = ft_calloc(ft_len(src) + ft_len(dest), sizeof(char *));
+	while (dest[i])
+	{
+		res[i] = dest[i];
+		i++;
+	}
+	while (src[j])
+	{
+		res[i] = src[j];
+		j++;
+		i++;
+	}
+	free(dest);
+	free(src[0]);
+	free(src);
+	return (res);
 }

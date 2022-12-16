@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:54:51 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 22:30:55 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/16 00:44:47 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ft_exit(t_input *input, t_progres *progress)
 	}
 	else if (input->cmd[0] && input->cmd[1])
 		g_var = ft_atoi(input->cmd[1]);
-	
 	ft_free1(progress, input);
 	printf("exit\n");
 	exit(g_var);

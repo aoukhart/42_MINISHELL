@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/15 02:11:16 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:49:14 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,13 @@ void	exec_in_child(t_input *input, char **env)
 		perror("minishell wst l exec d pipe");
 		exit(127);
 	}
+}
+
+void	execution(t_input *input, t_progres *progres)
+{
+	signal(SIGINT, SIG_IGN);
+	if (!input->pipe)
+		execute_single_cmd(input, progres);
+	else
+		ft_pipes(input, progres);
 }

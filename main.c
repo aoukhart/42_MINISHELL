@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/15 10:26:32 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/16 17:49:05 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**init_env(char **envp)
 	i = 0;
 	if (envp[0] == NULL)
 	{
-		env = ft_calloc(sizeof(char*), 1);
+		env = ft_calloc(sizeof (char *), 1);
 		return (env);
 	}
 	while (envp[i++])
@@ -38,16 +38,6 @@ char	**init_env(char **envp)
 	return (env);
 }
 
-void	execution(t_input *input, t_progres *progres)
-{
-	// signal(2, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	if (!input->pipe)
-		execute_single_cmd(input, progres);
-	else
-		ft_pipes(input, progres);
-}
-
 int	input_checker(t_input *input)
 {
 	t_input		*temp;
@@ -56,11 +46,9 @@ int	input_checker(t_input *input)
 	temp = input;
 	while (temp)
 	{
-		if (!temp->cmd && !temp->redirrections)
-			return (1);
-		if (temp->pipe == 1 && temp->next == NULL)
-			return (1);
 		temp_r = temp->redirrections;
+		if (temp->pipe == 1 && (!temp->next || !temp->cmd) && !temp_r)
+			return (1);
 		while (temp_r)
 		{
 			if (temp_r->fd == -3 && temp_r->delimiter == NULL)
@@ -100,21 +88,6 @@ char	*read_input(void)
 	}	
 	return (str);
 }
-
-int	check_spaces(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	if (str[i])
-		return (0);
-	else
-		return (1);	
-}
-
-void    printf_export(char *env);
 
 int	main(int ac, char **av, char **envp)
 {

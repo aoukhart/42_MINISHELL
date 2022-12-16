@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/15 23:35:16 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/16 00:26:05 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
-void pipes_manager(t_input *tmp, int fd[3], int out, t_progres *progress)
+void	pipes_manager(t_input *tmp, int fd[3], int out, t_progres *progress)
 {
 	dup2(fd[2], STDIN_FILENO);
 	if (tmp->pipe && tmp->redirrections && out != 1)
@@ -33,39 +33,29 @@ void pipes_manager(t_input *tmp, int fd[3], int out, t_progres *progress)
 	}
 }
 
-int execute_heredocs(t_input *input, char **env)
+int	execute_heredocs(t_input *input, char **env)
 {
-	int pid = fork();
+	int	pid;
+	int	status;
+
+	pid = fork();
 	if (pid == 0)
 		open_herdoc_file(input, env);
 	else
 	{
-		int status;
 		waitpid(pid, &status, 0);
 		if (!WIFEXITED(status))
-			return 1;
+			return (1);
 	}
-	return 0;
+	return (0);
 }
 
-void	check_error(int in, int out)
+int	exec_pipes(t_input *tmp, int fd[3], t_progres *progress, int index)
 {
-	if (in == -1 || out == -1)
-	{
-		perror("minishell error fd wayliiii");
-		exit(1);
-	}
-	else if (in == -2 || out == -2)
-	{
-		ft_putstr_fd("minishell: ambigious redirect\n", 2);
-		exit(1);
-	}
-}
+	int	pid;
+	int	out;
 
-int exec_pipes(t_input *tmp, int fd[3], t_progres *progress, int index)
-{
-	int pid;
-	int out = 1;
+	out = 1;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -76,26 +66,15 @@ int exec_pipes(t_input *tmp, int fd[3], t_progres *progress, int index)
 		check_error(fd[2], out);
 		pipes_manager(tmp, fd, out, progress);
 	}
-	return pid;
-}
-
-int pipes_len(t_input *input)
-{
-	int i = 0;
-	t_input *tmp;
-	tmp = input;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return i;
+	return (pid);
 }
 
 int	*loop_exec_pipes(t_input *input, int fd[3], t_progres *progress)
 {
-	int i = 0;
-	int *pid ;
+	int	i;
+	int	*pid ;
+
+	i = 0;
 	pid = malloc(sizeof(int) * pipes_len(input));
 	while (input)
 	{
@@ -111,15 +90,16 @@ int	*loop_exec_pipes(t_input *input, int fd[3], t_progres *progress)
 	}
 	wait_all(pid, i);
 	free(pid);
-	return fd;
+	return (fd);
 }
 
-void ft_pipes(t_input *input, t_progres *progress)
+void	ft_pipes(t_input *input, t_progres *progress)
 {
-	t_input *tmp;
-	int fd[3];
-	int i;
-	int *pid;
+	t_input	*tmp;
+	int		fd[3];
+	int		i;
+	int		*pid;
+
 	i = 0;
 	tmp = input;
 	pid = malloc(sizeof(int) * pipes_len(input));
@@ -128,7 +108,7 @@ void ft_pipes(t_input *input, t_progres *progress)
 	if (execute_heredocs(input, progress->envp))
 	{
 		g_var = 1;
-		return;
+		return ;
 	}
 	loop_exec_pipes(tmp, fd, progress);
 	wait_all(pid, i);

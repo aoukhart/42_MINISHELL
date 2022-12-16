@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 22:35:22 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 23:40:42 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/16 00:44:14 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "INCLUDE/minishell.h"
 
-void ctrl_c_handler(int sig)
+void	ctrl_c_handler(int sig)
 {
-    (void)sig;
-    printf("\n");
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-    g_var = 130;
+	(void) sig;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_var = 130;
 }
 
-void signals()
+void	signals(void)
 {
-    signal(SIGINT, ctrl_c_handler);
+	signal(SIGINT, ctrl_c_handler);
 }

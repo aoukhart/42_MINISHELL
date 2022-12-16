@@ -6,16 +6,18 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:54:44 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/12 04:09:27 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:10:37 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDE/minishell.h"
 
-int get_line_len(t_input *input)
+int	get_line_len(t_input *input)
 {
-	t_input *tmp;
-	int pipe = 0;
+	t_input	*tmp;
+	int		pipe;
+
+	pipe = 0;
 	tmp = input;
 	while (tmp)
 	{
@@ -23,13 +25,15 @@ int get_line_len(t_input *input)
 			pipe++;
 		tmp = tmp->next;
 	}
-	return pipe;
+	return (pipe);
 }
 
-void open_file(int i, char *s, char **env)
+void	open_file(int i, char *s, char **env)
 {
-	int fd = open(ft_strjoin("minishell_", ft_itoa(i)), \
-				O_RDWR | O_CREAT | O_TRUNC, 0644);
+	int	fd;
+
+	fd = open(ft_strjoin("minishell_", ft_itoa(i)), \
+		O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		perror("minishell");
@@ -39,10 +43,10 @@ void open_file(int i, char *s, char **env)
 	close(fd);
 }
 
-void ft_heredoc_v2(char *s, char **env, int fd)
+void	ft_heredoc_v2(char *s, char **env, int fd)
 {
-	t_progres ptr;
-    char *str;
+	t_progres	ptr;
+	char		*str;
 
 	ptr.i = 0;
 	ptr.envp = env;
@@ -61,13 +65,16 @@ void ft_heredoc_v2(char *s, char **env, int fd)
 	}
 }
 
-void open_herdoc_file(t_input *input, char **env)
+void	open_herdoc_file(t_input *input, char **env)
 {
-	int i = 0;
-	t_input *tmp;
-	t_redirect *redir;
+	int			i;
+	int			len;
+	t_input		*tmp;
+	t_redirect	*redir;
+
+	i = 0;
 	tmp = input;
-	int len = get_line_len(tmp);
+	len = get_line_len(tmp);
 	while (i <= len && tmp)
 	{
 		redir = tmp->redirrections;

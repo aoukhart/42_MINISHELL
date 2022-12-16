@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/15 05:25:03 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/16 18:06:27 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-	
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -24,7 +24,8 @@
 # include <sys/wait.h>
 # include "../Libft/libft.h"
 
-#define NOT_BUILT_IN -1
+# define NOT_BUILT_IN -1
+
 extern int	g_var;
 
 typedef struct s_progres
@@ -92,7 +93,7 @@ void		ft_free1(t_progres *progree, t_input *data);
 void		ft_free2(t_input *data);
 char		*heredoc(t_progres *progree);
 /*EXEC*/
-void 		execution(t_input *input, t_progres *progress);
+void		execution(t_input *input, t_progres *progress);
 void		ft_redic(t_input *input, char **env);
 int			ft_heredoc(char *s, char **env);
 void		exec_cmds(t_input *input, char **env);
@@ -117,29 +118,31 @@ void		close_all(int fd[2]);
 void		wait_all(int *pid, int x);
 int			get_in(t_input *tmp, int fd_in);
 int			get_out(t_input *tmp, int fd_out);
-void    check_builtins(t_input *input, char **env);
-int check_builtins_2(t_input *input, char **env);
-int check_builtins_1(t_input *input, char **env);
-int    is_builtin(t_input*input);
-void    execute_builtin(t_input *input, t_progres *progress, int index);
-void exec_in_child(t_input *input, char **env);
-int execute_heredocs(t_input *input, char **env);
-int get_in_v2(t_input *tmp, int fd_in, int index);
-void heredoc_manager_v2(t_progres ptr, int fd, char *delim);
-void ft_heredoc_v2(char *s, char **env, int fd);
-int execute_heredocs(t_input *input, char **env);
-int get_line_len(t_input *input);
-void open_file(int i, char *s, char **env);
-void open_herdoc_file(t_input *input, char **env);
-void 	handle_exit_val(int pid);
-void dup_in_out(int in, int out);
-void restore_fd(int in, int out, int new_in, int new_out);
-void pwd(t_input *input, t_progres *progress);
-void redic_not_builtin(t_input *input, char **env);
-void redic_builtin(t_input *input, t_progres *progress);
-void    ft_exit(t_input *input, t_progres *progress);
-void	check_error(int in, int out);
-int	export_error(void);
-int	export_n_unset_check(char *cmd);
+void		check_builtins(t_input *input, char **env);
+int			check_builtins_2(t_input *input, char **env);
+int			check_builtins_1(t_input *input, char **env);
+int			is_builtin(t_input*input);
+void		execute_builtin(t_input *input, t_progres *progress, int index);
+void		exec_in_child(t_input *input, char **env);
+int			execute_heredocs(t_input *input, char **env);
+int			get_in_v2(t_input *tmp, int fd_in, int index);
+void		heredoc_manager_v2(t_progres ptr, int fd, char *delim);
+void		ft_heredoc_v2(char *s, char **env, int fd);
+int			execute_heredocs(t_input *input, char **env);
+int			get_line_len(t_input *input);
+void		open_file(int i, char *s, char **env);
+void		open_herdoc_file(t_input *input, char **env);
+void		handle_exit_val(int pid);
+void		dup_in_out(int in, int out);
+void		restore_fd(int in, int out, int new_in, int new_out);
+void		pwd(t_input *input, t_progres *progress);
+void		redic_not_builtin(t_input *input, char **env);
+void		redic_builtin(t_input *input, t_progres *progress);
+void		ft_exit(t_input *input, t_progres *progress);
+void		check_error(int in, int out);
+int			export_error(void);
+int			export_n_unset_check(char *cmd);
+int			pipes_len(t_input *input);
+void		exec_redirection(t_input *input, t_progres *progress);
 
 #endif

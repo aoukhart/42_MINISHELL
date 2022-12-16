@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybachaki <ybachaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:29:12 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 23:33:54 by ybachaki         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:50:54 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_chdir(char *path, char **env)
 	{
 		perror("minishalal");
 		g_var = 1;
-		return;
+		return ;
 	}
 	change_pwds(getcwd(NULL, 0), oldpwd, env);
 }

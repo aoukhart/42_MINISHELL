@@ -22,7 +22,6 @@ SRC = main.c\
 		pipes/pipes_utils.c\
 		redirections/redirection.c\
 		redirections/redirect_utils.c\
-		redirections/redirect_utils2.c\
 		redirections/heredoc.c\
 
 FLAGS = -Wall -Wextra -Werror
@@ -33,7 +32,7 @@ all : $(NAME)
 
 $(NAME) : $(SRC)
 	@make all -C Libft/
-	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /goinfre/aoukhart/homebrew/opt/readline/lib -I /goinfre/aoukhart/homebrew/opt/readline/include -fsanitize=address -g
+	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /goinfre/aoukhart/homebrew/opt/readline/lib -I /goinfre/aoukhart/homebrew/opt/readline/include #-fsanitize=address -g
 clean :
 	@make clean -C Libft
 	@rm -rf $(NAME)
