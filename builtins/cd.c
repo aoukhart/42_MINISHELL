@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:29:12 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/16 17:50:54 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 23:44:30 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_chdir(char *path, char **env)
 	oldpwd = getcwd(NULL, 1000);
 	if (chdir(path))
 	{
-		perror("minishalal");
+		perror("minishell");
 		g_var = 1;
 		return ;
 	}

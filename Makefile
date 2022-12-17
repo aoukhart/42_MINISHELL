@@ -32,7 +32,7 @@ all : $(NAME)
 
 $(NAME) : $(SRC)
 	@make all -C Libft/
-	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /goinfre/aoukhart/homebrew/opt/readline/lib -I /goinfre/aoukhart/homebrew/opt/readline/include #-fsanitize=address -g
+	@gcc $(FLAGS) $(SRC) Libft/libft.a -o $(NAME) -lreadline -L /goinfre/aoukhart/homebrew/opt/readline/lib -I /goinfre/aoukhart/homebrew/opt/readline/include
 clean :
 	@make clean -C Libft
 	@rm -rf $(NAME)

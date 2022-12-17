@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:37:21 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/16 00:26:05 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 23:59:13 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	execute_heredocs(t_input *input, char **env)
 	{
 		waitpid(pid, &status, 0);
 		if (!WIFEXITED(status))
+		{
+			close_files(input);
 			return (1);
+		}
 	}
 	return (0);
 }
@@ -83,6 +86,7 @@ int	*loop_exec_pipes(t_input *input, int fd[3], t_progres *progress)
 		if (fd[2] != 0)
 			close(fd[2]);
 		fd[2] = fd[0];
+		close(fd[1]);
 		fd[0] = -1;
 		close_all(fd);
 		i++;

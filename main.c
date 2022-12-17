@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:38:03 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/16 17:49:05 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/17 01:18:05 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*read_input(void)
 {
 	char	*str;
 
-	str = readline("minishell>>");
+	str = readline("minishell$>");
 	if (!str)
 		exit(g_var);
 	if (!str[0])

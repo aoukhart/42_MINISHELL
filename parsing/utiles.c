@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:35:17 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 13:25:51 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 23:33:00 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,72 +37,16 @@ char	*ft_strjoin1(char *s1, char *s2)
 	return (res);
 }
 
-char	*ft_strchr(const char *s, int c)
+void	close_files(t_input *input)
 {
+	int	n;
 	int	i;
 
+	n = pipes_len(input);
 	i = 0;
-	while (*(s + i))
+	while (i < n)
 	{
-		if (*(s + i) == (char)c)
-			return ((char *)(s + i));
+		unlink(ft_strjoin("minishell_", ft_itoa(i)));
 		i++;
 	}
-	if (*(s + i) == (char)c)
-		return ((char *)(s + i));
-	return (NULL);
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	j;
-	size_t	len;
-
-	i = 0;
-	j = 0;
-	len = ft_strlen(dst);
-	if (dstsize > 0)
-	{
-		while (*(dst + i))
-			i++;
-		while (i < dstsize - 1 && *(src + j))
-		{
-			*(dst + i) = *(src + j);
-			i++;
-			j++;
-		}
-		*(dst + i) = '\0';
-	}
-	if (dstsize >= len)
-		return (ft_strlen(src) + len);
-	return (dstsize + ft_strlen(src));
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize > 0)
-	{
-		while (i < dstsize - 1 && *(src + i))
-		{
-			*(dst + i) = *(src + i);
-			i++;
-		}
-		*(dst + i) = '\0';
-	}
-	return (ft_strlen (src));
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*res;
-
-	res = malloc(count * size);
-	if (res == NULL)
-		return (NULL);
-	ft_bzero(res, count * size);
-	return (res);
 }

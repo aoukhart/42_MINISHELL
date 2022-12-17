@@ -6,33 +6,11 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:05:48 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/13 14:13:43 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/17 00:06:21 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../INCLUDE/minishell.h"
-
-size_t	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (*(s + i))
-		i++;
-	return (i);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		*(char *)(s + i) = 0;
-		i++;
-	}
-}
 
 void	ft_free1(t_progres *progree, t_input *data)
 {
@@ -83,4 +61,20 @@ void	free_dptr(t_input *input, int j)
 		i++;
 	}
 	free(input->cmd);
+}
+
+void	check_error_main(int in, int out)
+{
+	if (in == -1 || out == -1)
+	{
+		perror("minishell");
+		g_var = 1;
+		return ;
+	}	
+	if (in == -2 || out == -2)
+	{
+		ft_putstr_fd("minishell: ambigious redirect\n", 2);
+		g_var = 1;
+		return ;
+	}
 }

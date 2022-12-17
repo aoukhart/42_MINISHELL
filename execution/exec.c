@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:34 by an_ass            #+#    #+#             */
-/*   Updated: 2022/12/16 18:07:52 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/17 01:30:51 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_error_single_cmd(t_input *input)
 	}
 	else if (input->redirrections && (input->redirrections->fd) == -1)
 	{
-		perror("minihell");
+		perror("minishell");
 		g_var = 1;
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:37:07 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/16 17:49:14 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/17 01:17:18 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	exec_in_child(t_input *input, char **env)
 	input->cmd[0] = get_path(input->cmd, env);
 	if (execve(input->cmd[0], input->cmd, env) == -1)
 	{
-		perror("minishell wst l exec d pipe");
+		check_permission();
+		perror("minishell");
 		exit(127);
 	}
 }

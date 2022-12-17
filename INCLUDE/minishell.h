@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:40:57 by ybachaki          #+#    #+#             */
-/*   Updated: 2022/12/16 18:06:27 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/17 01:16:53 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,8 @@ int			export_error(void);
 int			export_n_unset_check(char *cmd);
 int			pipes_len(t_input *input);
 void		exec_redirection(t_input *input, t_progres *progress);
+void		close_files(t_input *input);
+void		check_error_main(int in, int out);
+void		check_permission(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:02:22 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/16 18:21:39 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/17 00:06:37 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	redic_builtin(t_input *input, t_progres *progress)
 	out_fd = dup(STDOUT_FILENO);
 	in = get_in(input, in);
 	out = get_out(input, out);
+	check_error_main(in, out);
 	dup_in_out(in, out);
 	execute_builtin(input, progress, is_builtin(input));
 	restore_fd(in, out, in_fd, out_fd);
@@ -69,6 +70,7 @@ void	redic_not_builtin(t_input *input, char **env)
 		signal(SIGQUIT, SIG_DFL);
 		in = get_in(input, in);
 		out = get_out(input, out);
+		check_error(in, out);
 		dup_in_out(in, out);
 		exec_in_child(input, env);
 	}

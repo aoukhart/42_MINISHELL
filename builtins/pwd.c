@@ -6,7 +6,7 @@
 /*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:45:51 by an4ss             #+#    #+#             */
-/*   Updated: 2022/12/14 18:43:28 by aoukhart         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:23:59 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	pwd(t_input *input, t_progres *progress)
 {
-	char	s[256];
+	char	s[1052];
 
 	(void)input;
 	(void)progress;

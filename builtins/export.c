@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: an4ss <an4ss@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aoukhart <aoukhart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:55:04 by aoukhart          #+#    #+#             */
-/*   Updated: 2022/12/15 05:42:52 by an4ss            ###   ########.fr       */
+/*   Updated: 2022/12/17 01:14:47 by aoukhart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	export_1(char *cmd, t_progres *progress, int len)
 		return ;
 	if (dupl != -1 && ft_strchr(cmd, '=')
 		&& (length(cmd) == length(progress->envp[dupl])))
+	{
+		free(progress->envp[dupl]);
 		progress->envp[dupl] = ft_strdup(cmd);
+	}
 	else
 		export_algo(cmd, progress, len);
 }
@@ -90,7 +93,6 @@ void	export(t_input *input, t_progres *progress)
 		{
 			if (export_n_unset_check(input->cmd[i]))
 			{
-				printf("qweqweqwe\n");
 				len = -1;
 				while (progress->envp[++len])
 					;
